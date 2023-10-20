@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "frontend",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
