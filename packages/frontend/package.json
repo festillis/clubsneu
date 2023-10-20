@@ -14,13 +14,17 @@
     "rollup": "^3.28.0",
     "solid-start-node": "^0.3.7",
     "typescript": "^4.9.5",
-    "vite": "^4.4.9"
+    "vite": "^4.5.0"
   },
   "dependencies": {
     "@solidjs/meta": "^0.28.6",
     "@solidjs/router": "^0.8.3",
+    "@suid/icons-material": "^0.6.11",
+    "@suid/material": "^0.15.1",
+    "@suid/vite-plugin": "^0.1.5",
     "solid-js": "^1.8.1",
-    "solid-start": "^0.3.7"
+    "solid-start": "^0.3.7",
+    "vite-plugin-solid": "^2.7.2"
   },
   "engines": {
     "node": ">=18"
