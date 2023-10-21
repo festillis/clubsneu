@@ -3,7 +3,9 @@
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "solid-start start",
+    "docker:build:dev": "docker build -t clubsneu-frontend -f Dockerfile.development .",
+    "docker:run:dev": "docker run -p 3000:8080 -d clubsneu-frontend"
   },
   "type": "module",
   "devDependencies": {
