@@ -1,56 +1,45 @@
-import { Routes } from '~/constants/routes';
-import { useRouteData } from 'solid-start';
+import { Button } from '@suid/material';
+import { Component, Show } from 'solid-js';
+import { authStore, userStore } from '~/stores';
+import { isAuthenticated } from '~/stores/auth_store';
 
-import {
-  createServerAction$,
-  createServerData$,
-  redirect
-} from 'solid-start/server';
-import { getUser, logout } from '~/db/session';
-import { onMount } from 'solid-js';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '~/firebase';
+const Home: Component = () => {
+  const handleLogin = async () => {
+    await authStore.login('clubsneu@gmail.com', 'clubsneu');
+  };
 
-export function routeData() {
-  return createServerData$(async (_, { request }) => {
-    const user = await getUser(request);
+  const handleLogout = async () => {
+    await authStore.logout();
+  };
 
-    if (!user) {
-      // throw redirect('/login');
-      redirect(Routes.test);
+  const handleGetRandomMessage = async () => {
+    const res = await userStore.getRandomMessage();
+
+    if (res.hasError) {
+      alert(`Something went wrong ${res.errorText}`);
+      return;
     }
 
-    return user;
-  });
-}
-
-export default function Home() {
-  const user = useRouteData<typeof routeData>();
-
-  onMount(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        redirect(Routes.test);
-      } else {
-        console.log(user);
-      }
-    });
-  });
-
-  // const [, { Form }] = createServerAction$((f: FormData, { request }) =>
-  //   logout(request)
-  // );
+    alert(res.data.message);
+  };
 
   return (
     <main class="w-full p-4 space-y-2">
       <div>Hello</div>
-      {/* <h1 class="font-bold text-3xl">Hello {user()?.username}</h1>
-      <h3 class="font-bold text-xl">Message board</h3>
-      <Form>
-        <button name="logout" type="submit">
-          Logout
-        </button>
-      </Form> */}
+      <div>
+        {isAuthenticated()
+          ? 'You are authenticated'
+          : 'You are not authenticated'}
+      </div>
+      <Show when={isAuthenticated()}>
+        <Button onClick={handleLogout}>Logout</Button>
+      </Show>
+      <Show when={!isAuthenticated()}>
+        <Button onClick={handleLogin}>Login</Button>
+      </Show>
+      <Button onClick={handleGetRandomMessage}>Get random message</Button>
     </main>
   );
-}
+};
+
+export default Home;

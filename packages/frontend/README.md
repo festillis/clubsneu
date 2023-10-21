@@ -28,3 +28,16 @@ npm run dev -- --open
 Solid apps are built with _adapters_, which optimise your project for deployment to different environments.
 
 By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different adapter, add it to the `devDependencies` in `package.json` and specify in your `vite.config.js`.
+
+## High-level Overview
+
+- `api_client`: API Client to make calls to the backend
+  - `api_response_types`: Interface types for API responses
+- `components`: Reusable UI components
+- `hooks`: Custom hooks
+- `constants`: Constants used throughout the app (Ex: Route names)
+- `firebase`: Firebase configuration
+- `stores`: Stores to manage state and abstract away
+  - `auth_store`: Handles authentication state and operations
+  - `user_store`: User store
+-  calls to `APIClient`
