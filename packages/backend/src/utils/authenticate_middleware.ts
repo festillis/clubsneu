@@ -1,11 +1,7 @@
 import { Reply, Request } from '../types/server';
 import verifyIdToken from './verify_id_token';
 
-const authenticateMiddleware = async (
-  request: Request,
-  reply: Reply,
-  next: any
-) => {
+const authenticateMiddleware = async (request: Request, reply: Reply) => {
   const token = request.headers.authorization?.split('Bearer ')[1];
 
   if (!token) {

@@ -1,4 +1,4 @@
-let users = [{ id: 0, username: "kody", password: "twixrox" }];
+let users = [{ id: 0, username: 'kody', password: 'twixrox' }];
 export const db = {
   user: {
     async create({ data }: { data: { username: string; password: string } }) {
@@ -7,7 +7,7 @@ export const db = {
       return user;
     },
     async findUnique({
-      where: { username = undefined, id = undefined },
+      where: { username = undefined, id = undefined }
     }: {
       where: { username?: string; id?: number };
     }) {
@@ -16,6 +16,6 @@ export const db = {
       } else {
         return users.find((user) => user.username === username);
       }
-    },
-  },
+    }
+  }
 };
