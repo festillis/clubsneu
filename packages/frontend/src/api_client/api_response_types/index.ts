@@ -1,3 +1,1 @@
-export interface SomeAuthenticatedRouteResponse {
-  message: string;
-}
+export * from './api_response_types';
