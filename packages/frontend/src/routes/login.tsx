@@ -1,7 +1,11 @@
 import { Show } from 'solid-js';
 import { useParams, useRouteData } from 'solid-start';
 import { FormError } from 'solid-start/data';
-import { createServerAction$, createServerData$, redirect } from 'solid-start/server';
+import {
+  createServerAction$,
+  createServerData$,
+  redirect
+} from 'solid-start/server';
 import { db } from '~/db';
 import { createUserSession, getUser, login, register } from '~/db/session';
 
@@ -72,9 +76,12 @@ export default function Login() {
         }
         const user = await register({ username, password });
         if (!user) {
-          throw new FormError(`Something went wrong trying to create a new user.`, {
-            fields
-          });
+          throw new FormError(
+            `Something went wrong trying to create a new user.`,
+            {
+              fields
+            }
+          );
         }
         return createUserSession(`${user.id}`, redirectTo);
       }
@@ -88,11 +95,16 @@ export default function Login() {
     <main>
       <h1>Login</h1>
       <Form>
-        <input type="hidden" name="redirectTo" value={params.redirectTo ?? '/'} />
+        <input
+          type="hidden"
+          name="redirectTo"
+          value={params.redirectTo ?? '/'}
+        />
         <fieldset>
           <legend>Login or Register?</legend>
           <label>
-            <input type="radio" name="loginType" value="login" checked={true} /> Login
+            <input type="radio" name="loginType" value="login" checked={true} />{' '}
+            Login
           </label>
           <label>
             <input type="radio" name="loginType" value="register" /> Register
