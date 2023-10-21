@@ -16,8 +16,8 @@ RUN pnpm install
 # Copy app source inside the docker image
 COPY . .
 
-# Make port 3000 available outside this container
-EXPOSE 3000
+# Make port available outside this container
+EXPOSE 3001
 
 # Define the command to run the app using CMD (only one CMD allowed)
 CMD ["pnpm", "start"]
