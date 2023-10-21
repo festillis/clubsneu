@@ -2,24 +2,42 @@
   "name": "backend",
   "version": "1.0.0",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
-    "serve": "nodemon dist/index.js",
+    "serve": "node dist/index.js",
+    "create:module": "bash scripts/create_module.sh",
     "docker:build:dev": "docker build -t clubsneu-backend -f Dockerfile.development .",
-    "docker:run:dev": "docker run -p 3000:3000 -d clubsneu-backend"
+    "docker:run:dev": "docker run -p 3000:3000 -d clubsneu-backend",
+    "prisma:gen": "prisma generate",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:pull": "prisma db pull",
+    "prisma:studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "@fastify/jwt": "^5.0.0",
+    "@fastify/swagger": "^8.12.0",
+    "@fastify/swagger-ui": "^1.10.1",
+    "@prisma/client": "^5.4.2",
+    "express": "^4.18.2",
+    "fastify": "^4.24.3",
+    "fastify-plugin": "^4.5.1",
+    "fastify-zod": "^1.4.0",
+    "firebase-admin": "^11.11.0",
+    "prisma": "^5.4.2",
+    "zod": "^3.22.4",
+    "zod-to-json-schema": "^3.21.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.20",
     "@types/node": "^20.8.7",
+    "concurrently": "^8.2.2",
     "http-proxy-middleware": "^2.0.6",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }
 }
