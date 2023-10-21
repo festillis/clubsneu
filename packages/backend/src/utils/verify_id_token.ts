@@ -8,7 +8,10 @@ const verifyIdToken = async (token: string): Promise<string | undefined> => {
     .auth()
     .verifyIdToken(token)
     .then((decodedToken) => decodedToken.uid)
-    .catch((_) => undefined);
+    .catch((e) => {
+      console.error(e);
+      return undefined;
+    });
 };
 
 export default verifyIdToken;

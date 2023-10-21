@@ -2,15 +2,20 @@ import fastify from 'fastify';
 import userRoutes from './modules/user/user.route';
 import admin from 'firebase-admin';
 import swagger from '@fastify/swagger';
+import cors from '@fastify/cors';
 import swaggerUi from '@fastify/swagger-ui';
 import swaggerOptions from './utils/swagger_options';
 import swaggerUiOptions from './utils/swagger_ui_options';
 
+// Start Firebase Admin SDK
 admin.initializeApp();
 
 const server = fastify({ logger: true });
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
 const host = '0.0.0.0';
+
+// Cors
+server.register(cors);
 
 // Test
 server.get('/', (request, reply) => {

@@ -26,11 +26,12 @@ export class APIClient {
    * Authenticated routes
    */
   auth = {
-    someAuthenticatedRoute: (token: string) => {
+    // someAuthenticatedRoute: (token: string) => {
+    someAuthenticatedRoute: () => {
       return this.req<SomeAuthenticatedRouteResponse>({
         method: 'POST',
-        url: '/user/someAuthenticatedRoute',
-        headers: { Authorization: `Bearer ${token}` }
+        url: '/user/someAuthenticatedRoute'
+        // headers: { Authorization: `Bearer ${token}` }
       });
     }
   };
