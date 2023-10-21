@@ -9,7 +9,7 @@ import swaggerUiOptions from './utils/swagger_ui_options';
 admin.initializeApp();
 
 const server = fastify({ logger: true });
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
 const host = '0.0.0.0';
 
 // Test

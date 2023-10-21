@@ -34,8 +34,8 @@ RUN pnpm install --prod
 # Copy built app from the builder stage
 COPY --from=builder /app/dist ./dist
 
-# Make port 3000 available to the world outside this container
-EXPOSE 3000
+# Make port available to the world outside this container
+EXPOSE 3001
 
 # Define the command to run your app using CMD which defines your runtime
 CMD [ "pnpm", "run", "serve" ]

@@ -7,7 +7,7 @@
     "serve": "node dist/index.js",
     "create:module": "bash scripts/create_module.sh",
     "docker:build:dev": "docker build -t clubsneu-backend -f Dockerfile.development .",
-    "docker:run:dev": "docker run -p 3000:3000 -d clubsneu-backend",
+    "docker:run:dev": "docker run -p 3001:3001 -d clubsneu-backend",
     "prisma:gen": "prisma generate",
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:pull": "prisma db pull",
