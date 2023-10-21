@@ -1,0 +1,15 @@
+{
+  "name": "clubsneu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "concurrently \"cd packages/backend && pnpm install\" \"cd packages/frontend && pnpm install\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
