@@ -13,7 +13,7 @@ const Home: Component = () => {
   };
 
   const onRegister = () => {
-    navigate(Routes.login);
+    navigate(Routes.register);
   };
 
   const onLogout = async () => {

@@ -6,6 +6,8 @@ import cors from '@fastify/cors';
 import swaggerUi from '@fastify/swagger-ui';
 import swaggerOptions from './utils/swagger_options';
 import swaggerUiOptions from './utils/swagger_ui_options';
+import { userSchemas } from './modules/user/user.schema';
+import { registerSchemas } from './utils/register_schemas';
 
 // Start Firebase Admin SDK
 admin.initializeApp();
@@ -14,13 +16,8 @@ const server = fastify({ logger: true });
 const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
 const host = '0.0.0.0';
 
-// Cors
+// Register Cors
 server.register(cors);
-
-// Test
-server.get('/', (request, reply) => {
-  reply.send({ status: 'You have reached the root' });
-});
 
 // Register swagger documentation
 server.register(swagger, swaggerOptions);
@@ -28,6 +25,9 @@ server.register(swaggerUi, swaggerUiOptions);
 
 // Register routes
 server.register(userRoutes, { prefix: '/api/user' });
+
+// Register schemas
+registerSchemas(server, userSchemas);
 
 const main = async () => {
   await server.ready();
