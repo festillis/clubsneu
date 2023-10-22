@@ -4,6 +4,8 @@ specifiers:
   '@fastify/cors': ^8.4.0
   '@fastify/swagger': ^8.12.0
   '@fastify/swagger-ui': ^1.10.1
+  '@microsoft/microsoft-graph-client': ^3.0.7
+  '@microsoft/microsoft-graph-types': ^2.38.0
   '@prisma/client': ^5.4.2
   '@types/node': ^20.8.7
   concurrently: ^8.2.2
@@ -22,6 +24,7 @@ dependencies:
   '@fastify/cors': 8.4.0
   '@fastify/swagger': 8.12.0
   '@fastify/swagger-ui': 1.10.1
+  '@microsoft/microsoft-graph-client': 3.0.7
   '@prisma/client': 5.4.2_prisma@5.4.2
   fastify: 4.24.3
   fastify-zod: 1.4.0_fastify@4.24.3
@@ -31,6 +34,7 @@ dependencies:
   zod-to-json-schema: 3.21.4_zod@3.22.4
 
 devDependencies:
+  '@microsoft/microsoft-graph-types': 2.38.0
   '@types/node': 20.8.7
   concurrently: 8.2.2
   nodemon: 3.0.1
@@ -66,7 +70,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
-    dev: true
 
   /@babel/types/7.23.0:
     resolution: {integrity: sha512-0oIyUfKoI3mSqMvsxBdclDwxXKXAUA8v/apZbc+iSyARYou1o8ZGDxbUYyLFoW2arqS2jDGqJuZvv1d/io1axg==}
@@ -339,6 +342,32 @@ packages:
     resolution: {integrity: sha512-Xs/4RZltsAL7pkvaNStUQt7netTkyxrS0K+RILcVr3TRMS/ToOg4I6uNfhB9SlGsnWBym4U+EaXq0f0cEMNkHA==}
     engines: {node: '>=8'}
     dev: false
+
+  /@microsoft/microsoft-graph-client/3.0.7:
+    resolution: {integrity: sha512-/AazAV/F+HK4LIywF9C+NYHcJo038zEnWkteilcxC1FM/uK/4NVGDKGrxx7nNq1ybspAroRKT4I1FHfxQzxkUw==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@azure/identity': '*'
+      '@azure/msal-browser': '*'
+      buffer: '*'
+      stream-browserify: '*'
+    peerDependenciesMeta:
+      '@azure/identity':
+        optional: true
+      '@azure/msal-browser':
+        optional: true
+      buffer:
+        optional: true
+      stream-browserify:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.23.2
+      tslib: 2.6.2
+    dev: false
+
+  /@microsoft/microsoft-graph-types/2.38.0:
+    resolution: {integrity: sha512-EXpTf/TFUb0EfBXiQ0rTmZf6fRgBn73lNfYdU2QKvqiMPQD/Cs2Gt+VmWVtK19F9Mf5Mt4bDTu5Ft0TGXOF8rA==}
+    dev: true
 
   /@prisma/client/5.4.2_prisma@5.4.2:
     resolution: {integrity: sha512-2xsPaz4EaMKj1WS9iW6MlPhmbqtBsXAOeVttSePp8vTFTtvzh2hZbDgswwBdSCgPzmmwF+tLB259QzggvCmJqA==}
@@ -2120,7 +2149,6 @@ packages:
 
   /regenerator-runtime/0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}
-    dev: true
 
   /require-directory/2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
