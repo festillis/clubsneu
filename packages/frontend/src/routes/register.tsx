@@ -1,9 +1,8 @@
 import { Button, Stack, TextField } from '@suid/material';
 import { Component, createSignal } from 'solid-js';
-import { redirect, useNavigate } from 'solid-start';
+import { useNavigate } from 'solid-start';
 import { Routes } from '~/constants/routes';
 import { authStore } from '~/stores';
-import { isAuthenticated } from '~/stores/auth_store';
 
 const Register: Component = () => {
   const navigate = useNavigate();
@@ -12,10 +11,25 @@ const Register: Component = () => {
   const [password, setPassword] = createSignal<string>('');
 
   const onRegister = async () => {
-    const res = await authStore.register(email(), password());
+    const registerResponse = await authStore.register(email(), password());
 
-    if (res.hasError) {
-      alert(`Something went wrong ${res.errorText}`);
+    if (registerResponse.hasError) {
+      console.error(registerResponse.errorText);
+      alert(
+        `Something went wrong with registration ${registerResponse.errorText}`
+      );
+      return;
+    }
+
+    const verificationResponse = await authStore.sendEmailVerification(
+      registerResponse.data.user
+    );
+
+    if (verificationResponse.hasError) {
+      console.error(verificationResponse.errorText);
+      alert(
+        `Something went wrong with verification ${verificationResponse.errorText}`
+      );
       return;
     }
 

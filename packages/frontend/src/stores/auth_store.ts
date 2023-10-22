@@ -1,19 +1,14 @@
 import {
-  ActionCodeSettings,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  sendSignInLinkToEmail,
-  signInWithEmailAndPassword
+  sendEmailVerification as fbSendEmailVerification,
+  signInWithEmailAndPassword,
+  User,
+  UserCredential
 } from 'firebase/auth';
 import { createSignal } from 'solid-js';
-import { LocalStorageKeys } from '~/constants/local_storage_keys';
 import { auth } from '~/firebase';
 import { Safe } from '~/types/safe';
-
-// TODO: Finish action code settings
-const actionCodeSettings: ActionCodeSettings = {
-  url: ''
-};
 
 export const [isAuthenticated, setIsAuthenticated] =
   createSignal<boolean>(false);
@@ -29,12 +24,16 @@ export const [isEmailVerified, setIsEmailVerified] =
 export const register = async (
   email: string,
   password: string
-): Promise<Safe<boolean>> => {
+): Promise<Safe<UserCredential>> => {
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return {
       hasError: false,
-      data: true
+      data: userCredential
     };
   } catch (e) {
     return {
@@ -50,12 +49,16 @@ export const register = async (
 export const login = async (
   email: string,
   password: string
-): Promise<Safe<boolean>> => {
+): Promise<Safe<UserCredential>> => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return {
       hasError: false,
-      data: true
+      data: userCredential
     };
   } catch (e) {
     return {
@@ -76,11 +79,10 @@ export const logout = async () => {
  * Sends an email verification to the user
  */
 export const sendEmailVerification = async (
-  email: string
+  user: User
 ): Promise<Safe<boolean>> => {
   try {
-    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-    localStorage.setItem(LocalStorageKeys.emailForSignIn, email);
+    await fbSendEmailVerification(user);
     return {
       hasError: false,
       data: true
@@ -97,6 +99,8 @@ export const sendEmailVerification = async (
  * Listener for authentication state changes
  */
 onAuthStateChanged(auth, async (user) => {
+  console.log(user);
+
   if (user) {
     console.log('User is signed in');
     setIsAuthenticated(true);
