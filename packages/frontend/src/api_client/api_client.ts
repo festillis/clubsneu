@@ -42,12 +42,14 @@ export class APIClient {
   private async req<T>(config: AxiosRequestConfig): Promise<Safe<T>> {
     try {
       const res = await this.axios.request(config);
+
       return {
         hasError: false,
         data: res.data as T
       };
     } catch (e) {
       console.error(e);
+
       return {
         hasError: true,
         errorText: (e as Error).message
@@ -59,8 +61,6 @@ export class APIClient {
    * For authenticated requests
    */
   private async authReq<T>(config: AxiosRequestConfig): Promise<Safe<T>> {
-    console.log(`Making authReq with token ${token()}`);
-
     return this.req<T>({
       ...config,
       headers: { Authorization: `Bearer ${token()}` }

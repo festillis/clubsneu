@@ -1,19 +1,14 @@
 import {
-  ActionCodeSettings,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  sendSignInLinkToEmail,
-  signInWithEmailAndPassword
+  sendEmailVerification as fbSendEmailVerification,
+  signInWithEmailAndPassword,
+  User,
+  UserCredential
 } from 'firebase/auth';
 import { createSignal } from 'solid-js';
-import { LocalStorageKeys } from '~/constants/local_storage_keys';
 import { auth } from '~/firebase';
 import { Safe } from '~/types/safe';
-
-// TODO: Finish action code settings
-const actionCodeSettings: ActionCodeSettings = {
-  url: ''
-};
 
 export const [isAuthenticated, setIsAuthenticated] =
   createSignal<boolean>(false);
@@ -29,14 +24,24 @@ export const [isEmailVerified, setIsEmailVerified] =
 export const register = async (
   email: string,
   password: string
-): Promise<Safe<boolean>> => {
+): Promise<Safe<UserCredential>> => {
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    console.log(`Registering user with email ${email}`);
+
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    console.log(`Registered user with email ${email}`);
     return {
       hasError: false,
-      data: true
+      data: userCredential
     };
   } catch (e) {
+    console.error(`Error registering user with email ${email}`);
+
     return {
       hasError: true,
       errorText: (e as Error).message
@@ -50,14 +55,25 @@ export const register = async (
 export const login = async (
   email: string,
   password: string
-): Promise<Safe<boolean>> => {
+): Promise<Safe<UserCredential>> => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    console.log(`Logging in user with email ${email}`);
+
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    console.log(`Logged in user with email ${email}`);
+
     return {
       hasError: false,
-      data: true
+      data: userCredential
     };
   } catch (e) {
+    console.error(`Error logging in user with email ${email}`);
+
     return {
       hasError: true,
       errorText: (e as Error).message
@@ -69,6 +85,8 @@ export const login = async (
  * Signs out a user
  */
 export const logout = async () => {
+  console.log('Logging out user');
+
   await auth.signOut();
 };
 
@@ -76,16 +94,22 @@ export const logout = async () => {
  * Sends an email verification to the user
  */
 export const sendEmailVerification = async (
-  email: string
+  user: User
 ): Promise<Safe<boolean>> => {
   try {
-    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-    localStorage.setItem(LocalStorageKeys.emailForSignIn, email);
+    console.log(`Sending email verification to user ${user.email}`);
+
+    await fbSendEmailVerification(user);
+
+    console.log(`Sent email verification to user ${user.email}`);
+
     return {
       hasError: false,
       data: true
     };
   } catch (e) {
+    console.error(`Error sending email verification to user ${user.email}`);
+
     return {
       hasError: true,
       errorText: (e as Error).message

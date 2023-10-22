@@ -41,12 +41,12 @@ const Home: Component = () => {
       </div>
       <Show when={isAuthenticated()}>
         <Button onClick={onLogout}>Logout</Button>
+        <Button onClick={handleGetRandomMessage}>Get random message</Button>
       </Show>
       <Show when={!isAuthenticated()}>
         <Button onClick={onLogin}>Login</Button>
         <Button onClick={onRegister}>Register</Button>
       </Show>
-      <Button onClick={handleGetRandomMessage}>Get random message</Button>
     </main>
   );
 };
