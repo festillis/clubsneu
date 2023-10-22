@@ -7,6 +7,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@microsoft/microsoft-graph-types": "^2.38.0",
     "@types/babel__core": "^7.20.1",
     "@types/node": "^18.17.5",
     "autoprefixer": "^10.4.16",
@@ -19,6 +20,8 @@
     "vite": "^4.5.0"
   },
   "dependencies": {
+    "@azure/identity": "^3.3.2",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
     "@solidjs/meta": "^0.28.6",
     "@solidjs/router": "^0.8.3",
     "@suid/icons-material": "^0.6.11",

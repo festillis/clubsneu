@@ -25,6 +25,8 @@ declare interface EnvVars {
   // Microsoft
   MICROSOFT_CLIENT_ID: string;
   MICROSOFT_TENANT_ID: string;
+  MICROSOFT_CLIENT_SECRET_VALUE: string;
+  MICROSOFT_CLIENT_SECRET_ID: string;
 }
 
 declare namespace NodeJS {
