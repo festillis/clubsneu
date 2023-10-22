@@ -16,6 +16,37 @@ enum Role {
   ADMIN
 }
 
+enum Tag {
+  UNDERGRADUATE
+  KHOURY
+  PROGRAMMING
+  PROFESSIONAL
+  DESIGN
+  PRODUCT_DEVELOPMENT
+  ENTREPRENEURSHIP
+  CONSULTING
+  BUSINESS
+  SERVICE
+  VENTURE_ACCELERATOR
+  STEM
+  SOCIAL
+  MENTORSHIP
+  VENTURE_CAPITAL
+  STARTUPS
+  PAAC
+}
+
+enum JoinStatus {
+  ACCEPTING_MEMBERS
+  NOT_ACCEPTING_MEMBERS
+}
+
+enum MembershipProcess {
+  OPEN
+  AUDITION
+  APPLICATION
+}
+
 model User {
   id        String   @id @unique
   email     String   @unique
@@ -24,4 +55,26 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   role      Role     @default(USER)
+
+  club   Club?   @relation(fields: [clubId], references: [id])
+  clubId String?
+
+  @@index([clubId])
+}
+
+model Club {
+  id           String     @id @unique
+  name         String
+  desc         String
+  email        String     @unique
+  website      String?
+  logoUrl      String?
+  coverUrl     String?
+  linkedinUrl  String?
+  instagramUrl String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  joinStatus   JoinStatus
+
+  members User[]
 }
