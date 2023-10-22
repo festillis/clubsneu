@@ -26,16 +26,22 @@ export const register = async (
   password: string
 ): Promise<Safe<UserCredential>> => {
   try {
+    console.log(`Registering user with email ${email}`);
+
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
+
+    console.log(`Registered user with email ${email}`);
     return {
       hasError: false,
       data: userCredential
     };
   } catch (e) {
+    console.error(`Error registering user with email ${email}`);
+
     return {
       hasError: true,
       errorText: (e as Error).message
@@ -51,16 +57,23 @@ export const login = async (
   password: string
 ): Promise<Safe<UserCredential>> => {
   try {
+    console.log(`Logging in user with email ${email}`);
+
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
       password
     );
+
+    console.log(`Logged in user with email ${email}`);
+
     return {
       hasError: false,
       data: userCredential
     };
   } catch (e) {
+    console.error(`Error logging in user with email ${email}`);
+
     return {
       hasError: true,
       errorText: (e as Error).message
@@ -72,6 +85,8 @@ export const login = async (
  * Signs out a user
  */
 export const logout = async () => {
+  console.log('Logging out user');
+
   await auth.signOut();
 };
 
@@ -82,12 +97,19 @@ export const sendEmailVerification = async (
   user: User
 ): Promise<Safe<boolean>> => {
   try {
+    console.log(`Sending email verification to user ${user.email}`);
+
     await fbSendEmailVerification(user);
+
+    console.log(`Sent email verification to user ${user.email}`);
+
     return {
       hasError: false,
       data: true
     };
   } catch (e) {
+    console.error(`Error sending email verification to user ${user.email}`);
+
     return {
       hasError: true,
       errorText: (e as Error).message
@@ -99,8 +121,6 @@ export const sendEmailVerification = async (
  * Listener for authentication state changes
  */
 onAuthStateChanged(auth, async (user) => {
-  console.log(user);
-
   if (user) {
     console.log('User is signed in');
     setIsAuthenticated(true);
