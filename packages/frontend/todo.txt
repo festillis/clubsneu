@@ -1,0 +1,1 @@
+"install": "cd node_modules/@azure/msal-browser && npm install && npm run build:all",

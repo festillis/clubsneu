@@ -1,42 +1,27 @@
-import {
-  ClientSecretCredential,
-  DeviceCodeCredential,
-  DeviceCodeInfo,
-  DeviceCodePromptCallback
-} from '@azure/identity';
 import { Client } from '@microsoft/microsoft-graph-client';
-import { TokenCredentialAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials';
 import { AppSettings } from './app_settings';
+import { User } from '@microsoft/microsoft-graph-types';
+import { ClubsNEUAuthenticationProvider } from './authenication_provider';
 
-// Create an instance of the TokenCredential class that is imported
-const credential = new ClientSecretCredential(
-  process.env.MICROSOFT_TENANT_ID,
-  process.env.MICROSOFT_CLIENT_ID,
-  process.env.MICROSOFT_CLIENT_SECRET_VALUE
-);
+let client: Client | undefined;
 
-// Set your scopes and options for TokenCredential.getToken (Check the ` interface GetTokenOptions` in (TokenCredential Implementation)[https://github.com/Azure/azure-sdk-for-js/blob/master/sdk/core/core-auth/src/tokenCredential.ts])
+export const initializeClient = async (settings: AppSettings) => {
+  if (!client) {
+    client = Client.initWithMiddleware({
+      authProvider: new ClubsNEUAuthenticationProvider(settings)
+    });
+  }
+};
 
-export const initializeGraphForUserAuth = async (
-  settings: AppSettings,
-  deviceCodePrompt: DeviceCodePromptCallback
-) => {
-  const deviceCodeCredential = new DeviceCodeCredential({
-    clientId: settings.clientId,
-    tenantId: settings.authTenant,
-    userPromptCallback: (info: DeviceCodeInfo) => {
-      console.log(info.message);
-    }
-  });
-  const authProvider = new TokenCredentialAuthenticationProvider(
-    deviceCodeCredential,
-    {
-      scopes: settings.graphUserScopes
-    }
+export const getUserAsync = async (): Promise<User> => {
+  if (!client) {
+    throw new Error('Graph has not been initialized for user auth');
+  }
+
+  return (
+    client
+      .api('/me/events')
+      // .select(['displayName', 'mail', 'userPrincipalName'])
+      .get()
   );
-  const client = Client.initWithMiddleware({
-    debugLogging: true,
-    authProvider
-  });
-  return client;
 };
