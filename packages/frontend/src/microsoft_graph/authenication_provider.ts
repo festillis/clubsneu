@@ -3,7 +3,7 @@ import { AuthenticationProvider } from '@microsoft/microsoft-graph-client';
 import { AppSettings, settings } from './app_settings';
 
 export class ClubsNEUAuthenticationProvider implements AuthenticationProvider {
-  private settings: AppSettings;
+  private readonly settings: AppSettings;
 
   constructor(settings: AppSettings) {
     this.settings = settings;
@@ -12,15 +12,15 @@ export class ClubsNEUAuthenticationProvider implements AuthenticationProvider {
   public async getAccessToken(): Promise<string> {
     const msalInstance = new PublicClientApplication({
       auth: {
-        clientId: settings.clientId
+        clientId: this.settings.clientId
       }
     });
 
     await msalInstance.initialize();
 
     const authResult = await msalInstance.loginPopup({
-      scopes: settings.graphUserScopes,
-      redirectUri: settings.redirectUri
+      scopes: this.settings.graphUserScopes,
+      redirectUri: this.settings.redirectUri
     });
 
     if (!authResult.account) {
