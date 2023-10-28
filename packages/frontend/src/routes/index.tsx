@@ -1,23 +1,20 @@
-import { Button } from '@suid/material';
-import { Component, Show } from 'solid-js';
+import { Component } from 'solid-js';
 import { useNavigate } from 'solid-start';
-import { Routes } from '~/constants/routes';
-import { authStore, userStore } from '~/stores';
-import { isAuthenticated } from '~/stores/auth_store';
+import { userStore } from '~/stores';
 
 const Home: Component = () => {
   const navigate = useNavigate();
 
-  const onLogin = () => {
-    navigate(Routes.login);
+  const onLogin = async () => {
+    // navigate(Routes.login);
   };
 
   const onRegister = () => {
-    navigate(Routes.register);
+    // navigate(Routes.register);
   };
 
   const onLogout = async () => {
-    await authStore.logout();
+    // await authStore.logout();
   };
 
   const handleGetRandomMessage = async () => {
@@ -34,7 +31,7 @@ const Home: Component = () => {
   return (
     <main class="w-full p-4 space-y-2">
       <div>Hello</div>
-      <div>
+      {/* <div>
         {isAuthenticated()
           ? 'You are authenticated'
           : 'You are not authenticated'}
@@ -46,7 +43,7 @@ const Home: Component = () => {
       <Show when={!isAuthenticated()}>
         <Button onClick={onLogin}>Login</Button>
         <Button onClick={onRegister}>Register</Button>
-      </Show>
+      </Show> */}
     </main>
   );
 };

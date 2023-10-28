@@ -4,7 +4,9 @@ import { Safe } from '~/types/safe';
 import { token } from '~/stores/auth_store';
 
 export class APIClient {
-  private readonly baseURL: string = 'http://localhost:3001/api';
+  private readonly baseURL: string = `${
+    import.meta.env.VITE_API_CLIENT_BASE_URL
+  }/api`;
 
   private static instance: APIClient;
   private axios: AxiosInstance;

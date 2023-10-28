@@ -120,16 +120,16 @@ export const sendEmailVerification = async (
 /**
  * Listener for authentication state changes
  */
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    console.log('User is signed in');
-    setIsAuthenticated(true);
-    setToken(await user.getIdToken());
-    setIsEmailVerified(user.emailVerified);
-  } else {
-    console.log('User is signed out');
-    setIsAuthenticated(false);
-    setToken(null);
-    setIsEmailVerified(false);
-  }
-});
+// onAuthStateChanged(auth, async (user) => {
+//   if (user) {
+//     console.log('User is signed in');
+//     setIsAuthenticated(true);
+//     setToken(await user.getIdToken());
+//     setIsEmailVerified(user.emailVerified);
+//   } else {
+//     console.log('User is signed out');
+//     setIsAuthenticated(false);
+//     setToken(null);
+//     setIsEmailVerified(false);
+//   }
+// });
