@@ -1,49 +1,38 @@
-import { Component } from 'solid-js';
-import { useNavigate } from 'solid-start';
-import { userStore } from '~/stores';
+import { Button, Stack, Typography } from '@suid/material';
+import { Component, Show } from 'solid-js';
+import { authStore } from '~/stores';
 
 const Home: Component = () => {
-  const navigate = useNavigate();
-
-  const onLogin = async () => {
-    // navigate(Routes.login);
+  const onSignInWithMicrosoft = async () => {
+    await authStore.signInWithMicrosoft();
   };
 
-  const onRegister = () => {
-    // navigate(Routes.register);
+  const onSignInWithGoogle = async () => {
+    await authStore.signInWithGoogle();
   };
 
   const onLogout = async () => {
-    // await authStore.logout();
+    await authStore.signOut();
   };
 
-  const handleGetRandomMessage = async () => {
-    const res = await userStore.getRandomMessage();
-
-    if (res.hasError) {
-      alert(`Something went wrong ${res.errorText}`);
-      return;
-    }
-
-    alert(res.data.message);
-  };
+  const onTest = async () => {};
 
   return (
     <main class="w-full p-4 space-y-2">
-      <div>Hello</div>
-      {/* <div>
-        {isAuthenticated()
-          ? 'You are authenticated'
-          : 'You are not authenticated'}
-      </div>
-      <Show when={isAuthenticated()}>
-        <Button onClick={onLogout}>Logout</Button>
-        <Button onClick={handleGetRandomMessage}>Get random message</Button>
-      </Show>
-      <Show when={!isAuthenticated()}>
-        <Button onClick={onLogin}>Login</Button>
-        <Button onClick={onRegister}>Register</Button>
-      </Show> */}
+      <Stack spacing={2}>
+        <Show when={authStore.isAuthenticated()}>
+          <Typography>You are authenticated</Typography>
+          <Button onClick={onLogout}>Logout</Button>
+          <Button onClick={onTest}>Test</Button>
+        </Show>
+        <Show when={!authStore.isAuthenticated()}>
+          <Typography>You are not authenticated</Typography>
+          <Button onClick={onSignInWithMicrosoft}>
+            Sign in with Microsoft
+          </Button>
+          <Button onClick={onSignInWithGoogle}>Sign in with Google</Button>
+        </Show>
+      </Stack>
     </main>
   );
 };

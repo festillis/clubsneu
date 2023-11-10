@@ -1,135 +1,50 @@
-import {
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  sendEmailVerification as fbSendEmailVerification,
-  signInWithEmailAndPassword,
-  User,
-  UserCredential
-} from 'firebase/auth';
+import { User as fbUser, onAuthStateChanged } from 'firebase/auth';
 import { createSignal } from 'solid-js';
 import { auth } from '~/firebase';
-import { Safe } from '~/types/safe';
+import { authService } from '~/services';
 
 export const [isAuthenticated, setIsAuthenticated] =
   createSignal<boolean>(false);
 
-export const [token, setToken] = createSignal<string | null>(null);
+export const signInWithMicrosoft = async () => {
+  return await authService.signInWithMicrosoft();
+};
 
-export const [isEmailVerified, setIsEmailVerified] =
-  createSignal<boolean>(false);
+export const signInWithGoogle = async () => {
+  return await authService.signInWithGoogle();
+};
 
-/**
- * Registers a user with email and password
- */
-export const register = async (
+export const createUserWithEmailAndPassword = async (
   email: string,
   password: string
-): Promise<Safe<UserCredential>> => {
-  try {
-    console.log(`Registering user with email ${email}`);
-
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    console.log(`Registered user with email ${email}`);
-    return {
-      hasError: false,
-      data: userCredential
-    };
-  } catch (e) {
-    console.error(`Error registering user with email ${email}`);
-
-    return {
-      hasError: true,
-      errorText: (e as Error).message
-    };
-  }
+) => {
+  return await authService.createUserWithEmailAndPassword(email, password);
 };
 
-/**
- * Signs in a user with email and password
- */
-export const login = async (
+export const signInWithEmailAndPassword = async (
   email: string,
   password: string
-): Promise<Safe<UserCredential>> => {
-  try {
-    console.log(`Logging in user with email ${email}`);
-
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-    console.log(`Logged in user with email ${email}`);
-
-    return {
-      hasError: false,
-      data: userCredential
-    };
-  } catch (e) {
-    console.error(`Error logging in user with email ${email}`);
-
-    return {
-      hasError: true,
-      errorText: (e as Error).message
-    };
-  }
+) => {
+  return await authService.signInWithEmailAndPassword(email, password);
 };
 
-/**
- * Signs out a user
- */
-export const logout = async () => {
-  console.log('Logging out user');
-
-  await auth.signOut();
+export const signOut = async () => {
+  await authService.signOut();
 };
 
-/**
- * Sends an email verification to the user
- */
-export const sendEmailVerification = async (
-  user: User
-): Promise<Safe<boolean>> => {
-  try {
-    console.log(`Sending email verification to user ${user.email}`);
-
-    await fbSendEmailVerification(user);
-
-    console.log(`Sent email verification to user ${user.email}`);
-
-    return {
-      hasError: false,
-      data: true
-    };
-  } catch (e) {
-    console.error(`Error sending email verification to user ${user.email}`);
-
-    return {
-      hasError: true,
-      errorText: (e as Error).message
-    };
-  }
+export const sendEmailVerification = async (user: fbUser) => {
+  return await authService.sendEmailVerification(user);
 };
 
 /**
  * Listener for authentication state changes
  */
-// onAuthStateChanged(auth, async (user) => {
-//   if (user) {
-//     console.log('User is signed in');
-//     setIsAuthenticated(true);
-//     setToken(await user.getIdToken());
-//     setIsEmailVerified(user.emailVerified);
-//   } else {
-//     console.log('User is signed out');
-//     setIsAuthenticated(false);
-//     setToken(null);
-//     setIsEmailVerified(false);
-//   }
-// });
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    console.log('User is signed in');
+    setIsAuthenticated(true);
+  } else {
+    console.log('User is signed out');
+    setIsAuthenticated(false);
+  }
+});

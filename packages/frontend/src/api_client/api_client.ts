@@ -1,12 +1,10 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { SomeAuthenticatedRouteResponse } from './api_response_types';
 import { Safe } from '~/types/safe';
-import { token } from '~/stores/auth_store';
+import { envVars } from '~/env';
 
 export class APIClient {
-  private readonly baseURL: string = `${
-    import.meta.env.VITE_API_CLIENT_BASE_URL
-  }/api`;
+  private readonly baseURL: string = `${envVars.API_CLIENT_BASE_URL}/api`;
 
   private static instance: APIClient;
   private axios: AxiosInstance;
@@ -30,11 +28,14 @@ export class APIClient {
    * Authenticated routes
    */
   auth = {
-    someAuthenticatedRoute: () => {
-      return this.authReq<SomeAuthenticatedRouteResponse>({
-        method: 'POST',
-        url: '/user/someAuthenticatedRoute'
-      });
+    someAuthenticatedRoute: (token: string) => {
+      return this.authReq<SomeAuthenticatedRouteResponse>(
+        {
+          method: 'POST',
+          url: '/user/someAuthenticatedRoute'
+        },
+        token
+      );
     }
   };
 
@@ -62,10 +63,13 @@ export class APIClient {
   /**
    * For authenticated requests
    */
-  private async authReq<T>(config: AxiosRequestConfig): Promise<Safe<T>> {
+  private async authReq<T>(
+    config: AxiosRequestConfig,
+    token: string
+  ): Promise<Safe<T>> {
     return this.req<T>({
       ...config,
-      headers: { Authorization: `Bearer ${token()}` }
+      headers: { Authorization: `Bearer ${token}` }
     });
   }
 }
