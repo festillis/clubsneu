@@ -1,6 +1,9 @@
-import { PublicClientApplication } from '@azure/msal-browser';
+import {
+  PublicClientApplication,
+  BrowserCacheLocation
+} from '@azure/msal-browser';
 import { AuthenticationProvider } from '@microsoft/microsoft-graph-client';
-import { AppSettings, settings } from './app_settings';
+import { AppSettings } from './app_settings';
 
 export class ClubsNEUAuthenticationProvider implements AuthenticationProvider {
   private readonly settings: AppSettings;
@@ -13,6 +16,9 @@ export class ClubsNEUAuthenticationProvider implements AuthenticationProvider {
     const msalInstance = new PublicClientApplication({
       auth: {
         clientId: this.settings.clientId
+      },
+      cache: {
+        cacheLocation: BrowserCacheLocation.SessionStorage
       }
     });
 

@@ -1,51 +1,54 @@
-import { Component } from 'solid-js';
+import { Button, Stack } from '@suid/material';
+import { Show, Component, createSignal } from 'solid-js';
 import { useNavigate } from 'solid-start';
-import { userStore } from '~/stores';
+import { Routes } from '~/constants/routes';
+import { authStore, microsoftAuthStore } from '~/stores';
 
-const Home: Component = () => {
-  const navigate = useNavigate();
-
+const Login: Component = () => {
   const onLogin = async () => {
-    // navigate(Routes.login);
+    microsoftAuthStore.initializeClient();
+    // await microsoftAuthStore.greetUser();
+
+    // const res = await authStore.login(email(), password());
+    // if (res.hasError) {
+    //   alert(`Something went wrong ${res.errorText}`);
+    //   return;
+    // }
+    // navigate(Routes.home);
   };
 
-  const onRegister = () => {
-    // navigate(Routes.register);
-  };
-
-  const onLogout = async () => {
-    // await authStore.logout();
-  };
-
-  const handleGetRandomMessage = async () => {
-    const res = await userStore.getRandomMessage();
-
-    if (res.hasError) {
-      alert(`Something went wrong ${res.errorText}`);
-      return;
-    }
-
-    alert(res.data.message);
+  const logUser = async () => {
+    const calendars = await microsoftAuthStore.getCalendars();
+    console.log(calendars);
   };
 
   return (
-    <main class="w-full p-4 space-y-2">
-      <div>Hello</div>
-      {/* <div>
-        {isAuthenticated()
-          ? 'You are authenticated'
-          : 'You are not authenticated'}
-      </div>
-      <Show when={isAuthenticated()}>
-        <Button onClick={onLogout}>Logout</Button>
-        <Button onClick={handleGetRandomMessage}>Get random message</Button>
+    // <Stack>
+    //   <TextField
+    //     placeholder="Northeastern Email"
+    //     value={email()}
+    //     onChange={(_, value) => setEmail(value)}
+    //   />
+    //   <TextField
+    //     placeholder="Password"
+    //     value={password()}
+    //     onChange={(_, value) => setPassword(value)}
+    //   />
+    //   <Button onClick={onLogin}>Login</Button>
+    // </Stack>
+    <Stack direction="column" spacing={5}>
+      <Show when={!microsoftAuthStore.authUser()}>
+        <Button onClick={onLogin} variant="contained">
+          Login
+        </Button>
       </Show>
-      <Show when={!isAuthenticated()}>
-        <Button onClick={onLogin}>Login</Button>
-        <Button onClick={onRegister}>Register</Button>
-      </Show> */}
-    </main>
+      <Show when={microsoftAuthStore.authUser()}>
+        <Button onClick={logUser} variant="contained">
+          Log User
+        </Button>
+      </Show>
+    </Stack>
   );
 };
 
-export default Home;
+export default Login;

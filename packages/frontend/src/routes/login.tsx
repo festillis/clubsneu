@@ -1,43 +1,51 @@
-import { Stack, TextField, Button } from '@suid/material';
-import { Component, createSignal } from 'solid-js';
+import { Component } from 'solid-js';
 import { useNavigate } from 'solid-start';
-import { Routes } from '~/constants/routes';
-import { authStore, microsoftAuthStore } from '~/stores';
+import { userStore } from '~/stores';
 
-const Login: Component = () => {
+const Home: Component = () => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = createSignal<string>('');
-  const [password, setPassword] = createSignal<string>('');
-
   const onLogin = async () => {
-    await microsoftAuthStore.initializeClient();
-    await microsoftAuthStore.greetUser();
+    // navigate(Routes.login);
+  };
 
-    // const res = await authStore.login(email(), password());
-    // if (res.hasError) {
-    //   alert(`Something went wrong ${res.errorText}`);
-    //   return;
-    // }
-    // navigate(Routes.home);
+  const onRegister = () => {
+    // navigate(Routes.register);
+  };
+
+  const onLogout = async () => {
+    // await authStore.logout();
+  };
+
+  const handleGetRandomMessage = async () => {
+    const res = await userStore.getRandomMessage();
+
+    if (res.hasError) {
+      alert(`Something went wrong ${res.errorText}`);
+      return;
+    }
+
+    alert(res.data.message);
   };
 
   return (
-    // <Stack>
-    //   <TextField
-    //     placeholder="Northeastern Email"
-    //     value={email()}
-    //     onChange={(_, value) => setEmail(value)}
-    //   />
-    //   <TextField
-    //     placeholder="Password"
-    //     value={password()}
-    //     onChange={(_, value) => setPassword(value)}
-    //   />
-    //   <Button onClick={onLogin}>Login</Button>
-    // </Stack>
-    <Button onClick={onLogin}>Login</Button>
+    <main class="w-full p-4 space-y-2">
+      <div>Hello</div>
+      {/* <div>
+        {isAuthenticated()
+          ? 'You are authenticated'
+          : 'You are not authenticated'}
+      </div>
+      <Show when={isAuthenticated()}>
+        <Button onClick={onLogout}>Logout</Button>
+        <Button onClick={handleGetRandomMessage}>Get random message</Button>
+      </Show>
+      <Show when={!isAuthenticated()}>
+        <Button onClick={onLogin}>Login</Button>
+        <Button onClick={onRegister}>Register</Button>
+      </Show> */}
+    </main>
   );
 };
 
-export default Login;
+export default Home;
