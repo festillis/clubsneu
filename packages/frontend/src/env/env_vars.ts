@@ -14,6 +14,13 @@ export const FIREBASE_APP_ID = import.meta.env.VITE_FIREBASE_APP_ID;
 export const FIREBASE_MEASUREMENT_ID = import.meta.env
   .VITE_FIREBASE_MEASUREMENT_ID;
 
+// Google Cloud
+export const GOOGLE_CLOUD_API_KEY = import.meta.env.VITE_GOOGLE_CLOUD_API_KEY;
+export const GOOGLE_OAUTH_CLIENT_ID = import.meta.env
+  .VITE_GOOGLE_OAUTH_CLIENT_ID;
+export const GOOGLE_SERVICE_ACCOUNT_ACCESS_TOKEN = import.meta.env
+  .VITE_GOOGLE_SERVICE_ACCOUNT_ACCESS_TOKEN;
+
 // Microsoft
 export const MICROSOFT_CLIENT_ID = import.meta.env.VITE_MICROSOFT_CLIENT_ID;
 export const MICROSOFT_CLIENT_SECRET_VALUE = import.meta.env

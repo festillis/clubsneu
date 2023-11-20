@@ -1,6 +1,8 @@
 import { Button, Stack, Typography } from '@suid/material';
 import { Component, Show } from 'solid-js';
-import { authStore } from '~/stores';
+import { APIErrors as APIErrors } from '~/api_client/types';
+import { SessionStorageKeys } from '~/constants/session_storage_keys';
+import { authStore, calendarStore } from '~/stores';
 
 const Home: Component = () => {
   const onSignInWithMicrosoft = async () => {
@@ -15,7 +17,41 @@ const Home: Component = () => {
     await authStore.signOut();
   };
 
-  const onTest = async () => {};
+  const onTestCalendarEvents = async () => {
+    const calendarId =
+      'aab8e2278c912e76e6e7e7f2836021a9a838b75d39ceea69eee8ad9ee675c170@group.calendar.google.com';
+    const calendarId2 =
+      'bc135269716e14780496789fcecc60b8bc8516bcf104c18238dc28090e8a0382@group.calendar.google.com';
+    const calendar = await calendarStore.getCalendar(calendarId2);
+
+    if (calendar.hasError) {
+      console.error(calendar.errorText);
+      return;
+    }
+
+    const events = calendar.data.items;
+    console.log(events);
+  };
+
+  const onTestCalendarList = async () => {
+    console.log('before', localStorage);
+
+    const result = await calendarStore.getCalendarList();
+    console.log('result', result);
+
+    if (result.hasError) {
+      if (result.errorText === APIErrors.token_not_found) {
+        console.log('reauthenticating...');
+        await authStore.reauthenticate();
+        console.log('after', localStorage);
+      }
+      console.log(result);
+      return;
+    }
+
+    const calendars = result.data;
+    console.log(calendars);
+  };
 
   return (
     <main class="w-full p-4 space-y-2">
@@ -23,7 +59,7 @@ const Home: Component = () => {
         <Show when={authStore.isAuthenticated()}>
           <Typography>You are authenticated</Typography>
           <Button onClick={onLogout}>Logout</Button>
-          <Button onClick={onTest}>Test</Button>
+          <Button onClick={onTestCalendarList}>Test</Button>
         </Show>
         <Show when={!authStore.isAuthenticated()}>
           <Typography>You are not authenticated</Typography>

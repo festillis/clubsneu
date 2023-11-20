@@ -16,6 +16,11 @@ declare interface ImportMetaEnv {
   readonly VITE_FIREBASE_APP_ID: string;
   readonly VITE_FIREBASE_MEASUREMENT_ID: string;
 
+  // GOOGLE CLOUD
+  readonly VITE_GOOGLE_CLOUD_API_KEY: string;
+  readonly VITE_GOOGLE_OAUTH_CLIENT_ID: string;
+  readonly VITE_GOOGLE_SERVICE_ACCOUNT_ACCESS_TOKEN: string;
+
   // MICROSOFT
   readonly VITE_MICROSOFT_CLIENT_ID: string;
   readonly VITE_MICROSOFT_CLIENT_SECRET_VALUE: string;
