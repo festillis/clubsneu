@@ -15,5 +15,6 @@
     "types": ["vite/client"],
     "noEmit": true,
     "isolatedModules": true
-  }
+  },
+  "exclude": ["node_modules"]
 }
