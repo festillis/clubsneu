@@ -1,3 +1,5 @@
+import { envVars } from '~/env';
+
 export interface AppSettings {
   clientId: string;
   clientSecret: string;
@@ -8,9 +10,9 @@ export interface AppSettings {
 }
 
 export const settings: AppSettings = {
-  clientId: import.meta.env.VITE_MICROSOFT_CLIENT_ID,
-  clientSecret: import.meta.env.VITE_MICROSOFT_CLIENT_SECRET_VALUE,
-  tenantId: import.meta.env.VITE_MICROSOFT_TENANT_ID,
+  clientId: envVars.MICROSOFT_CLIENT_ID,
+  clientSecret: envVars.MICROSOFT_CLIENT_SECRET_VALUE,
+  tenantId: envVars.MICROSOFT_TENANT_ID,
   authTenant: 'common',
   graphUserScopes: [
     'offline_access',
@@ -18,5 +20,5 @@ export const settings: AppSettings = {
     'Mail.Read',
     'Calendars.Read'
   ],
-  redirectUri: import.meta.env.VITE_BASE_URL
+  redirectUri: envVars.BASE_URL
 };

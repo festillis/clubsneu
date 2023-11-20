@@ -1,49 +1,79 @@
-import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { SomeAuthenticatedRouteResponse } from './api_response_types';
+import Axios, { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 import { Safe } from '~/types/safe';
-import { token } from '~/stores/auth_store';
+import { APIErrors } from './types';
+
+type Config = Omit<AxiosRequestConfig, 'method' | 'url'>;
 
 export class APIClient {
-  private readonly baseURL: string = `${
-    import.meta.env.VITE_API_CLIENT_BASE_URL
-  }/api`;
+  private readonly axios: AxiosInstance;
+  private readonly accessToken?: string;
+  private readonly getAccessToken:
+    | (() => Promise<string | undefined | null>)
+    | (() => string | undefined | null);
 
-  private static instance: APIClient;
-  private axios: AxiosInstance;
-
-  private constructor() {
+  constructor(
+    baseURL: string,
+    getAccessToken:
+      | (() => Promise<string | undefined | null>)
+      | (() => string | undefined | null),
+    accessToken?: string
+  ) {
     this.axios = Axios.create({
-      baseURL: this.baseURL,
-      headers: { 'content-type': 'application/json' }
+      baseURL,
+      headers: {
+        'content-type': 'application/json'
+      }
     });
-  }
-
-  public static getInstance(): APIClient {
-    if (!APIClient.instance) {
-      APIClient.instance = new APIClient();
-    }
-
-    return APIClient.instance;
+    this.accessToken = accessToken;
+    this.getAccessToken = getAccessToken;
   }
 
   /**
-   * Authenticated routes
+   * For authenticated requests
    */
-  auth = {
-    someAuthenticatedRoute: () => {
-      return this.authReq<SomeAuthenticatedRouteResponse>({
-        method: 'POST',
-        url: '/user/someAuthenticatedRoute'
-      });
+  public async authReq<T>(
+    method: Method,
+    url: string,
+    config?: Config
+  ): Promise<Safe<T>> {
+    // if (!this.accessToken) {
+    //   console.error('No access token found');
+    //   return {
+    //     hasError: true,
+    //     errorText: APIErrors.token_not_found
+    //   };
+    // }
+
+    const token = await this.getAccessToken();
+
+    if (!token) {
+      console.error('No token found');
+      return {
+        hasError: true,
+        errorText: APIErrors.token_not_found
+      };
     }
-  };
+
+    return this.req<T>(method, url, {
+      ...config,
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
 
   /**
    * For unauthenticated requests
    */
-  private async req<T>(config: AxiosRequestConfig): Promise<Safe<T>> {
+  public async req<T>(
+    method: Method,
+    url: string,
+    config?: Config
+  ): Promise<Safe<T>> {
     try {
-      const res = await this.axios.request(config);
+      const res = await this.axios.request({
+        method,
+        url,
+        ...config
+      });
 
       return {
         hasError: false,
@@ -57,15 +87,5 @@ export class APIClient {
         errorText: (e as Error).message
       };
     }
-  }
-
-  /**
-   * For authenticated requests
-   */
-  private async authReq<T>(config: AxiosRequestConfig): Promise<Safe<T>> {
-    return this.req<T>({
-      ...config,
-      headers: { Authorization: `Bearer ${token()}` }
-    });
   }
 }
