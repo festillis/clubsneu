@@ -5,10 +5,7 @@ import {
 
 export interface AuthenticatedInfo {
   user: fbUser;
-  credentials: fbOAuthCredential;
+  accessToken: string;
 }
 
-export enum AuthProviders {
-  microsoft = 'microsoft.com',
-  google = 'google.com'
-}
+export type AuthProvider = 'microsoft.com' | 'google.com';
