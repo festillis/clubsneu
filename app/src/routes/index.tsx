@@ -45,12 +45,18 @@ const Home: Component = () => {
     console.log(events);
   };
 
+  const onLogAccesstoken = async () => {
+    const accessToken = authStore.accessToken;
+    console.log(accessToken);
+  };
+
   return (
     <main class="w-full p-4 space-y-2">
       <Stack spacing={2}>
         <Show when={authStore.isAuthenticated()}>
           <Typography>You are authenticated</Typography>
           <Button onClick={onLogout}>Logout</Button>
+          <Button onClick={onLogAccesstoken}>Log Access Token</Button>
           <Button onClick={onTestShowACalendarEvent}>Log An Event</Button>
           <Button onClick={onTestShowUserCalendars}>Log User Calendars</Button>
         </Show>

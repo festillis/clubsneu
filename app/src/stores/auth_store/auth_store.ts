@@ -51,7 +51,12 @@ export const startMonitoringAccessTokenSession = (
   userId: string,
   accessTokenExpiry: Date
 ) => {
-  const accessTokenExpiryMs = accessTokenExpiry.getTime();
+  console.log(
+    'Starting monitoring access token session',
+    userId,
+    accessTokenExpiry
+  );
+  const accessTokenExpiryMs = new Date(accessTokenExpiry).getTime();
   const nowMs = new Date().getTime();
   const timeUntilExpiryMs = accessTokenExpiryMs - nowMs;
 
