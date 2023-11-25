@@ -1,7 +1,4 @@
-import { get } from 'http';
 import { APIEvent, json } from 'solid-start';
-import { ApiClient } from '~/api_client';
-import { envVars } from '~/env';
 import {
   getAccessTokenExpiryDate,
   getNewGoogleCredentialsWithRefreshToken
