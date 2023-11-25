@@ -1,15 +1,14 @@
 import { Component, onMount } from 'solid-js';
 import { useSearchParams } from '@solidjs/router';
-import { signInWithCustomToken } from 'firebase/auth';
-import { clientAuth } from '~/firebase';
 import { useNavigate } from '@solidjs/router';
+import { login } from '~/services/auth_service';
 
 const Login: Component = () => {
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const navigate = useNavigate();
 
   onMount(async () => {
-    console.log({ ...params });
+    console.log('params', { ...params });
 
     const customSignInToken = params['custom_token'];
     if (!customSignInToken) {
@@ -17,7 +16,9 @@ const Login: Component = () => {
       return;
     }
 
-    await signInWithCustomToken(clientAuth, customSignInToken);
+    await login(customSignInToken);
+
+    // Navigate to home page after logging in
     navigate('/');
   });
 

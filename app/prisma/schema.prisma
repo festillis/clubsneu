@@ -23,6 +23,7 @@ model User {
   refreshToken      String
   accessToken       String
   accessTokenExpiry DateTime
+  provider          String
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

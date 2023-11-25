@@ -34,7 +34,6 @@
     "axios": "^1.5.1",
     "firebase": "^10.5.0",
     "firebase-admin": "^11.11.0",
-    "googleapis": "^128.0.0",
     "solid-js": "^1.8.5",
     "solid-start": "^0.3.7",
     "vite-plugin-solid": "^2.7.2"

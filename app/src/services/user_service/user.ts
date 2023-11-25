@@ -1,17 +1,24 @@
 import { prisma } from '~/prisma';
 import { Prisma } from '@prisma/client';
-import { envVars } from '~/env';
-import { ApiClient } from '~/api_client';
 
-export const userExists = async (id: string, accessToken: string) => {};
+// Must run server-side
+export const userExists = async (id: string) => {
+  const user = await prisma.user.findUnique({
+    where: { id }
+  });
 
-export const findUserById = async (id: string) => {
+  return !!user;
+};
+
+// Must run server-side
+export const getUserById = async (id: string) => {
   const user = await prisma.user.findUnique({
     where: { id }
   });
   return user;
 };
 
+// Must run server-side
 export const createUser = async (input: Prisma.UserCreateInput) => {
   const user = await prisma.user.create({
     data: input
@@ -19,6 +26,7 @@ export const createUser = async (input: Prisma.UserCreateInput) => {
   return user;
 };
 
+// Must run server-side
 export const updateUser = async (id: string, input: Prisma.UserUpdateInput) => {
   const user = await prisma.user.update({
     where: { id },

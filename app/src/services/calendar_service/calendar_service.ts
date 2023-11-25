@@ -1,15 +1,8 @@
 import { ApiClient } from '~/api_client';
 import { CalendarEvents } from './types';
 import { envVars } from '~/env';
-import { SessionStorageKeys } from '~/constants/session_storage_keys';
 
-const CALENDAR_API_BASE_URL = 'https://www.googleapis.com/calendar/v3';
-
-const getAccessToken = () => {
-  return localStorage.getItem(SessionStorageKeys.accessToken);
-};
-
-const api = new ApiClient(CALENDAR_API_BASE_URL);
+const api = new ApiClient('https://www.googleapis.com/calendar/v3');
 
 export const getCalendar = async (calendarId: string) => {
   return await api.req<CalendarEvents>('GET', {

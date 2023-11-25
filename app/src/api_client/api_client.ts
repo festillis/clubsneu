@@ -10,7 +10,7 @@ export class ApiClient {
     this.axios = Axios.create({
       baseURL,
       headers: {
-        'content-type': 'application/json'
+        'Content-Type': 'application/json'
       }
     });
   }
@@ -41,7 +41,8 @@ export class ApiClient {
         ...config
       });
       return { hasError: false, data: res.data as T };
-    } catch (e) {
+    } catch (e: any) {
+      console.error(e);
       return { hasError: true, errorText: (e as Error).message };
     }
   }
