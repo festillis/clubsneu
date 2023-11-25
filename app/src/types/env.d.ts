@@ -1,6 +1,9 @@
 /// <reference types="vite/client" />
 
 declare interface ImportMetaEnv {
+  // ACCESS TOKEN EXPIRY
+  readonly VITE_ACCESS_TOKEN_EXPIRY_MINS: string;
+
   // BASE URL
   readonly VITE_BASE_URL: string;
 
@@ -16,9 +19,14 @@ declare interface ImportMetaEnv {
   readonly VITE_FIREBASE_APP_ID: string;
   readonly VITE_FIREBASE_MEASUREMENT_ID: string;
 
+  // FIREBASE ADMIN
+  readonly VITE_FIREBASE_ADMIN_CLIENT_EMAIL: string;
+  readonly VITE_FIREBASE_ADMIN_PRIVATE_KEY: string;
+
   // GOOGLE CLOUD
   readonly VITE_GOOGLE_CLOUD_API_KEY: string;
   readonly VITE_GOOGLE_OAUTH_CLIENT_ID: string;
+  readonly VITE_GOOGLE_OAUTH_CLIENT_SECRET: string;
   readonly VITE_GOOGLE_SERVICE_ACCOUNT_ACCESS_TOKEN: string;
 
   // MICROSOFT

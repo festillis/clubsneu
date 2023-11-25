@@ -16,6 +16,7 @@
     "autoprefixer": "^10.4.16",
     "esbuild": "^0.14.54",
     "postcss": "^8.4.31",
+    "prisma": "^5.6.0",
     "rollup": "^3.28.0",
     "solid-start-node": "^0.3.7",
     "tailwindcss": "^3.3.3",
@@ -23,6 +24,7 @@
     "vite": "^4.5.0"
   },
   "dependencies": {
+    "@prisma/client": "^5.6.0",
     "@solid-primitives/storage": "^2.1.1",
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
@@ -31,6 +33,7 @@
     "@suid/vite-plugin": "^0.1.5",
     "axios": "^1.5.1",
     "firebase": "^10.5.0",
+    "firebase-admin": "^11.11.0",
     "solid-js": "^1.8.5",
     "solid-start": "^0.3.7",
     "vite-plugin-solid": "^2.7.2"

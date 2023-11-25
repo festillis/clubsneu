@@ -1,3 +1,9 @@
+
+// Access Token Expiry
+export const ACCESS_TOKEN_EXPIRY_MINS = parseInt(
+  import.meta.env.VITE_ACCESS_TOKEN_EXPIRY_MINS
+);
+
 // Base Urls
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const API_CLIENT_BASE_URL = import.meta.env.VITE_API_CLIENT_BASE_URL;
@@ -14,10 +20,19 @@ export const FIREBASE_APP_ID = import.meta.env.VITE_FIREBASE_APP_ID;
 export const FIREBASE_MEASUREMENT_ID = import.meta.env
   .VITE_FIREBASE_MEASUREMENT_ID;
 
+// Firebase Admin
+export const FIREBASE_ADMIN_CLIENT_EMAIL = import.meta.env
+  .VITE_FIREBASE_ADMIN_CLIENT_EMAIL;
+export const VITE_FIREBASE_ADMIN_PRIVATE_KEY = import.meta.env
+  .VITE_FIREBASE_ADMIN_PRIVATE_KEY;
+
 // Google Cloud
 export const GOOGLE_CLOUD_API_KEY = import.meta.env.VITE_GOOGLE_CLOUD_API_KEY;
 export const GOOGLE_OAUTH_CLIENT_ID = import.meta.env
   .VITE_GOOGLE_OAUTH_CLIENT_ID;
+export const GOOGLE_OAUTH_CLIENT_SECRET = import.meta.env
+  .VITE_GOOGLE_OAUTH_CLIENT_SECRET;
+
 export const GOOGLE_SERVICE_ACCOUNT_ACCESS_TOKEN = import.meta.env
   .VITE_GOOGLE_SERVICE_ACCOUNT_ACCESS_TOKEN;
 

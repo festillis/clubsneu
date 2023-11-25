@@ -1,10 +1,13 @@
-import { FirebaseOptions, initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getFunctions } from 'firebase/functions';
+import {
+  FirebaseOptions,
+  initializeApp as initializeClientApp,
+  getApps as getClientApps,
+  getApp as getClientApp
+} from 'firebase/app';
+import { getAuth as getClientAuth } from 'firebase/auth';
 import { envVars } from '~/env';
 
-export const firebaseConfig: FirebaseOptions = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: envVars.FIREBASE_API_KEY,
   authDomain: envVars.FIREBASE_AUTH_DOMAIN,
   projectId: envVars.FIREBASE_PROJECT_ID,
@@ -14,7 +17,9 @@ export const firebaseConfig: FirebaseOptions = {
   measurementId: envVars.FIREBASE_MEASUREMENT_ID
 };
 
-export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const auth = getAuth(app);
-export const functions = getFunctions(app);
+// Prevents the app from being initialized multiple times in hot-reloading
+const clientApp = !getClientApps().length
+  ? initializeClientApp(firebaseConfig, 'client')
+  : getClientApp('client');
+
+export const clientAuth = getClientAuth(clientApp);
