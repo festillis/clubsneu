@@ -2,6 +2,7 @@ import { getDateFromNow } from '~/utils/date';
 import { AuthProvider } from './types';
 
 export const getAccessTokenExpiryDate = (expiresIn: number) => {
+  // Refresh the access token 5 minutes before it expires
   const earlyRefreshSeconds = 60 * 5;
   return getDateFromNow({ seconds: expiresIn - earlyRefreshSeconds });
 };

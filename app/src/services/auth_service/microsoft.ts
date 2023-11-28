@@ -33,7 +33,7 @@ export const getMicrosoftCredentialsWithAuthorizationCode = async (
     `https://login.microsoftonline.com/${envVars.MICROSOFT_TENANT_ID}/oauth2/v2.0/token`
   );
 
-  const tokenResult = await api.req<{
+  return await api.req<{
     access_token: string;
     refresh_token: string;
     expires_in: number;
@@ -54,17 +54,12 @@ export const getMicrosoftCredentialsWithAuthorizationCode = async (
       client_secret: envVars.MICROSOFT_CLIENT_SECRET_VALUE
     }
   });
-
-  if (tokenResult.hasError) {
-    throw new Error('Could not get credentials');
-  }
-
-  return tokenResult.data;
 };
 
 export const getMicrosoftUserInfo = async (accessToken: string) => {
   const api = new ApiClient('https://graph.microsoft.com/v1.0/me');
-  const response = await api.req<{
+
+  return await api.req<{
     businessPhones: string[];
     displayName: string;
     givenName: string;
@@ -83,12 +78,6 @@ export const getMicrosoftUserInfo = async (accessToken: string) => {
       Authorization: `Bearer ${accessToken}`
     }
   });
-
-  if (response.hasError) {
-    throw new Error('Could not get user info');
-  }
-
-  return response.data;
 };
 
 export const getNewMicrosoftCredentialsWithRefreshToken = async (
@@ -97,7 +86,8 @@ export const getNewMicrosoftCredentialsWithRefreshToken = async (
   const api = new ApiClient(
     `https://login.microsoftonline.com/${envVars.MICROSOFT_TENANT_ID}/oauth2/v2.0/token`
   );
-  const tokenResult = await api.req<{
+
+  return await api.req<{
     access_token: string;
     refresh_token: string;
     expires_in: number;
@@ -114,10 +104,4 @@ export const getNewMicrosoftCredentialsWithRefreshToken = async (
       client_secret: envVars.MICROSOFT_CLIENT_SECRET_VALUE
     }
   });
-
-  if (tokenResult.hasError) {
-    throw new Error('Could not refresh access token');
-  }
-
-  return tokenResult.data;
 };

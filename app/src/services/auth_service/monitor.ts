@@ -29,7 +29,7 @@ export const startMonitoringAccessTokenSession = (
     try {
       console.log('Access token has expired. Need re-authentication');
 
-      const newCredentialsResponse = await api.req<{
+      const newCredentials = await api.req<{
         accessToken: string;
         refreshToken: string;
         accessTokenExpiry: Date;
@@ -41,18 +41,11 @@ export const startMonitoringAccessTokenSession = (
         }
       });
 
-      console.log('newCredentialsResponse', newCredentialsResponse);
-
-      if (newCredentialsResponse.hasError) {
-        console.error('Could not refresh access token');
-        throw new Error(newCredentialsResponse.errorText);
-      }
-
       const {
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
         accessTokenExpiry: newAccessTokenExpiry
-      } = newCredentialsResponse.data;
+      } = newCredentials;
 
       setAccessToken(newAccessToken);
 
