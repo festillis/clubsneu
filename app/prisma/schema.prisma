@@ -24,6 +24,7 @@ model User {
   refreshToken      String
   accessToken       String
   accessTokenExpiry DateTime
+  profile           Profile?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -31,6 +32,25 @@ model User {
   ownedClubs      Club[] @relation("ClubOwners")
   memberClubs     Club[] @relation("ClubMembers")
   subscribedClubs Club[] @relation("ClubSubscribers")
+}
+
+model Profile {
+  userId String @id @unique
+
+  name         String
+  pronouns     String?
+  bio          String?
+  schoolYear   String?
+  avatarUrl    String?
+  websiteUrl   String?
+  twitterUrl   String?
+  facebookUrl  String?
+  instagramUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Club {
