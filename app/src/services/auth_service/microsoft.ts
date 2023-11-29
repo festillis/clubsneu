@@ -8,7 +8,7 @@ export const microsoftAuthScopes = [
   'User.Read'
 ];
 
-export const getMicrosoftAuthLink = async () => {
+export const getMicrosoftAuthLink = () => {
   const authLink = new URL(
     `https://login.microsoftonline.com/${envVars.MICROSOFT_TENANT_ID}/oauth2/v2.0/authorize`
   );

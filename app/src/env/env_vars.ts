@@ -1,12 +1,5 @@
-
-// Access Token Expiry
-export const ACCESS_TOKEN_EXPIRY_MINS = parseInt(
-  import.meta.env.VITE_ACCESS_TOKEN_EXPIRY_MINS
-);
-
-// Base Urls
+// Base URL
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
-export const API_CLIENT_BASE_URL = import.meta.env.VITE_API_CLIENT_BASE_URL;
 
 // Firebase
 export const FIREBASE_API_KEY = import.meta.env.VITE_FIREBASE_API_KEY;

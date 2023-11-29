@@ -1,0 +1,7 @@
+FROM postgres
+
+ENV POSTGRES_USER=root
+ENV POSTGRES_PASSWORD=clubsneu
+ENV POSTGRES_DB=clubsneu
+
+EXPOSE 5432

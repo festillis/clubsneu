@@ -12,25 +12,29 @@ import {
   Title
 } from 'solid-start';
 import './root.css';
+import { ThemeProvider } from '@suid/material';
+import { theme } from './theme';
 
 export default function Root() {
   return (
-    <Html lang="en">
-      <Head>
-        <Title>ClubsNEU</Title>
-        <Meta charset="utf-8" />
-        <Meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <Body>
-        <ErrorBoundary>
-          <Suspense fallback={<div>Loading</div>}>
-            <Routes>
-              <FileRoutes />
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
-        <Scripts />
-      </Body>
-    </Html>
+    <ThemeProvider theme={theme}>
+      <Html lang="en">
+        <Head>
+          <Title>ClubsNEU</Title>
+          <Meta charset="utf-8" />
+          <Meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <Body>
+          <ErrorBoundary>
+            <Suspense fallback={<div>Loading</div>}>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </Suspense>
+          </ErrorBoundary>
+          <Scripts />
+        </Body>
+      </Html>
+    </ThemeProvider>
   );
 }

@@ -45,7 +45,7 @@ const Test: Component = () => {
   };
 
   const onAddOwnerToClub = async () => {
-    const club1Id = '4ee9982a-8df8-45d9-9580-cfbb818767a9';
+    const club1Id = '08f41813-50e4-4fc4-a289-a866304a6132';
     const result = await toSafe(() => serverAddOwnerToClub(club1Id, 'user1'));
 
     console.log(result);

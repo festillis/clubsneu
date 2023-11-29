@@ -1,6 +1,5 @@
 import { api } from '~/api_client';
 import { AuthProvider } from './types';
-import { getProviderName } from './utils';
 import { logout } from './logout';
 
 // UI re-render not needed, so stored as a normal variable
@@ -34,7 +33,7 @@ export const startMonitoringAccessTokenSession = (
         refreshToken: string;
         accessTokenExpiry: Date;
       }>('POST', {
-        url: `/auth/refresh/${getProviderName(provider)}`,
+        url: `/auth/refresh/${provider}`,
         params: {
           userId,
           refreshToken
