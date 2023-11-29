@@ -70,7 +70,7 @@ export const GET = async ({ request }: APIEvent) => {
         adminAuth,
         email,
         name,
-        'google.com'
+        'google'
       );
 
       await createUser({
@@ -80,7 +80,8 @@ export const GET = async ({ request }: APIEvent) => {
         accessToken: access_token,
         refreshToken: refresh_token,
         accessTokenExpiry: getAccessTokenExpiryDate(expires_in),
-        provider: 'google.com'
+        provider: 'google',
+        role: 'exec'
       });
 
       const customToken = await createFirebaseToken(

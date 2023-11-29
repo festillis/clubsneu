@@ -16,26 +16,46 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
+  id String @id
 
   email             String   @unique
-  name              String?
+  name              String
+  role              String
+  provider          String
   refreshToken      String
   accessToken       String
   accessTokenExpiry DateTime
-  provider          String
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Session   Session[]
-}
-
-model Session {
-  id String @id @default(uuid())
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  ownedClubs      Club[] @relation("ClubOwners")
+  memberClubs     Club[] @relation("ClubMembers")
+  subscribedClubs Club[] @relation("ClubSubscribers")
+}
+
+model Club {
+  id String @id @default(uuid())
+
+  name        String  @unique
+  tags        Tag[]   @relation("ClubTags")
+  calendarUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owners      User[] @relation("ClubOwners")
+  members     User[] @relation("ClubMembers")
+  subscribers User[] @relation("ClubSubscribers")
+}
+
+model Tag {
+  id String @id @default(uuid())
+
+  name String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clubs Club[] @relation("ClubTags")
 }

@@ -60,7 +60,7 @@ export const GET = async ({ request }: APIEvent) => {
         adminAuth,
         mail,
         displayName,
-        'microsoft.com'
+        'microsoft'
       );
 
       await createUser({
@@ -70,7 +70,8 @@ export const GET = async ({ request }: APIEvent) => {
         accessToken: access_token,
         refreshToken: refresh_token,
         accessTokenExpiry: getAccessTokenExpiryDate(expires_in),
-        provider: 'microsoft.com'
+        provider: 'microsoft',
+        role: 'member'
       });
 
       const customToken = await createFirebaseToken(

@@ -7,15 +7,29 @@ export const getAccessTokenExpiryDate = (expiresIn: number) => {
   return getDateFromNow({ seconds: expiresIn - earlyRefreshSeconds });
 };
 
+// /**
+//  * Remove '.com' from provider
+//  */
+// export const getProviderName = (provider: AuthProvider) => {
+//   switch (provider) {
+//     case 'google.com':
+//       return 'google';
+//     case 'microsoft.com':
+//       return 'microsoft';
+//     default:
+//       throw new Error(`Unknown provider: ${provider}`);
+//   }
+// };
+
 /**
- * Remove '.com' from provider
+ * Adds '.com' to provider
  */
-export const getProviderName = (provider: AuthProvider) => {
+export const getProviderId = (provider: AuthProvider) => {
   switch (provider) {
-    case 'google.com':
-      return 'google';
-    case 'microsoft.com':
-      return 'microsoft';
+    case 'google':
+      return 'google.com';
+    case 'microsoft':
+      return 'microsoft.com';
     default:
       throw new Error(`Unknown provider: ${provider}`);
   }
