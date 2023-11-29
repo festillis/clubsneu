@@ -16,8 +16,7 @@ datasource db {
 }
 
 model User {
-  id String @id
-
+  id                String   @id
   email             String   @unique
   name              String
   role              String
