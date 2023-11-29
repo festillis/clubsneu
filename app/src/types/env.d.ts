@@ -1,14 +1,8 @@
 /// <reference types="vite/client" />
 
 declare interface ImportMetaEnv {
-  // ACCESS TOKEN EXPIRY
-  readonly VITE_ACCESS_TOKEN_EXPIRY_MINS: string;
-
   // BASE URL
   readonly VITE_BASE_URL: string;
-
-  // API CLIENT
-  readonly VITE_API_CLIENT_BASE_URL: string;
 
   // FIREBASE
   readonly VITE_FIREBASE_API_KEY: string;
