@@ -34,3 +34,29 @@ export const updateUser = async (id: string, input: Prisma.UserUpdateInput) => {
   });
   return user;
 };
+
+// Must run server-side
+export const fixRoles = async () => {
+  const execResults = await prisma.user.updateMany({
+    where: {
+      provider: 'google'
+    },
+    data: {
+      role: 'exec'
+    }
+  });
+
+  const memberResults = await prisma.user.updateMany({
+    where: {
+      provider: 'microsoft'
+    },
+    data: {
+      role: 'member'
+    }
+  });
+
+  return {
+    members: memberResults.count,
+    execs: execResults.count
+  };
+};

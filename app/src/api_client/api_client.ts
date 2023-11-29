@@ -1,7 +1,6 @@
 import Axios, { AxiosInstance, Method } from 'axios';
 import { Safe } from '~/types/safe';
 import { Config } from './types';
-import { clientAuth } from '~/firebase';
 
 export class ApiClient {
   private readonly axios: AxiosInstance;
@@ -22,7 +21,7 @@ export class ApiClient {
     method: Method,
     accessToken: string,
     config?: Config
-  ): Promise<Safe<T>> {
+  ): Promise<T> {
     return this.req<T>(method, {
       ...config,
       headers: {
@@ -34,16 +33,12 @@ export class ApiClient {
   /**
    * For unauthenticated requests
    */
-  public async req<T>(method: Method, config?: Config): Promise<Safe<T>> {
-    try {
-      const res = await this.axios.request({
-        method,
-        ...config
-      });
-      return { hasError: false, data: res.data as T };
-    } catch (e: any) {
-      console.error(e);
-      return { hasError: true, errorText: (e as Error).message };
-    }
+  public async req<T>(method: Method, config?: Config): Promise<T> {
+    const res = await this.axios.request({
+      method,
+      ...config
+    });
+
+    return res.data as T;
   }
 }

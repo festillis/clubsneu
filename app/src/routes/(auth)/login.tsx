@@ -4,17 +4,18 @@ import { useNavigate } from '@solidjs/router';
 import { login } from '~/services/auth_service';
 
 const Login: Component = () => {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
 
   onMount(async () => {
-    console.log('params', { ...params });
-
     const customSignInToken = params['custom_token'];
     if (!customSignInToken) {
       console.error('Log in failed. Missing custom token or access token');
       return;
     }
+
+    // Clear the search params from URL
+    setParams({});
 
     await login(customSignInToken);
 
@@ -22,6 +23,7 @@ const Login: Component = () => {
     navigate('/');
   });
 
+  // TODO: Add an improved loading screen UI
   return (
     <div>
       <h1>Logging in...</h1>

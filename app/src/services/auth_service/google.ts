@@ -27,7 +27,8 @@ export const getGoogleCredentialsWithAuthorizationCode = async (
   code: string
 ) => {
   const api = new ApiClient('https://oauth2.googleapis.com/token');
-  const response = await api.req<{
+
+  return await api.req<{
     access_token: string;
     refresh_token: string;
     expires_in: number;
@@ -42,17 +43,12 @@ export const getGoogleCredentialsWithAuthorizationCode = async (
       grant_type: 'authorization_code'
     }
   });
-
-  if (response.hasError) {
-    throw new Error('Could not get credentials');
-  }
-
-  return response.data;
 };
 
 export const getGoogleUserInfo = async (accessToken: string) => {
   const api = new ApiClient('https://www.googleapis.com/oauth2/v2/userinfo');
-  const response = await api.req<{
+
+  return await api.req<{
     email: string;
     family_name: string;
     gender: string;
@@ -69,19 +65,14 @@ export const getGoogleUserInfo = async (accessToken: string) => {
       Authorization: `Bearer ${accessToken}`
     }
   });
-
-  if (response.hasError) {
-    throw new Error('Could not get user info');
-  }
-
-  return response.data;
 };
 
 export const getNewGoogleCredentialsWithRefreshToken = async (
   refreshToken: string
 ) => {
   const api = new ApiClient('https://oauth2.googleapis.com/token');
-  const response = await api.req<{
+
+  return await api.req<{
     access_token: string;
     refresh_token: string;
     expires_in: number;
@@ -95,10 +86,4 @@ export const getNewGoogleCredentialsWithRefreshToken = async (
       grant_type: 'refresh_token'
     }
   });
-
-  if (response.hasError) {
-    throw new Error('Could not refresh access token');
-  }
-
-  return response.data;
 };

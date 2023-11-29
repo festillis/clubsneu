@@ -1,1 +1,1 @@
-export type AuthProvider = 'microsoft.com' | 'google.com';
+export type AuthProvider = 'google' | 'microsoft';
