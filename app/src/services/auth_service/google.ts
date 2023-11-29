@@ -7,7 +7,7 @@ export const googleAuthScopes = [
   'https://www.googleapis.com/auth/userinfo.profile'
 ];
 
-export const getGoogleAuthLink = async () => {
+export const getGoogleAuthLink = () => {
   const authLink = new URL('https://accounts.google.com/o/oauth2/v2/auth');
   authLink.searchParams.append('client_id', envVars.GOOGLE_OAUTH_CLIENT_ID);
   authLink.searchParams.append(
