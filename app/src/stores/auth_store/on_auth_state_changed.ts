@@ -32,13 +32,6 @@ onAuthStateChanged(clientAuth, async (user) => {
       const { accessToken, refreshToken, accessTokenExpiry, provider } =
         await serverGetUserCredentials(user.uid);
 
-      console.log({
-        accessToken,
-        refreshToken,
-        accessTokenExpiry,
-        provider
-      });
-
       startMonitoringAccessTokenSession(
         user.uid,
         provider as AuthProvider,
@@ -49,8 +42,7 @@ onAuthStateChanged(clientAuth, async (user) => {
       setAccessToken(accessToken);
       setIsAuthenticated(true);
 
-      console.log('User is signed in');
-      console.log(user);
+      console.log(`User is signed in as ${user.email}`);
     } catch (e) {
       console.error(e);
       await logout();
