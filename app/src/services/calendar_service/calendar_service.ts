@@ -1,5 +1,5 @@
 import { ApiClient } from '~/api_client';
-import { CalendarEvents } from './types';
+import { CalendarEvents, CalendarList } from './types';
 import { envVars } from '~/env';
 
 const api = new ApiClient('https://www.googleapis.com/calendar/v3');
@@ -12,7 +12,7 @@ export const getCalendar = async (calendarId: string) => {
 };
 
 export const getCalendarList = async (accessToken: string) => {
-  return await api.authReq('GET', accessToken, {
+  return await api.authReq<CalendarList>('GET', accessToken, {
     url: '/users/me/calendarList'
   });
 };
