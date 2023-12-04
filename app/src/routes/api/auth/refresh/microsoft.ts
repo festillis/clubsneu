@@ -1,9 +1,5 @@
 import { APIEvent, json } from 'solid-start';
-import {
-  getAccessTokenExpiryDate,
-  getNewMicrosoftCredentialsWithRefreshToken
-} from '~/services/auth_service';
-import { updateUser } from '~/services/user_service';
+import { authService, userService } from '~/services';
 
 export const POST = async ({ request }: APIEvent) => {
   try {
@@ -20,15 +16,17 @@ export const POST = async ({ request }: APIEvent) => {
     }
 
     const { access_token, refresh_token, expires_in } =
-      await getNewMicrosoftCredentialsWithRefreshToken(refreshToken);
+      await authService.getNewMicrosoftCredentialsWithRefreshToken(
+        refreshToken
+      );
 
     const newCredentials = {
       accessToken: access_token,
       refreshToken: refresh_token,
-      accessTokenExpiry: getAccessTokenExpiryDate(expires_in)
+      accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in)
     };
 
-    await updateUser(userId, newCredentials);
+    await userService.updateUser(userId, newCredentials);
 
     return json(newCredentials);
   } catch (e: any) {

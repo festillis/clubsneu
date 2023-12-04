@@ -5,7 +5,7 @@ import {
   getApp as getClientApp
 } from 'firebase/app';
 import { getAuth as getClientAuth } from 'firebase/auth';
-import { envVars } from '~/env';
+import { envVars } from '~/constants/env';
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: envVars.FIREBASE_API_KEY,

@@ -1,23 +1,13 @@
 import { cert } from 'firebase-admin/app';
 import { APIEvent, json, redirect } from 'solid-start';
-import { envVars } from '~/env';
+import { envVars } from '~/constants/env';
 import {
   initializeApp as initializeAdminApp,
   getApps as getAdminApps,
   getApp as getAdminApp
 } from 'firebase-admin/app';
 import { getAuth as getAdminAuth } from 'firebase-admin/auth';
-import {
-  getAuthUserByEmail,
-  createNewAuthUser,
-  createFirebaseToken
-} from '~/services/auth_service/admin';
-import {
-  getAccessTokenExpiryDate,
-  getMicrosoftCredentialsWithAuthorizationCode,
-  getMicrosoftUserInfo
-} from '~/services/auth_service';
-import { createUser, updateUser } from '~/services/user_service';
+import { authService, userService } from '~/services';
 
 // Must initialize Firebase Admin SDK server-side
 const firebaseAdminConfig = {
@@ -49,32 +39,34 @@ export const GET = async ({ request }: APIEvent) => {
     }
 
     const { access_token, refresh_token, expires_in } =
-      await getMicrosoftCredentialsWithAuthorizationCode(authCode);
+      await authService.getMicrosoftCredentialsWithAuthorizationCode(authCode);
 
-    const { displayName, mail } = await getMicrosoftUserInfo(access_token);
+    const { displayName, mail } = await authService.getMicrosoftUserInfo(
+      access_token
+    );
 
-    const authUser = await getAuthUserByEmail(adminAuth, mail);
+    const authUser = await authService.getAuthUserByEmail(adminAuth, mail);
     if (!authUser) {
       console.log('Auth user does not exist. Creating new user...');
-      const createdAuthUser = await createNewAuthUser(
+      const createdAuthUser = await authService.createNewAuthUser(
         adminAuth,
         mail,
         displayName,
         'microsoft'
       );
 
-      await createUser({
+      await userService.createUser({
         id: createdAuthUser.uid,
         email: mail,
         name: displayName,
         accessToken: access_token,
         refreshToken: refresh_token,
-        accessTokenExpiry: getAccessTokenExpiryDate(expires_in),
+        accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in),
         provider: 'microsoft',
         role: 'member'
       });
 
-      const customToken = await createFirebaseToken(
+      const customToken = await authService.createFirebaseToken(
         adminAuth,
         createdAuthUser.uid
       );
@@ -83,11 +75,14 @@ export const GET = async ({ request }: APIEvent) => {
     }
 
     console.log('Auth user exists. Updating user...');
-    const customToken = await createFirebaseToken(adminAuth, authUser.uid);
-    await updateUser(authUser.uid, {
+    const customToken = await authService.createFirebaseToken(
+      adminAuth,
+      authUser.uid
+    );
+    await userService.updateUser(authUser.uid, {
       accessToken: access_token,
       refreshToken: refresh_token,
-      accessTokenExpiry: getAccessTokenExpiryDate(expires_in)
+      accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in)
     });
     return redirect(`${envVars.BASE_URL}/login?custom_token=${customToken}`);
   } catch (e: any) {

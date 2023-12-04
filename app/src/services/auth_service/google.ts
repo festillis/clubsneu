@@ -1,5 +1,5 @@
 import { ApiClient } from '~/api_client';
-import { envVars } from '~/env';
+import { envVars } from '~/constants/env';
 
 export const googleAuthScopes = [
   'https://www.googleapis.com/auth/calendar.readonly',

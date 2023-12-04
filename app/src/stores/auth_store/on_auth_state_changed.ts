@@ -10,6 +10,8 @@ import {
 import { AuthProvider } from '~/services/auth_service';
 import { logout } from '~/services/auth_service/logout';
 import { getUserById } from '~/services/user_service';
+import { DISABLE_AUTH } from '~/constants/flags';
+import { onCleanup } from 'solid-js';
 
 const serverGetUserCredentials = server$(async (id: string) => {
   const user = await getUserById(id);
@@ -26,7 +28,12 @@ const serverGetUserCredentials = server$(async (id: string) => {
   };
 });
 
-onAuthStateChanged(clientAuth, async (user) => {
+const authChangedUnsubscribe = onAuthStateChanged(clientAuth, async (user) => {
+  if (DISABLE_AUTH) {
+    console.log('Auth disabled');
+    return;
+  }
+
   if (user) {
     try {
       const { accessToken, refreshToken, accessTokenExpiry, provider } =
@@ -55,4 +62,8 @@ onAuthStateChanged(clientAuth, async (user) => {
 
     console.log('No user signed in');
   }
+});
+
+onCleanup(() => {
+  authChangedUnsubscribe();
 });
