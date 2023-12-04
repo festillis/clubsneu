@@ -1,5 +1,5 @@
-import { Box, Grid, Stack } from '@suid/material';
-import { Component, For, createSignal } from 'solid-js';
+import { Box, Grid, Stack, useTheme } from '@suid/material';
+import { Component, For, Show, createSignal } from 'solid-js';
 import ClubCard from '~/components/ClubCard';
 import ClubTypesNavbar from '~/components/ClubTypesNavbar';
 import Footer from '~/components/Footer';
