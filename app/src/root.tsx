@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense } from 'solid-js';
+import { Show, Suspense } from 'solid-js';
 import {
   Body,
   ErrorBoundary,
@@ -14,8 +14,11 @@ import {
 import './root.css';
 import { ThemeProvider } from '@suid/material';
 import { theme } from './theme';
+import { createMediaQuery } from '@solid-primitives/media';
 
 export default function Root() {
+  const isDesktopSize = createMediaQuery('(min-width: 1280px)');
+
   return (
     <ThemeProvider theme={theme}>
       <Html lang="en">
@@ -25,13 +28,20 @@ export default function Root() {
           <Meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <Body>
-          <ErrorBoundary>
-            <Suspense fallback={<div>Loading</div>}>
-              <Routes>
-                <FileRoutes />
-              </Routes>
-            </Suspense>
-          </ErrorBoundary>
+          <Show
+            when={isDesktopSize()}
+            fallback={
+              <div>We currently only support desktop size browsers</div>
+            }>
+            <ErrorBoundary>
+              <Suspense fallback={<div>Loading</div>}>
+                <Routes>
+                  <FileRoutes />
+                </Routes>
+              </Suspense>
+            </ErrorBoundary>
+          </Show>
+
           <Scripts />
         </Body>
       </Html>

@@ -37,7 +37,7 @@ const ClubCard: Component<Props> = ({ icon }) => {
           }}>
           {icon || <GroupsIcon />}
         </Box>
-        <Typography fontWeight={600} fontSize="1.25rem">
+        <Typography fontWeight={500} fontSize="1.25rem">
           Sandbox at Northeastern
         </Typography>
       </Stack>

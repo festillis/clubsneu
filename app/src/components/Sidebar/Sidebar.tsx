@@ -145,7 +145,7 @@ const Sidebar: Component = () => {
       }}>
       {/* Results */}
       <Stack direction="row">
-        <Typography fontWeight={700} fontSize="1.125rem">
+        <Typography fontWeight={600} fontSize="1.125rem">
           554
         </Typography>
         &nbsp;
@@ -156,7 +156,7 @@ const Sidebar: Component = () => {
 
       {/* Tags */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={700} fontSize="1.125rem">
+        <Typography fontWeight={600} fontSize="1.125rem">
           Tags
         </Typography>
         <TextField
@@ -172,7 +172,7 @@ const Sidebar: Component = () => {
 
       {/* Sort by */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={700} fontSize="1.125rem">
+        <Typography fontWeight={600} fontSize="1.125rem">
           Sort
         </Typography>
         <Select
@@ -184,7 +184,7 @@ const Sidebar: Component = () => {
 
       {/* Join Status */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={700} fontSize="1.125rem">
+        <Typography fontWeight={600} fontSize="1.125rem">
           Join Status
         </Typography>
         <Checklist options={selectedJoinStatus} onChange={onJoinStatusChange} />
@@ -192,7 +192,7 @@ const Sidebar: Component = () => {
 
       {/* Membership Process */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={700} fontSize="1.125rem">
+        <Typography fontWeight={600} fontSize="1.125rem">
           Membership Process
         </Typography>
         <Checklist
@@ -203,7 +203,7 @@ const Sidebar: Component = () => {
 
       {/* Member Count */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={700} fontSize="1.125rem">
+        <Typography fontWeight={600} fontSize="1.125rem">
           Member Count
         </Typography>
         <Checklist

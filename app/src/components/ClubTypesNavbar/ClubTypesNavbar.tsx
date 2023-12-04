@@ -37,7 +37,7 @@ const ClubTypesNavbar: Component<Props> = ({ selected, onSelectedChange }) => {
             onClick={() => onSelectedChange(idx())}>
             <Typography
               fontSize="1.125rem"
-              fontWeight={selected() === idx() ? 700 : 500}>
+              fontWeight={selected() === idx() ? 600 : 500}>
               {type}
             </Typography>
           </Box>

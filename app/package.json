@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.6.0",
+    "@solid-primitives/media": "^2.2.5",
     "@solid-primitives/storage": "^2.1.1",
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
