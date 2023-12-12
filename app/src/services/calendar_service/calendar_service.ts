@@ -1,6 +1,6 @@
 import { ApiClient } from '~/api_client';
 import { CalendarEvents, CalendarList } from './types';
-import { envVars } from '~/env';
+import { envVars } from '~/constants/env';
 
 const api = new ApiClient('https://www.googleapis.com/calendar/v3');
 

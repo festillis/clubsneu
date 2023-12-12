@@ -1,4 +1,4 @@
-import { envVars } from '~/env';
+import { envVars } from '~/constants/env';
 import { ApiClient } from './api_client';
 
 export * from './api_client';

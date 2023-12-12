@@ -1,5 +1,5 @@
 import { APIEvent, json, redirect } from 'solid-start';
-import { envVars } from '~/env';
+import { envVars } from '~/constants/env';
 import {
   cert,
   initializeApp as initializeAdminApp,
@@ -7,17 +7,7 @@ import {
   getApp as getAdminApp
 } from 'firebase-admin/app';
 import { getAuth as getAdminAuth } from 'firebase-admin/auth';
-import {
-  getAuthUserByEmail,
-  createNewAuthUser,
-  createFirebaseToken
-} from '~/services/auth_service/admin';
-import {
-  getAccessTokenExpiryDate,
-  getGoogleCredentialsWithAuthorizationCode,
-  getGoogleUserInfo
-} from '~/services/auth_service';
-import { createUser, updateUser } from '~/services/user_service';
+import { authService, userService } from '~/services';
 
 // Must initialize Firebase Admin SDK server-side
 const firebaseAdminConfig = {
@@ -49,7 +39,7 @@ export const GET = async ({ request }: APIEvent) => {
     }
 
     const { access_token, refresh_token, expires_in } =
-      await getGoogleCredentialsWithAuthorizationCode(authCode);
+      await authService.getGoogleCredentialsWithAuthorizationCode(authCode);
     if (!refresh_token || !access_token) {
       // TODO: redirect to login page with error message
       return json(
@@ -58,33 +48,33 @@ export const GET = async ({ request }: APIEvent) => {
       );
     }
 
-    const { email, name } = await getGoogleUserInfo(access_token);
+    const { email, name } = await authService.getGoogleUserInfo(access_token);
     if (!email || !name) {
       return json({ error: 'Missing email and/or name' }, { status: 400 });
     }
 
-    const authUser = await getAuthUserByEmail(adminAuth, email);
+    const authUser = await authService.getAuthUserByEmail(adminAuth, email);
     if (!authUser) {
       console.log('Auth user does not exist. Creating new user...');
-      const createdAuthUser = await createNewAuthUser(
+      const createdAuthUser = await authService.createNewAuthUser(
         adminAuth,
         email,
         name,
         'google'
       );
 
-      await createUser({
+      await userService.createUser({
         id: createdAuthUser.uid,
         email,
         name,
         accessToken: access_token,
         refreshToken: refresh_token,
-        accessTokenExpiry: getAccessTokenExpiryDate(expires_in),
+        accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in),
         provider: 'google',
         role: 'exec'
       });
 
-      const customToken = await createFirebaseToken(
+      const customToken = await authService.createFirebaseToken(
         adminAuth,
         createdAuthUser.uid
       );
@@ -94,12 +84,15 @@ export const GET = async ({ request }: APIEvent) => {
 
     console.log('Auth user exists. Updating user...');
 
-    const customToken = await createFirebaseToken(adminAuth, authUser.uid);
+    const customToken = await authService.createFirebaseToken(
+      adminAuth,
+      authUser.uid
+    );
 
-    await updateUser(authUser.uid, {
+    await userService.updateUser(authUser.uid, {
       accessToken: access_token,
       refreshToken: refresh_token,
-      accessTokenExpiry: getAccessTokenExpiryDate(expires_in)
+      accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in)
     });
 
     return redirect(`${envVars.BASE_URL}/login?custom_token=${customToken}`);

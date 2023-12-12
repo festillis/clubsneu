@@ -51,12 +51,27 @@ const Test: Component = () => {
     console.log(result);
   };
 
+  const onSignInToMapillary = async () => {
+    const url = new URL('https://www.mapillary.com/connect');
+
+    url.searchParams.append('client_id', '6939495986099408');
+    url.searchParams.append(
+      'redirect_uri',
+      'http://localhost:3000/api/ai/redirect'
+    );
+    url.searchParams.append('response_type', 'code');
+    url.searchParams.append('scope', 'read');
+
+    window.location.replace(url.toString());
+  };
+
   return (
     <Stack>
-      <Button onClick={onFixDbConstraints}>Fix Db Constraints</Button>
+      <Button onClick={onSignInToMapillary}>Sign in to Mapillary</Button>
+      {/* <Button onClick={onFixDbConstraints}>Fix Db Constraints</Button>
       <Button onClick={onCreateClub}>Create Club</Button>
       <Button onClick={onCreateUser}>Create User</Button>
-      <Button onClick={onAddOwnerToClub}>Add Owner To Club</Button>
+      <Button onClick={onAddOwnerToClub}>Add Owner To Club</Button> */}
     </Stack>
   );
 };

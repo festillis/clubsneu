@@ -1,5 +1,6 @@
 import { ApiClient } from '~/api_client';
-import { envVars } from '~/env';
+import { envVars } from '~/constants/env';
+import { MicrosoftCredentials, MicrosoftUserInfo } from './types';
 
 export const microsoftAuthScopes = [
   'openid',
@@ -33,13 +34,7 @@ export const getMicrosoftCredentialsWithAuthorizationCode = async (
     `https://login.microsoftonline.com/${envVars.MICROSOFT_TENANT_ID}/oauth2/v2.0/token`
   );
 
-  return await api.req<{
-    access_token: string;
-    refresh_token: string;
-    expires_in: number;
-    token_type: string;
-    scope: string;
-  }>('POST', {
+  return await api.req<MicrosoftCredentials>('POST', {
     headers: {
       // Must be sent in x-www-form-urlencoded body format
       'Content-Type': 'application/x-www-form-urlencoded'
@@ -59,19 +54,7 @@ export const getMicrosoftCredentialsWithAuthorizationCode = async (
 export const getMicrosoftUserInfo = async (accessToken: string) => {
   const api = new ApiClient('https://graph.microsoft.com/v1.0/me');
 
-  return await api.req<{
-    businessPhones: string[];
-    displayName: string;
-    givenName: string;
-    jobTitle: string;
-    mail: string;
-    mobilePhone: string;
-    officeLocation: string;
-    preferredLanguage: string;
-    surname: string;
-    userPrincipalName: string;
-    id: string;
-  }>('GET', {
+  return await api.req<MicrosoftUserInfo>('GET', {
     headers: {
       // Must be sent in x-www-form-urlencoded body format
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -87,11 +70,7 @@ export const getNewMicrosoftCredentialsWithRefreshToken = async (
     `https://login.microsoftonline.com/${envVars.MICROSOFT_TENANT_ID}/oauth2/v2.0/token`
   );
 
-  return await api.req<{
-    access_token: string;
-    refresh_token: string;
-    expires_in: number;
-  }>('POST', {
+  return await api.req<MicrosoftCredentials>('POST', {
     headers: {
       // Must be sent in x-www-form-urlencoded body format
       'Content-Type': 'application/x-www-form-urlencoded'
