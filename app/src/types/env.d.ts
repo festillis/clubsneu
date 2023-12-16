@@ -1,6 +1,9 @@
 /// <reference types="vite/client" />
 
 declare interface ImportMetaEnv {
+  // NODE_ENV
+  readonly VITE_NODE_ENV: 'development' | 'production';
+
   // BASE URL
   readonly VITE_BASE_URL: string;
 

@@ -1,3 +1,6 @@
+// Node Env
+export const NODE_ENV = import.meta.env.VITE_NODE_ENV;
+
 // Base URL
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
