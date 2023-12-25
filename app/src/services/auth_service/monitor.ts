@@ -1,16 +1,9 @@
-import { api } from '~/api_client';
 import { AuthProvider } from './types';
 import { logout } from './logout';
+import { setAccessToken } from './access_token';
+import { authClient } from '~/api_client';
 
-// UI re-render not needed, so stored as a normal variable
-let accessToken: string | null = null;
 let accessTokenExpiryTimeout: NodeJS.Timeout | null = null;
-
-export const getAccessToken = () => accessToken;
-
-export const setAccessToken = (token: string | null) => {
-  accessToken = token;
-};
 
 export const startMonitoringAccessTokenSession = (
   userId: string,
@@ -24,42 +17,36 @@ export const startMonitoringAccessTokenSession = (
   const nowMs = new Date().getTime();
   const timeUntilExpiryMs = accessTokenExpiryMs - nowMs;
 
+  // console.log(
+  //   `Access token expires in ${Math.round(
+  //     timeUntilExpiryMs / 1000 / 60
+  //   )}m ${Math.round((timeUntilExpiryMs / 1000) % 60)}s`
+  // );
+
   accessTokenExpiryTimeout = setTimeout(async () => {
-    try {
-      console.log('Access token has expired. Need re-authentication');
+    console.log('Access token has expired. Need re-authentication');
 
-      const newCredentials = await api.req<{
-        accessToken: string;
-        refreshToken: string;
-        accessTokenExpiry: Date;
-      }>('POST', {
-        url: `/auth/refresh/${provider}`,
-        params: {
-          userId,
-          refreshToken
-        }
-      });
+    const newCredentials = await authClient.getNewCredentialsWithRefreshToken(
+      userId,
+      provider,
+      refreshToken
+    );
 
-      const {
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken,
-        accessTokenExpiry: newAccessTokenExpiry
-      } = newCredentials;
-
-      setAccessToken(newAccessToken);
-
-      // Recursively call this function to monitor the expiration of the new access token
-      startMonitoringAccessTokenSession(
-        userId,
-        provider,
-        newRefreshToken,
-        newAccessTokenExpiry
-      );
-    } catch (e) {
-      console.error(e);
+    if (newCredentials.hasError) {
+      console.error(newCredentials.errorText);
       await logout();
       return;
     }
+
+    setAccessToken(newCredentials.data.accessToken);
+
+    // Recursively call this function to monitor the expiration of the new access token
+    startMonitoringAccessTokenSession(
+      userId,
+      provider,
+      newCredentials.data.refreshToken,
+      newCredentials.data.accessTokenExpiry
+    );
   }, Math.max(timeUntilExpiryMs, 0));
 };
 

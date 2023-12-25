@@ -1,10 +1,26 @@
 import { Stack, Typography } from '@suid/material';
 import TextField from '~/components/TextField';
-import { Component } from 'solid-js';
+import { Component, Show } from 'solid-js';
 import SearchIcon from '@suid/icons-material/Search';
 import Button from '../Button';
+import { authService } from '~/services';
+import { authStore } from '~/stores';
 
 const Navbar: Component = () => {
+  const onSignInWithGoogle = () => {
+    const authLink = authService.getGoogleAuthLink();
+    window.location.replace(authLink);
+  };
+
+  const onSignInWithMicrosoft = () => {
+    const authLink = authService.getMicrosoftAuthLink();
+    window.location.replace(authLink);
+  };
+
+  const onLogout = async () => {
+    await authService.logout();
+  };
+
   return (
     <Stack
       direction="row"
@@ -36,13 +52,37 @@ const Navbar: Component = () => {
             backgroundColor: '#FAF9F9'
           }}
         />
-        <Button
-          style={{
-            color: '#ffffff',
-            'background-color': '#E72330'
-          }}>
-          Login
-        </Button>
+        <Show
+          when={authStore.isAuthenticated()}
+          fallback={
+            <Stack direction="row" spacing={2}>
+              <Button
+                style={{
+                  color: '#ffffff',
+                  'background-color': '#E72330'
+                }}
+                onClick={onSignInWithGoogle}>
+                Google
+              </Button>
+              <Button
+                style={{
+                  color: '#ffffff',
+                  'background-color': '#E72330'
+                }}
+                onClick={onSignInWithMicrosoft}>
+                Microsoft
+              </Button>
+            </Stack>
+          }>
+          <Button
+            style={{
+              color: '#ffffff',
+              'background-color': '#E72330'
+            }}
+            onClick={onLogout}>
+            Logout
+          </Button>
+        </Show>
       </Stack>
     </Stack>
   );

@@ -15,6 +15,7 @@ import './root.css';
 import { ThemeProvider } from '@suid/material';
 import { theme } from './theme';
 import { createMediaQuery } from '@solid-primitives/media';
+import { flags } from './constants';
 
 export default function Root() {
   const isDesktopSize = createMediaQuery('(min-width: 1280px)');
@@ -29,17 +30,17 @@ export default function Root() {
         </Head>
         <Body>
           <Show
-            when={isDesktopSize()}
+            when={flags.ENFORCE_DESKTOP_ONLY_SIZE && !isDesktopSize()}
             fallback={
-              <div>We currently only support desktop size browsers</div>
+              <ErrorBoundary>
+                <Suspense fallback={<div>Loading</div>}>
+                  <Routes>
+                    <FileRoutes />
+                  </Routes>
+                </Suspense>
+              </ErrorBoundary>
             }>
-            <ErrorBoundary>
-              <Suspense fallback={<div>Loading</div>}>
-                <Routes>
-                  <FileRoutes />
-                </Routes>
-              </Suspense>
-            </ErrorBoundary>
+            <div>We currently only support desktop size browsers</div>
           </Show>
 
           <Scripts />

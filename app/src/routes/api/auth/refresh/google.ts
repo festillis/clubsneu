@@ -1,17 +1,18 @@
 import { APIEvent, json } from 'solid-start';
+import { statusCodes } from '~/constants';
 import { authService, userService } from '~/services';
+import { requestUtils } from '~/utils';
 
 export const POST = async ({ request }: APIEvent) => {
   try {
-    const url = new URL(request.url);
-    const searchParams = url.searchParams;
+    const searchParams = requestUtils.getUrlSearchParams(request);
     const userId = searchParams.get('userId');
     const refreshToken = searchParams.get('refreshToken');
 
     if (!userId || !refreshToken) {
       return json(
         { error: 'Missing userId and/or refreshToken' },
-        { status: 400 }
+        { status: statusCodes.BAD_REQUEST }
       );
     }
 
@@ -29,6 +30,9 @@ export const POST = async ({ request }: APIEvent) => {
     return json(newCredentials);
   } catch (error: any) {
     console.error(error);
-    return json({ error: error.message }, { status: 500 });
+    return json(
+      { error: error.message },
+      { status: statusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 };

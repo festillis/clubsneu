@@ -43,3 +43,21 @@ export interface MicrosoftUserInfo {
   userPrincipalName: string;
   id: string;
 }
+
+export interface GoogleTokenInfoSuccess {
+  azp: string;
+  aud: string;
+  sub: string;
+  scope: string;
+  exp: number;
+  expires_in: number;
+  email: string;
+  email_verified: boolean;
+  access_type: string;
+}
+
+export interface GoogleTokenInfoFailure {
+  error_description: string;
+}
+
+export type GoogleTokenInfo = GoogleTokenInfoSuccess | GoogleTokenInfoFailure;

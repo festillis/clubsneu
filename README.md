@@ -7,6 +7,6 @@
 - Solid Start
 - TypeScript
 - Prisma
-- SQL Server
 - Firebase Authentication
 - Firebase Storage
+- SQL Database

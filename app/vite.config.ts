@@ -2,7 +2,6 @@ import solid from 'solid-start/vite';
 import { defineConfig } from 'vite';
 import solidPlugin from 'vite-plugin-solid';
 import suidPlugin from '@suid/vite-plugin';
-import solidSvg from 'vite-plugin-solid-svg';
 import vercel from 'solid-start-vercel';
 
 export default defineConfig({
@@ -12,8 +11,7 @@ export default defineConfig({
       adapter: vercel()
     }),
     suidPlugin(),
-    solidPlugin(),
-    solidSvg()
+    solidPlugin()
   ],
   build: {
     target: 'esnext'

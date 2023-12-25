@@ -1,0 +1,25 @@
+.custom.solid-select-container {
+  color: #fa7f25;
+  background-color: #ffffff;
+}
+
+.custom .solid-select-control {
+  outline-color: #fca560;
+  border-color: #fca560;
+  background-color: #ffffff;
+}
+
+.custom .solid-select-placeholder {
+  color: #fca560;
+  background-color: #ffffff;
+}
+
+.custom .solid-select-option:hover {
+  background-color: #fa7f25;
+  color: #fff;
+}
+
+.custom .solid-select-option[data-focused='true'] {
+  background-color: #fca560;
+  color: #fff;
+}

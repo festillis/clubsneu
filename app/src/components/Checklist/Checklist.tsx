@@ -1,4 +1,10 @@
-import { Checkbox, FormControlLabel, FormGroup, Stack } from '@suid/material';
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Stack,
+  Typography
+} from '@suid/material';
 import { Accessor, Component, For } from 'solid-js';
 
 export interface ChecklistOption {
@@ -33,7 +39,10 @@ const Checklist: Component<Props> = ({ options, onChange }) => {
                   onChange={(_, checked) => onChange(value, checked)}
                 />
               }
-              label={label}
+              label={<Typography>{label}</Typography>}
+              sx={{
+                width: 'max-content'
+              }}
             />
           )}
         </For>

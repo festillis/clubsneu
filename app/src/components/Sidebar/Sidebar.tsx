@@ -1,11 +1,11 @@
-import { Stack, Typography } from '@suid/material';
-import { Component, createSignal } from 'solid-js';
-import TextField from '../TextField';
-import SearchIcon from '@suid/icons-material/Search';
+import { CircularProgress, Stack, Typography } from '@suid/material';
+import { Component, Show, createResource, createSignal } from 'solid-js';
 import Select from '../Select';
 import { SelectOption } from '../Select/Select';
 import { ChecklistOption } from '../Checklist/Checklist';
 import Checklist from '../Checklist';
+import Autocomplete from '../Autocomplete';
+import { tagClient } from '~/api_client';
 
 const sortOptions: SelectOption[] = [
   {
@@ -78,6 +78,11 @@ const memberCountOptions: ChecklistOption[] = [
 ];
 
 const Sidebar: Component = () => {
+  // Tags
+  const [tags] = createResource(tagClient.getTags);
+
+  const [selectedTags, setSelectedTags] = createSignal<string[]>([]);
+
   const [selectedSortValue, setSelectedSortValue] = createSignal('');
   const [selectedJoinStatus, setSelectedJoinStatus] =
     createSignal(joinStatusOptions);
@@ -85,6 +90,10 @@ const Sidebar: Component = () => {
     createSignal(membershipProcessOptions);
   const [selectedMemberCount, setSelectedMemberCount] =
     createSignal(memberCountOptions);
+
+  const onTagsChange = (value: string) => {
+    setSelectedTags((prev) => [...prev, value]);
+  };
 
   const onSortChange = (value: string) => {
     setSelectedSortValue(value);
@@ -159,15 +168,12 @@ const Sidebar: Component = () => {
         <Typography fontWeight={600} fontSize="1.125rem">
           Tags
         </Typography>
-        <TextField
-          placeholder="Search for tags"
-          icon={<SearchIcon />}
-          sx={{
-            border: '1px solid #E3E3E3',
-            backgroundColor: '#ffffff',
-            width: '18.75rem'
-          }}
-        />
+        <Show when={tags()} fallback={<Typography>Loading...</Typography>}>
+          <Autocomplete
+            options={tags()!.map(({ name }) => name)}
+            onChange={onTagsChange}
+          />
+        </Show>
       </Stack>
 
       {/* Sort by */}
