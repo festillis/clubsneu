@@ -17,9 +17,11 @@ export const startMonitoringAccessTokenSession = (
   const nowMs = new Date().getTime();
   const timeUntilExpiryMs = accessTokenExpiryMs - nowMs;
 
-  // TODO: `timeUntilExpiryMs` is NaN
-  // TODO: `provider` is undefined
-  console.log(`Access token expires in ${timeUntilExpiryMs}ms`);
+  // console.log(
+  //   `Access token expires in ${Math.round(
+  //     timeUntilExpiryMs / 1000 / 60
+  //   )}m ${Math.round((timeUntilExpiryMs / 1000) % 60)}s`
+  // );
 
   accessTokenExpiryTimeout = setTimeout(async () => {
     console.log('Access token has expired. Need re-authentication');

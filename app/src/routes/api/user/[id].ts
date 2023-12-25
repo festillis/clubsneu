@@ -2,7 +2,6 @@ import { APIEvent, json } from 'solid-start';
 import { middleware } from '~/api_client';
 import { statusCodes } from '~/constants';
 import { userService } from '~/services';
-import { AuthProvider } from '~/services/auth_service';
 import { requestUtils } from '~/utils';
 
 export const GET = async ({ request, params }: APIEvent) => {

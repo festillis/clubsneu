@@ -6,12 +6,17 @@ import {
   startMonitoringAccessTokenSession,
   stopMonitoringAccessTokenSession
 } from './monitor';
-import { getAccessToken, setAccessToken } from './access_token';
+import { setAccessToken } from './access_token';
 import { authStore } from '~/stores';
 import { AuthProvider } from './types';
 import { flags } from '~/constants';
 import { setProvider } from './provider';
-import { userClient } from '~/api_client';
+import server$ from 'solid-start/server';
+import { userService } from '..';
+
+const serverGetUserById = server$(async (id: string) =>
+  userService.getUserById(id)
+);
 
 const authChangedUnsubscribe = onAuthStateChanged(clientAuth, async (user) => {
   if (flags.DISABLE_AUTH) {
@@ -19,29 +24,27 @@ const authChangedUnsubscribe = onAuthStateChanged(clientAuth, async (user) => {
     return;
   }
 
-  // Access token should be populated from `routes/login.tsx`
-  const accessToken = getAccessToken();
-  console.log('Access token', accessToken);
+  if (user) {
+    // Force fetch user info
+    const dbUser = await serverGetUserById(user.uid);
 
-  if (user && accessToken) {
-    const dbUser = await userClient.getUserById(user.uid);
-
-    if (dbUser.hasError) {
-      console.error(dbUser.errorText);
+    if (!dbUser) {
+      console.error('User not found. Logging out...');
       await logout();
       return;
     }
 
     startMonitoringAccessTokenSession(
-      dbUser.data.accessToken,
-      dbUser.data.provider as AuthProvider,
-      dbUser.data.refreshToken,
-      dbUser.data.accessTokenExpiry
+      dbUser.accessToken,
+      dbUser.provider as AuthProvider,
+      dbUser.refreshToken,
+      dbUser.accessTokenExpiry
     );
-    setAccessToken(accessToken);
+    setAccessToken(dbUser.accessToken);
+    setProvider(dbUser.provider as AuthProvider);
     authStore.setIsAuthenticated(true);
 
-    console.log(`User is signed in as ${dbUser.data.email}`);
+    console.log(`User is signed in as ${dbUser.email}`);
   } else {
     setAccessToken(null);
     setProvider(null);

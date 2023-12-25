@@ -73,6 +73,5 @@ export const isValidGoogleAccessToken = async (accessToken: string) => {
     }
   });
 
-  // TODO: check if type of response is GoogleTokenInfoSuccess
-  return true;
+  return !('error_description' in response);
 };
