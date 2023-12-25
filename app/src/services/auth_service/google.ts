@@ -1,6 +1,6 @@
-import { ApiClient } from '~/api_client';
+import { ApiClient } from '~/api_client/client';
 import { envVars } from '~/constants/env';
-import { GoogleCredentials, GoogleUserInfo } from './types';
+import { GoogleCredentials, GoogleTokenInfo, GoogleUserInfo } from './types';
 
 export const googleAuthScopes = [
   'https://www.googleapis.com/auth/calendar.readonly',
@@ -63,4 +63,16 @@ export const getNewGoogleCredentialsWithRefreshToken = async (
       grant_type: 'refresh_token'
     }
   });
+};
+
+export const isValidGoogleAccessToken = async (accessToken: string) => {
+  const api = new ApiClient('https://www.googleapis.com/oauth2/v3/tokeninfo');
+  const response = await api.req<GoogleTokenInfo>('POST', {
+    params: {
+      access_token: accessToken
+    }
+  });
+
+  // TODO: check if type of response is GoogleTokenInfoSuccess
+  return true;
 };

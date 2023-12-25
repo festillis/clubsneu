@@ -1,4 +1,4 @@
-import { ApiClient } from '~/api_client';
+import { ApiClient } from '~/api_client/client';
 import { envVars } from '~/constants/env';
 import { MicrosoftCredentials, MicrosoftUserInfo } from './types';
 
@@ -83,4 +83,13 @@ export const getNewMicrosoftCredentialsWithRefreshToken = async (
       client_secret: envVars.MICROSOFT_CLIENT_SECRET_VALUE
     }
   });
+};
+
+export const isValidMicrosoftAccessToken = async (accessToken: string) => {
+  try {
+    await getMicrosoftUserInfo(accessToken);
+    return true;
+  } catch (e) {
+    return false;
+  }
 };

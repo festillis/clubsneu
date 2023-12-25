@@ -1,4 +1,4 @@
-import { ApiError } from '~/api_client/types';
+import { ApiError } from '~/api_client/client/types';
 import { NeedsAuth } from '~/types/needs_auth';
 import { Safe } from '~/types/safe';
 

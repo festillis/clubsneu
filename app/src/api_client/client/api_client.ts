@@ -1,6 +1,7 @@
 import Axios, { AxiosInstance, Method } from 'axios';
-import { Safe } from '~/types/safe';
 import { Config } from './types';
+import { authService } from '~/services';
+import { middleware } from '..';
 
 export class ApiClient {
   private readonly axios: AxiosInstance;
@@ -17,15 +18,23 @@ export class ApiClient {
   /**
    * For authenticated requests
    */
-  public async authReq<T>(
-    method: Method,
-    accessToken: string,
-    config?: Config
-  ): Promise<T> {
+  public async authReq<T>(method: Method, config?: Config): Promise<T> {
+    const accessToken = authService.getAccessToken();
+    const provider = authService.getProvider();
+
+    if (
+      !accessToken ||
+      !provider ||
+      !middleware.authenticated(accessToken, provider)
+    ) {
+      throw new Error('Not authenticated');
+    }
+
     return this.req<T>(method, {
       ...config,
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
+        'X-provider': provider
       }
     });
   }

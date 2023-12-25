@@ -8,6 +8,8 @@ import {
 } from 'firebase-admin/app';
 import { getAuth as getAdminAuth } from 'firebase-admin/auth';
 import { authService, userService } from '~/services';
+import { statusCodes } from '~/constants';
+import { requestUtils } from '~/utils';
 
 // Must initialize Firebase Admin SDK server-side
 const firebaseAdminConfig = {
@@ -26,15 +28,14 @@ const adminAuth = getAdminAuth(adminApp);
 
 export const GET = async ({ request }: APIEvent) => {
   try {
-    const url = new URL(request.url);
-    const searchParams = url.searchParams;
+    const searchParams = requestUtils.getUrlSearchParams(request);
     const authCode = searchParams.get('code');
 
     if (!authCode) {
       // TODO: redirect to login page with error message
       return json(
         { error: 'No authorization code provided. Invalid login process.' },
-        { status: 400 }
+        { status: statusCodes.BAD_REQUEST }
       );
     }
 
@@ -44,13 +45,16 @@ export const GET = async ({ request }: APIEvent) => {
       // TODO: redirect to login page with error message
       return json(
         { error: 'No refresh token and/or access token provided' },
-        { status: 400 }
+        { status: statusCodes.BAD_REQUEST }
       );
     }
 
     const { email, name } = await authService.getGoogleUserInfo(access_token);
     if (!email || !name) {
-      return json({ error: 'Missing email and/or name' }, { status: 400 });
+      return json(
+        { error: 'Missing email and/or name' },
+        { status: statusCodes.BAD_REQUEST }
+      );
     }
 
     const authUser = await authService.getAuthUserByEmail(adminAuth, email);
@@ -79,7 +83,12 @@ export const GET = async ({ request }: APIEvent) => {
         createdAuthUser.uid
       );
 
-      return redirect(`${envVars.BASE_URL}/login?custom_token=${customToken}`);
+      const redirectUrl = new URL(`${envVars.BASE_URL}/login`);
+      redirectUrl.searchParams.append('custom_token', customToken);
+      redirectUrl.searchParams.append('access_token', access_token);
+      redirectUrl.searchParams.append('provider', 'google');
+
+      return redirect(redirectUrl.toString());
     }
 
     console.log('Auth user exists. Updating user...');
@@ -95,10 +104,18 @@ export const GET = async ({ request }: APIEvent) => {
       accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in)
     });
 
-    return redirect(`${envVars.BASE_URL}/login?custom_token=${customToken}`);
-  } catch (error) {
-    console.error(error);
+    const redirectUrl = new URL(`${envVars.BASE_URL}/login`);
+    redirectUrl.searchParams.append('custom_token', customToken);
+    redirectUrl.searchParams.append('access_token', access_token);
+    redirectUrl.searchParams.append('provider', 'google');
+
+    return redirect(redirectUrl.toString());
+  } catch (e: any) {
+    console.error(e);
     // TODO: redirect to login page with error message
-    return json({ error: (error as Error).message }, { status: 500 });
+    return json(
+      { error: e.message },
+      { status: statusCodes.INTERNAL_SERVER_ERROR }
+    );
   }
 };

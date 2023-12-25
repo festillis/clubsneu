@@ -37,6 +37,7 @@ const Select: Component<Props> = ({
           },
         border: '1px solid #E3E3E3',
         height: '2.6875rem',
+        width: '100%',
         borderRadius: '0.75rem'
       }}>
       {options.map(({ label, value }) => (

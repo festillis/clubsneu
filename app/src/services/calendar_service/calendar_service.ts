@@ -1,4 +1,4 @@
-import { ApiClient } from '~/api_client';
+import { ApiClient } from '~/api_client/client';
 import { CalendarEvents, CalendarList } from './types';
 import { envVars } from '~/constants/env';
 
@@ -12,7 +12,7 @@ export const getCalendar = async (calendarId: string) => {
 };
 
 export const getCalendarList = async (accessToken: string) => {
-  return await api.authReq<CalendarList>('GET', accessToken, {
+  return await api.authReq<CalendarList>('GET', {
     url: '/users/me/calendarList'
   });
 };
