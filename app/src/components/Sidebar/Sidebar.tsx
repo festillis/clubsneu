@@ -1,11 +1,10 @@
-import { CircularProgress, Stack, Typography } from '@suid/material';
-import { Component, Show, createResource, createSignal } from 'solid-js';
+import { Stack, Typography } from '@suid/material';
+import { Component, createSignal } from 'solid-js';
 import Select from '../Select';
 import { SelectOption } from '../Select/Select';
 import { ChecklistOption } from '../Checklist/Checklist';
 import Checklist from '../Checklist';
-import Autocomplete from '../Autocomplete';
-import { tagClient } from '~/api_client';
+import TagSelect from '../TagSelect';
 
 const sortOptions: SelectOption[] = [
   {
@@ -78,11 +77,7 @@ const memberCountOptions: ChecklistOption[] = [
 ];
 
 const Sidebar: Component = () => {
-  // Tags
-  const [tags] = createResource(tagClient.getTags);
-
   const [selectedTags, setSelectedTags] = createSignal<string[]>([]);
-
   const [selectedSortValue, setSelectedSortValue] = createSignal('');
   const [selectedJoinStatus, setSelectedJoinStatus] =
     createSignal(joinStatusOptions);
@@ -90,10 +85,6 @@ const Sidebar: Component = () => {
     createSignal(membershipProcessOptions);
   const [selectedMemberCount, setSelectedMemberCount] =
     createSignal(memberCountOptions);
-
-  const onTagsChange = (value: string) => {
-    setSelectedTags((prev) => [...prev, value]);
-  };
 
   const onSortChange = (value: string) => {
     setSelectedSortValue(value);
@@ -150,7 +141,8 @@ const Sidebar: Component = () => {
       sx={{
         gap: '3.75rem',
         backgroundColor: '#ffffff',
-        padding: '3.5rem 1.5rem'
+        padding: '3.5rem 1.5rem',
+        width: '25rem'
       }}>
       {/* Results */}
       <Stack direction="row">
@@ -168,12 +160,10 @@ const Sidebar: Component = () => {
         <Typography fontWeight={600} fontSize="1.125rem">
           Tags
         </Typography>
-        <Show when={tags()} fallback={<Typography>Loading...</Typography>}>
-          <Autocomplete
-            options={tags()!.map(({ name }) => name)}
-            onChange={onTagsChange}
-          />
-        </Show>
+        <TagSelect
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
+        />
       </Stack>
 
       {/* Sort by */}
