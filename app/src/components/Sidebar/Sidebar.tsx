@@ -1,21 +1,9 @@
 import { Stack, Typography } from '@suid/material';
 import { Component, createSignal } from 'solid-js';
 import Select from '../Select';
-import { SelectOption } from '../Select/Select';
 import { ChecklistOption } from '../Checklist/Checklist';
 import Checklist from '../Checklist';
 import TagSelect from '../TagSelect';
-
-const sortOptions: SelectOption[] = [
-  {
-    label: 'Name',
-    value: 'name'
-  },
-  {
-    label: 'Date',
-    value: 'date'
-  }
-];
 
 const joinStatusOptions: ChecklistOption[] = [
   {
@@ -173,8 +161,9 @@ const Sidebar: Component = () => {
         </Typography>
         <Select
           value={selectedSortValue}
-          options={sortOptions}
           onChange={onSortChange}
+          options={['Name', 'Date']}
+          placeholder="None selected"
         />
       </Stack>
 

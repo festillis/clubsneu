@@ -1,4 +1,4 @@
-import { Accessor, Component, For, Setter } from 'solid-js';
+import { Accessor, Component, For, JSX, Setter } from 'solid-js';
 import { As, Select } from '@kobalte/core';
 import { Check, Close } from '@suid/icons-material';
 import { Chip, IconButton, Stack } from '@suid/material';
@@ -8,7 +8,7 @@ interface Props {
   selectedValues: Accessor<string[]>;
   setSelectedValues: Setter<string[]>;
   options: string[];
-  placeholder?: string;
+  placeholder?: JSX.Element;
 }
 
 const MultiSelect: Component<Props> = ({

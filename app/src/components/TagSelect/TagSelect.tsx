@@ -2,6 +2,7 @@ import { Accessor, Component, Setter, Switch, createResource } from 'solid-js';
 import { tagClient } from '~/api_client';
 import MultiSelect from '../MultiSelect';
 import { Match } from 'solid-js';
+import TagPlaceholder from './TagPlaceholder';
 
 interface Props {
   selectedTags: Accessor<string[]>;
@@ -18,7 +19,7 @@ const TagSelect: Component<Props> = ({ selectedTags, setSelectedTags }) => {
           selectedValues={selectedTags}
           setSelectedValues={setSelectedTags}
           options={[]}
-          placeholder="Select tags"
+          placeholder={<TagPlaceholder />}
         />
       </Match>
       <Match when={tags()}>
@@ -26,7 +27,7 @@ const TagSelect: Component<Props> = ({ selectedTags, setSelectedTags }) => {
           selectedValues={selectedTags}
           setSelectedValues={setSelectedTags}
           options={tags().map((tag) => tag.name)}
-          placeholder="Select tags"
+          placeholder={<TagPlaceholder />}
         />
       </Match>
     </Switch>
