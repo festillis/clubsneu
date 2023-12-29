@@ -1,4 +1,4 @@
-import { Accessor, Component, For, Setter, createEffect } from 'solid-js';
+import { Accessor, Component, For, Setter } from 'solid-js';
 import { As, Select } from '@kobalte/core';
 import { Check, Close } from '@suid/icons-material';
 import { Chip, IconButton, Stack } from '@suid/material';
@@ -17,10 +17,6 @@ const MultiSelect: Component<Props> = ({
   options,
   placeholder
 }) => {
-  createEffect(() => {
-    console.log('options', options);
-  });
-
   return (
     <Select.Root<string>
       multiple
