@@ -1,7 +1,7 @@
 import { Box, Grid, Stack } from '@suid/material';
 import { Component, For, createSignal } from 'solid-js';
 import ClubCard from '~/components/ClubCard';
-import ClubTypesNavbar from '~/components/ClubTypesNavbar';
+import ClubTypesNavbar from '~/components/CategoryNavbar';
 import Footer from '~/components/Footer';
 import Navbar from '~/components/Navbar';
 import Sidebar from '~/components/Sidebar';

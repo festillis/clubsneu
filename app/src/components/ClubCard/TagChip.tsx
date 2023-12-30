@@ -14,7 +14,7 @@ const TagChip: Component<Props> = ({ label }) => {
         padding: '0.5rem',
         color: '#746F6F',
         fontSize: '0.8rem',
-        fontWeight: 600
+        fontWeight: 500
       }}
     />
   );
