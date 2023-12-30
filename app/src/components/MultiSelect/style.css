@@ -21,7 +21,6 @@
   border-color: hsl(240 5% 65%);
 }
 .select__trigger:focus-visible {
-  /* outline: 2px solid hsl(200 98% 39%); */
   outline-offset: 2px;
 }
 .select__trigger[data-invalid] {
@@ -86,8 +85,9 @@
 }
 .select__item[data-highlighted] {
   outline: none;
-  background-color: slategray;
-  color: white;
+  background-color: #edecec;
+  color: black;
+  /* color: white; */
 }
 .select__section {
   padding: 8px 0 0 8px;

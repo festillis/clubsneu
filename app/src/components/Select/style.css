@@ -86,8 +86,8 @@
 }
 .select__item[data-highlighted] {
   outline: none;
-  background-color: slategray;
-  color: white;
+  background-color: #edecec;
+  color: black;
 }
 .select__section {
   padding: 8px 0 0 8px;
