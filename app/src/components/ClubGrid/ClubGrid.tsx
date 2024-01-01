@@ -2,7 +2,7 @@ import { Grid } from '@suid/material';
 import { Component, For, Match, Switch, createResource } from 'solid-js';
 import ClubCard from '../ClubCard';
 import { clubClient } from '~/api_client';
-import ClubCardSkeleton from '../ClubCardSkeleton';
+import ClubCardSkeleton from '../ClubCard/ClubCardSkeleton';
 
 const NUMBER_OF_CLUB_SKELETONS = 8;
 

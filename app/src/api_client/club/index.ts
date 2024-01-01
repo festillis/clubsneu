@@ -6,7 +6,6 @@ export const getAllClubIds = async () => {
 };
 
 export const getClubById = async (clubId: string) => {
-  console.log('clubId', clubId);
   return api.req<Club>('GET', { url: `/club/${clubId}` });
 };
 
