@@ -1,6 +1,6 @@
 import { APIEvent, json } from 'solid-start';
 import { statusCodes } from '~/constants';
-import { envVars } from '~/constants/env';
+import { envVars } from '~/constants';
 import { clubService, tagService, userService } from '~/services';
 
 export const DELETE = async ({ params }: APIEvent) => {

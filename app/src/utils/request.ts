@@ -1,4 +1,4 @@
-import { AuthProvider } from '~/services/auth_service';
+import { AuthProvider } from '~/services/auth';
 
 export const getUrlSearchParams = (request: Request) => {
   const url = new URL(request.url);

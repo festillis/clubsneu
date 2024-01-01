@@ -1,6 +1,5 @@
 import { json } from 'solid-start';
-import { statusCodes } from '~/constants';
-import { envVars } from '~/constants/env';
+import { envVars, statusCodes } from '~/constants';
 import { mockDataLoader } from '~/dataloader';
 
 export const POST = async () => {

@@ -1,5 +1,5 @@
 import { APIEvent, json, redirect } from 'solid-start';
-import { envVars } from '~/constants/env';
+import { envVars } from '~/constants';
 import {
   cert,
   initializeApp as initializeAdminApp,

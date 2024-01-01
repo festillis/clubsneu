@@ -13,7 +13,7 @@ export const GET = async ({ request, params }: APIEvent) => {
     !id ||
     !accessToken ||
     !provider ||
-    !middleware.authenticated(accessToken, provider)
+    !middleware.isAuthenticated(accessToken, provider)
   ) {
     return json(
       { error: 'Not authenticated' },

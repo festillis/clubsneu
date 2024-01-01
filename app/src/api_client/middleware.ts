@@ -1,7 +1,7 @@
 import { authService } from '~/services';
-import { AuthProvider } from '~/services/auth_service';
+import { AuthProvider } from '~/services/auth';
 
-export const authenticated = async (
+export const isAuthenticated = async (
   accessToken: string,
   provider: AuthProvider
 ) => {
