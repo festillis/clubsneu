@@ -1,18 +1,18 @@
 import { json } from 'solid-start';
 import { statusCodes } from '~/constants';
 import { envVars } from '~/constants/env';
-import { loadData } from '~/dataloader';
+import { productionDataLoader } from '~/dataloader';
 
-export const GET = async () => {
+export const POST = async () => {
   if (envVars.NODE_ENV !== 'development') {
     return json(
       { error: 'This endpoint is only available in development mode.' },
-      { status: statusCodes.BAD_REQUEST }
+      { status: statusCodes.FORBIDDEN }
     );
   }
 
   try {
-    await loadData();
+    await productionDataLoader.loadData();
   } catch (e: any) {
     console.error(e);
     return json(

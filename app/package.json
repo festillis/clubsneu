@@ -7,7 +7,10 @@
     "prisma:gen": "prisma generate",
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:pull": "prisma db pull",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "dataclear": "./src/scripts/dataclear.sh",
+    "dataload:mock": "./src/scripts/dataload_mock.sh",
+    "dataload:prod": "./src/scripts/dataload_production.sh"
   },
   "type": "module",
   "devDependencies": {

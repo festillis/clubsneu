@@ -36,6 +36,11 @@ export const updateUser = async (id: string, input: Prisma.UserUpdateInput) => {
 };
 
 // Must run server-side
+export const deleteAllUsers = async () => {
+  await prisma.user.deleteMany();
+};
+
+// Must run server-side
 export const fixRoles = async () => {
   const execResults = await prisma.user.updateMany({
     where: {

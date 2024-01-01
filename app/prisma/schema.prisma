@@ -57,8 +57,10 @@ model Club {
   id String @id @default(uuid())
 
   name        String  @unique
-  tags        Tag[]   @relation("ClubTags")
+  description String
   calendarUrl String?
+  logoUrl     String?
+  tags        Tag[]   @relation("ClubTags")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

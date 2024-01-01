@@ -10,7 +10,7 @@ interface Props {
 }
 
 const TagSelect: Component<Props> = ({ selectedTags, setSelectedTags }) => {
-  const [tags] = createResource(tagClient.getTags, { initialValue: [] });
+  const [tags] = createResource(tagClient.getTags);
 
   return (
     <Switch>
@@ -26,7 +26,7 @@ const TagSelect: Component<Props> = ({ selectedTags, setSelectedTags }) => {
         <MultiSelect
           selectedValues={selectedTags}
           setSelectedValues={setSelectedTags}
-          options={tags().map((tag) => tag.name)}
+          options={tags()!.map((tag) => tag.name)}
           placeholder={<TagPlaceholder />}
         />
       </Match>

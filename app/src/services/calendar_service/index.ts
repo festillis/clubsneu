@@ -1,2 +1,2 @@
-export * from './calendar_service';
+export * from './calendar';
 export * from './types';
