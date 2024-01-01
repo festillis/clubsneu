@@ -1,11 +1,10 @@
-import { Box, Grid, Stack } from '@suid/material';
-import { Component, For, createSignal } from 'solid-js';
-import ClubCard from '~/components/ClubCard';
+import { Box, Stack } from '@suid/material';
+import { Component, createSignal } from 'solid-js';
 import ClubTypesNavbar from '~/components/CategoryNavbar';
+import ClubGrid from '~/components/ClubGrid';
 import Footer from '~/components/Footer';
 import Navbar from '~/components/Navbar';
 import Sidebar from '~/components/Sidebar';
-import sandboxIcon from '~/icons/sandbox-icon.jpeg';
 
 const Home: Component = () => {
   const [selectedCategoryIdx, setSelectedCategoryIdx] = createSignal(0);
@@ -40,30 +39,7 @@ const Home: Component = () => {
             sx={{
               maxWidth: '60rem' // Width of two club cards
             }}>
-            <Grid
-              container
-              spacing={2}
-              sx={{
-                flexWrap: 'wrap'
-              }}>
-              <For each={Array(9)}>
-                {() => (
-                  <Grid item md={12} lg={6}>
-                    <ClubCard
-                      icon={
-                        <img
-                          src={sandboxIcon}
-                          style={{
-                            height: '100%',
-                            width: '100%'
-                          }}
-                        />
-                      }
-                    />
-                  </Grid>
-                )}
-              </For>
-            </Grid>
+            <ClubGrid />
           </Box>
         </Stack>
       </Stack>

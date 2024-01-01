@@ -1,5 +1,2 @@
-import { tagDataloader } from './tag';
-
-export const loadData = async () => {
-  await tagDataloader.loadTags();
-};
+export * as mockDataLoader from './mock';
+export * as productionDataLoader from './production';

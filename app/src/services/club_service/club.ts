@@ -2,11 +2,27 @@ import { Prisma } from '@prisma/client';
 import { prisma } from '~/prisma';
 
 // Must run server-side
-const getClubById = async (id: string) => {
+export const getClubById = async (id: string) => {
   const club = await prisma.club.findUnique({
     where: { id }
   });
   return club;
+};
+
+// Must run server-side
+export const getClubs = async () => {
+  return await prisma.club.findMany();
+};
+
+// Must run server-side
+export const getClubIds = async () => {
+  const response = await prisma.club.findMany({
+    select: {
+      id: true
+    }
+  });
+
+  return response.map((club) => club.id);
 };
 
 // Must run server-side
@@ -30,6 +46,11 @@ export const deleteClub = async (id: string) => {
 };
 
 // Must run server-side
+export const deleteAllClubs = async () => {
+  return await prisma.club.deleteMany();
+};
+
+// Must run server-side
 export const addOwnerToClub = async (clubId: string, userId: string) => {
   return await prisma.club.update({
     where: { id: clubId },
@@ -37,6 +58,20 @@ export const addOwnerToClub = async (clubId: string, userId: string) => {
       owners: {
         connect: {
           id: userId
+        }
+      }
+    }
+  });
+};
+
+// Must run server-side
+export const addTagToClub = async (clubId: string, tagId: string) => {
+  return await prisma.club.update({
+    where: { id: clubId },
+    data: {
+      tags: {
+        connect: {
+          id: tagId
         }
       }
     }
@@ -54,4 +89,20 @@ export const updateClubCalendarUrl = async (
       calendarUrl
     }
   });
+};
+
+// Must run server-side
+export const getTagsForClub = async (clubId: string) => {
+  const clubWithTags = await prisma.club.findUnique({
+    where: { id: clubId },
+    include: {
+      tags: true
+    }
+  });
+
+  if (!clubWithTags) {
+    throw new Error(`Club with id ${clubId} not found`);
+  }
+
+  return clubWithTags.tags;
 };

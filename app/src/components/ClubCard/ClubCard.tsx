@@ -1,13 +1,17 @@
-import { Box, Divider, Stack, Typography } from '@suid/material';
-import { Component, JSX } from 'solid-js';
+import { Box, Divider, Skeleton, Stack, Typography } from '@suid/material';
+import { Component, For, Match, Switch, createResource } from 'solid-js';
 import TagChip from './TagChip';
 import GroupsIcon from '@suid/icons-material/Groups';
+import { clubClient } from '~/api_client';
 
 interface Props {
-  icon?: JSX.Element;
+  clubId: string;
 }
 
-const ClubCard: Component<Props> = ({ icon }) => {
+const ClubCard: Component<Props> = ({ clubId }) => {
+  const [club] = createResource(() => clubClient.getClubById(clubId));
+  const [tags] = createResource(() => clubClient.getTagsForClub(clubId));
+
   return (
     <Stack
       direction="column"
@@ -35,11 +39,31 @@ const ClubCard: Component<Props> = ({ icon }) => {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-          {icon || <GroupsIcon />}
+          <Switch>
+            <Match when={club.loading || club.error || !club()?.logoUrl}>
+              <GroupsIcon />
+            </Match>
+            <Match when={club()}>
+              <img
+                src={club()!.logoUrl!}
+                style={{
+                  height: '100%',
+                  width: '100%'
+                }}
+              />
+            </Match>
+          </Switch>
         </Box>
-        <Typography fontWeight={500} fontSize="1.25rem">
-          Sandbox at Northeastern
-        </Typography>
+        <Switch>
+          <Match when={club.loading || club.error}>
+            <Skeleton width={50} height={10} />
+          </Match>
+          <Match when={club()}>
+            <Typography fontWeight={500} fontSize="1.25rem">
+              {club()!.name}
+            </Typography>
+          </Match>
+        </Switch>
       </Stack>
       <Divider />
       <Stack
@@ -49,23 +73,49 @@ const ClubCard: Component<Props> = ({ icon }) => {
           padding: '1.25rem',
           justifyContent: 'space-evenly'
         }}>
-        <Typography>
-          Northeastern's student-led software consultancy working closely with
-          clients to help them best leverage computation.
-        </Typography>
+        <Switch>
+          <Match when={club.loading || club.error}>
+            <Stack direction="column">
+              <Stack direction="row">
+                <Skeleton width={50} height={10} />
+                <Skeleton width={50} height={10} />
+                <Skeleton width={50} height={10} />
+              </Stack>
+              <Stack direction="row">
+                <Skeleton width={20} height={10} />
+                <Skeleton width={70} height={10} />
+                <Skeleton width={60} height={10} />
+              </Stack>
+            </Stack>
+          </Match>
+          <Match when={club()}>
+            <Typography>{club()!.description}</Typography>
+          </Match>
+        </Switch>
         <Stack
           direction="row"
           sx={{
             gap: '0.625rem',
             flexWrap: 'wrap'
-            // border: 'thin solid red'
           }}>
-          <TagChip label="Undergraduate" />
-          <TagChip label="Khoury" />
-          <TagChip label="Programming" />
-          <TagChip label="Professional" />
-          <TagChip label="Design" />
-          <TagChip label="Product Development" />
+          <Switch>
+            <Match when={tags.loading || tags.error}>
+              <For each={Array(6)}>
+                {() => (
+                  <Skeleton
+                    width={50}
+                    height={10}
+                    sx={{
+                      borderRadius: '0.5rem'
+                    }}
+                  />
+                )}
+              </For>
+            </Match>
+            <Match when={tags()}>
+              <For each={tags()!}>{(tag) => <TagChip label={tag.name} />}</For>
+            </Match>
+          </Switch>
         </Stack>
       </Stack>
     </Stack>
