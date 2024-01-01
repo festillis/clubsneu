@@ -40,12 +40,13 @@ const MultiSelect: Component<Props> = ({
               <Stack
                 direction="row"
                 sx={{
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  gap: '0.5rem'
                 }}>
                 <Stack
                   direction="row"
                   sx={{
-                    gap: 0.5,
+                    gap: '0.5rem',
                     flexWrap: 'wrap'
                   }}>
                   <For each={state.selectedOptions()}>
