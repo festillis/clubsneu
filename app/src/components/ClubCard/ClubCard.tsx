@@ -2,7 +2,7 @@ import { Box, Divider, Skeleton, Stack, Typography } from '@suid/material';
 import { Component, For, Match, Show, Switch, createResource } from 'solid-js';
 import TagChip from './TagChip';
 import GroupsIcon from '@suid/icons-material/Groups';
-import { clubClient } from '~/api_client';
+import { clubClient } from '~/clients';
 import ClubCardSkeleton from './ClubCardSkeleton';
 
 interface Props {

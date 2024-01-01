@@ -1,5 +1,5 @@
 import { Accessor, Component, Setter, Switch, createResource } from 'solid-js';
-import { tagClient } from '~/api_client';
+import { tagClient } from '~/clients';
 import MultiSelect from '../MultiSelect';
 import { Match } from 'solid-js';
 import TagPlaceholder from './TagPlaceholder';

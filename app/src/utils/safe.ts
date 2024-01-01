@@ -1,5 +1,12 @@
-import server$ from 'solid-start/server';
-import { Safe } from '~/types/safe';
+export type Safe<T> =
+  | {
+      hasError: false;
+      data: T;
+    }
+  | {
+      hasError: true;
+      errorText: string;
+    };
 
 export const toSafe = async <T>(
   fn: (...args: unknown[]) => T | Promise<T>
@@ -11,16 +18,3 @@ export const toSafe = async <T>(
     return { hasError: true, errorText: (e as Error).message };
   }
 };
-
-// export const runOnServer = async <T>(
-//   fn: (...args: unknown[]) => T | Promise<T>
-// ): Promise<T> => {
-//   const serverFn = server$(fn);
-//   return await serverFn();
-// };
-
-// export const toSafeServerFn = <T>(
-//   fn: (...args: unknown[]) => T | Promise<T>
-// ) => {
-//   return toSafe(server$(fn));
-// };

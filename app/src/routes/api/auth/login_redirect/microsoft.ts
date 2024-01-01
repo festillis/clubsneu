@@ -1,6 +1,6 @@
 import { cert } from 'firebase-admin/app';
 import { APIEvent, json, redirect } from 'solid-start';
-import { envVars } from '~/constants/env';
+import { envVars } from '~/constants';
 import {
   initializeApp as initializeAdminApp,
   getApps as getAdminApps,
