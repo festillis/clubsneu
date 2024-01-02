@@ -29,7 +29,7 @@ const ClubGrid: Component<Props> = () => {
           </For>
         </Match>
         <Match when={clubIds()}>
-          <For each={Array(NUMBER_OF_CLUB_SKELETONS).fill(clubIds()).flat()}>
+          <For each={clubIds()}>
             {(clubId) => (
               <Grid item md={12} lg={6}>
                 <ClubCard clubId={clubId} />
