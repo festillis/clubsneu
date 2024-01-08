@@ -6,14 +6,14 @@ import './style.css';
 
 interface Props {
   selectedValues: Accessor<string[]>;
-  setSelectedValues: Setter<string[]>;
+  onSelectedValuesChange: (values: string[]) => void;
   options: string[];
   placeholder?: JSX.Element;
 }
 
 const MultiSelect: Component<Props> = ({
   selectedValues,
-  setSelectedValues,
+  onSelectedValuesChange,
   options,
   placeholder
 }) => {
@@ -21,7 +21,7 @@ const MultiSelect: Component<Props> = ({
     <Select.Root<string>
       multiple
       value={selectedValues()}
-      onChange={setSelectedValues}
+      onChange={onSelectedValuesChange}
       options={options}
       placeholder={placeholder}
       class="select__root"

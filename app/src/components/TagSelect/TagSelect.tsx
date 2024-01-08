@@ -6,10 +6,13 @@ import TagPlaceholder from './TagPlaceholder';
 
 interface Props {
   selectedTags: Accessor<string[]>;
-  setSelectedTags: Setter<string[]>;
+  onSelectedTagsChange: (tags: string[]) => void;
 }
 
-const TagSelect: Component<Props> = ({ selectedTags, setSelectedTags }) => {
+const TagSelect: Component<Props> = ({
+  selectedTags,
+  onSelectedTagsChange
+}) => {
   const [tags] = createResource(tagClient.getTags);
 
   return (
@@ -17,7 +20,7 @@ const TagSelect: Component<Props> = ({ selectedTags, setSelectedTags }) => {
       <Match when={tags.loading || tags.error}>
         <MultiSelect
           selectedValues={selectedTags}
-          setSelectedValues={setSelectedTags}
+          onSelectedValuesChange={onSelectedTagsChange}
           options={[]}
           placeholder={<TagPlaceholder />}
         />
@@ -25,7 +28,7 @@ const TagSelect: Component<Props> = ({ selectedTags, setSelectedTags }) => {
       <Match when={tags()}>
         <MultiSelect
           selectedValues={selectedTags}
-          setSelectedValues={setSelectedTags}
+          onSelectedValuesChange={onSelectedTagsChange}
           options={tags()!.map((tag) => tag.name)}
           placeholder={<TagPlaceholder />}
         />

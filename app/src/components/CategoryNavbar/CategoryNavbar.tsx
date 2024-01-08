@@ -1,19 +1,10 @@
 import { Box, Stack, Typography } from '@suid/material';
 import { Accessor, Component, For } from 'solid-js';
-
-const categories = [
-  'Discover',
-  'Social',
-  'Professional',
-  'Cultural',
-  'Greek Life',
-  'Service',
-  'Sports'
-];
+import { categories } from './categories';
 
 interface Props {
-  selected: Accessor<number>;
-  onSelectedChange: (idx: number) => void;
+  selected: Accessor<string>;
+  onSelectedChange: (tagName: string) => void;
 }
 
 const CategoryNavbar: Component<Props> = ({ selected, onSelectedChange }) => {
@@ -26,22 +17,18 @@ const CategoryNavbar: Component<Props> = ({ selected, onSelectedChange }) => {
         gap: '0.625rem'
       }}>
       <For each={categories}>
-        {(type, idx) => (
+        {(tagName) => (
           <Box
             sx={{
               cursor: 'pointer',
-              backgroundColor: selected() === idx() ? '#EDECEC' : 'transparent',
+              backgroundColor:
+                selected() === tagName ? '#EDECEC' : 'transparent',
               padding: '0.5rem 1rem',
               borderRadius: '0.75rem',
-              border: selected() === idx() ? '1px solid #' : 'none'
+              border: selected() === tagName ? '1px solid #' : 'none'
             }}
-            onClick={() => onSelectedChange(idx())}>
-            <Typography
-              fontSize="1.125rem"
-              // fontWeight={selected() === idx() ? 600 : 500}
-            >
-              {type}
-            </Typography>
+            onClick={() => onSelectedChange(tagName)}>
+            <Typography fontSize="1.125rem">{tagName}</Typography>
           </Box>
         )}
       </For>

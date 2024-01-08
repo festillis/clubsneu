@@ -3,34 +3,43 @@ import { Box } from '@suid/material';
 import { ExpandMore } from '@suid/icons-material';
 import { Select as KSelect } from '@kobalte/core';
 import './style.css';
+import { ChecklistOption } from '../Checklist/types';
 
-interface Props {
-  value: Accessor<string>;
-  onChange: (value: string) => void;
-  options: string[];
+interface Props<T extends string> {
+  value: Accessor<ChecklistOption<T>>;
+  onChange: (value: ChecklistOption<T>) => void;
+  options: ChecklistOption<T>[];
   placeholder?: JSX.Element;
 }
 
-const Select: Component<Props> = ({
+const Select = <T extends string>({
   value,
   options,
   placeholder,
   onChange
-}) => {
+}: Props<T>) => {
   return (
     <KSelect.Root
       value={value()}
-      onChange={onChange}
+      onChange={(value) => {
+        if (!value) {
+          return;
+        }
+
+        onChange(value);
+      }}
       options={options}
+      optionValue="value"
+      optionTextValue="label"
       placeholder={placeholder}
       itemComponent={(props) => (
         <KSelect.Item item={props.item} class="select__item">
-          <KSelect.ItemLabel>{props.item.rawValue}</KSelect.ItemLabel>
+          <KSelect.ItemLabel>{props.item.rawValue.label}</KSelect.ItemLabel>
         </KSelect.Item>
       )}>
       <KSelect.Trigger class="select__trigger" aria-label="Fruit">
-        <KSelect.Value<string> class="select__value">
-          {(state) => state.selectedOption()}
+        <KSelect.Value<ChecklistOption<T>> class="select__value">
+          {(state) => state.selectedOption().label}
         </KSelect.Value>
         <KSelect.Icon>
           <Box

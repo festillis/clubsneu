@@ -10,12 +10,28 @@ export const getClubById = async (id: string) => {
 };
 
 // Must run server-side
+export const getClubIdsByFilter = async (
+  filter: Prisma.ClubWhereInput,
+  orderBy: Prisma.ClubOrderByWithRelationInput
+) => {
+  const clubs = await prisma.club.findMany({
+    where: filter,
+    orderBy,
+    select: {
+      id: true
+    }
+  });
+
+  return clubs.map((club) => club.id);
+};
+
+// Must run server-side
 export const getClubs = async () => {
   return await prisma.club.findMany();
 };
 
 // Must run server-side
-export const getClubIds = async () => {
+export const getAllClubIds = async () => {
   const response = await prisma.club.findMany({
     select: {
       id: true
@@ -93,9 +109,11 @@ export const updateClubCalendarUrl = async (
 
 // Must run server-side
 export const getTagsForClub = async (clubId: string) => {
+  console.log('getTagsForClub', clubId);
+
   const clubWithTags = await prisma.club.findUnique({
     where: { id: clubId },
-    include: {
+    select: {
       tags: true
     }
   });

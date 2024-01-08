@@ -1,4 +1,4 @@
-import { AuthProvider } from './types';
+import { AuthProvider } from '~/services/auth';
 import { dateUtils } from '~/utils';
 
 /**

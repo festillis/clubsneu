@@ -1,4 +1,4 @@
-import { tagNames } from './tag_names';
+import { tagNames } from './tags';
 import { tagService } from '~/services';
 
 export const deleteTags = async () => {

@@ -9,7 +9,7 @@ import {
 import { getAuth as getAdminAuth } from 'firebase-admin/auth';
 import { authService, userService } from '~/services';
 import { statusCodes } from '~/constants';
-import { requestUtils } from '~/utils';
+import { authUtils, requestUtils } from '~/utils';
 
 // Must initialize Firebase Admin SDK server-side
 const firebaseAdminConfig = {
@@ -73,7 +73,7 @@ export const GET = async ({ request }: APIEvent) => {
         name,
         accessToken: access_token,
         refreshToken: refresh_token,
-        accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in),
+        accessTokenExpiry: authUtils.getAccessTokenExpiryDate(expires_in),
         provider: 'google',
         role: 'exec'
       });
@@ -99,7 +99,7 @@ export const GET = async ({ request }: APIEvent) => {
     await userService.updateUser(authUser.uid, {
       accessToken: access_token,
       refreshToken: refresh_token,
-      accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in)
+      accessTokenExpiry: authUtils.getAccessTokenExpiryDate(expires_in)
     });
 
     const redirectUrl = new URL(`${envVars.BASE_URL}/login`);
