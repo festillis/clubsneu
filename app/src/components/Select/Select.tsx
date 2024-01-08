@@ -26,7 +26,6 @@ const Select = <T extends string>({
           return;
         }
 
-        console.log({ value });
         onChange(value);
       }}
       options={options}
