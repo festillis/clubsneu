@@ -52,7 +52,6 @@ const ClubGrid: Component<Props> = ({
 
   createEffect(
     on([tags, sortBy, joinStatuses, membershipProcesses, memberCounts], () => {
-      console.log({ sortBy: sortBy() });
       refetchClubIds();
     })
   );
