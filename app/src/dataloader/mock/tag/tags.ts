@@ -14,6 +14,8 @@ export const tagNames = [
   'Professional',
   'Programming',
   'Service',
+  'Social',
+  'Sports',
   'Startups',
   'STEM',
   'Undergraduate',

@@ -1,128 +1,49 @@
 import { Stack, Typography } from '@suid/material';
-import { Component, createSignal } from 'solid-js';
+import { Accessor, Component } from 'solid-js';
 import Select from '../Select';
-import { ChecklistOption } from '../Checklist/Checklist';
-import Checklist from '../Checklist';
 import TagSelect from '../TagSelect';
+import { JoinStatus, MemberCount, MembershipProcess, SortBy } from './types';
+import Checklist from '../Checklist';
+import {
+  joinStatusOptions,
+  memberCountOptions,
+  membershipProcessOptions,
+  sortByOptions
+} from './options';
+import { ChecklistOption } from '../Checklist/types';
 
-const joinStatusOptions: ChecklistOption[] = [
-  {
-    label: 'Accepting Members',
-    value: 'Accepting Members',
-    checked: false
-  },
-  {
-    label: 'Not Accepting Members',
-    value: 'Not Accepting Members',
-    checked: false
-  }
-];
+interface Props {
+  selectedTags: Accessor<string[]>;
+  onSelectedTagsChange: (tags: string[]) => void;
 
-const membershipProcessOptions: ChecklistOption[] = [
-  {
-    label: 'Open Membership',
-    value: 'Open Membership',
-    checked: false
-  },
-  {
-    label: 'Audition Required',
-    value: 'Audition Required',
-    checked: false
-  },
-  {
-    label: 'Application Required',
-    value: 'Application Required',
-    checked: false
-  }
-];
+  selectedSortBy: Accessor<ChecklistOption<SortBy>>;
+  onSortChange: (value: ChecklistOption<SortBy>) => void;
 
-const memberCountOptions: ChecklistOption[] = [
-  {
-    label: 'Less than 20',
-    value: 'Less than 20',
-    checked: false
-  },
-  {
-    label: '20 - 50',
-    value: '20 - 50',
-    checked: false
-  },
-  {
-    label: '50 - 100',
-    value: '50 - 100',
-    checked: false
-  },
-  {
-    label: '100 - 150',
-    value: '100 - 150',
-    checked: false
-  },
-  {
-    label: 'More than 150',
-    value: 'More than 150',
-    checked: false
-  }
-];
+  selectedJoinStatuses: Accessor<JoinStatus[]>;
+  onJoinStatusChange: (value: JoinStatus, checked: boolean) => void;
 
-const Sidebar: Component = () => {
-  const [selectedTags, setSelectedTags] = createSignal<string[]>([]);
-  const [selectedSortValue, setSelectedSortValue] = createSignal('');
-  const [selectedJoinStatus, setSelectedJoinStatus] =
-    createSignal(joinStatusOptions);
-  const [selectedMembershipProcess, setSelectedMembershipProcess] =
-    createSignal(membershipProcessOptions);
-  const [selectedMemberCount, setSelectedMemberCount] =
-    createSignal(memberCountOptions);
+  selectedMembershipProcesses: Accessor<MembershipProcess[]>;
+  onMembershipProcessChange: (
+    value: MembershipProcess,
+    checked: boolean
+  ) => void;
 
-  const onSortChange = (value: string) => {
-    setSelectedSortValue(value);
-  };
+  selectedMemberCounts: Accessor<MemberCount[]>;
+  onMemberCountChange: (value: MemberCount, checked: boolean) => void;
+}
 
-  const onJoinStatusChange = (value: string, checked: boolean) => {
-    setSelectedJoinStatus((prev) =>
-      prev.map((option) => {
-        if (option.value === value) {
-          return {
-            ...option,
-            checked
-          };
-        }
-
-        return option;
-      })
-    );
-  };
-
-  const onMembershipProcessChange = (value: string, checked: boolean) => {
-    setSelectedMembershipProcess((prev) =>
-      prev.map((option) => {
-        if (option.value === value) {
-          return {
-            ...option,
-            checked
-          };
-        }
-
-        return option;
-      })
-    );
-  };
-
-  const onMemberCountChange = (value: string, checked: boolean) => {
-    setSelectedMemberCount((prev) =>
-      prev.map((option) => {
-        if (option.value === value) {
-          return {
-            ...option,
-            checked
-          };
-        }
-
-        return option;
-      })
-    );
-  };
-
+const Sidebar: Component<Props> = ({
+  selectedTags,
+  onSelectedTagsChange,
+  selectedSortBy,
+  onSortChange,
+  selectedJoinStatuses,
+  onJoinStatusChange,
+  selectedMembershipProcesses,
+  onMembershipProcessChange,
+  selectedMemberCounts,
+  onMemberCountChange
+}) => {
   return (
     <Stack
       direction="column"
@@ -130,18 +51,18 @@ const Sidebar: Component = () => {
         gap: '3.75rem',
         backgroundColor: '#ffffff',
         padding: '3.5rem 1.5rem',
-        width: '25rem'
+        width: '28.5rem'
       }}>
       {/* Results */}
-      <Stack direction="row">
-        <Typography fontWeight={600} fontSize="1.125rem">
+      {/* <Stack direction="row"> */}
+      {/* <Typography fontWeight={600} fontSize="1.125rem">
           554
         </Typography>
         &nbsp;
         <Typography fontWeight={500} fontSize="1.125rem">
           Results
-        </Typography>
-      </Stack>
+        </Typography> */}
+      {/* </Stack> */}
 
       {/* Tags */}
       <Stack direction="column" gap="1rem">
@@ -150,7 +71,7 @@ const Sidebar: Component = () => {
         </Typography>
         <TagSelect
           selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
+          onSelectedTagsChange={onSelectedTagsChange}
         />
       </Stack>
 
@@ -160,9 +81,9 @@ const Sidebar: Component = () => {
           Sort
         </Typography>
         <Select
-          value={selectedSortValue}
+          value={selectedSortBy}
           onChange={onSortChange}
-          options={['Name', 'Date']}
+          options={sortByOptions}
           placeholder="None selected"
         />
       </Stack>
@@ -172,7 +93,11 @@ const Sidebar: Component = () => {
         <Typography fontWeight={600} fontSize="1.125rem">
           Join Status
         </Typography>
-        <Checklist options={selectedJoinStatus} onChange={onJoinStatusChange} />
+        <Checklist
+          selectedValues={selectedJoinStatuses}
+          options={joinStatusOptions}
+          onChange={onJoinStatusChange}
+        />
       </Stack>
 
       {/* Membership Process */}
@@ -181,7 +106,8 @@ const Sidebar: Component = () => {
           Membership Process
         </Typography>
         <Checklist
-          options={selectedMembershipProcess}
+          selectedValues={selectedMembershipProcesses}
+          options={membershipProcessOptions}
           onChange={onMembershipProcessChange}
         />
       </Stack>
@@ -192,7 +118,8 @@ const Sidebar: Component = () => {
           Member Count
         </Typography>
         <Checklist
-          options={selectedMemberCount}
+          selectedValues={selectedMemberCounts}
+          options={memberCountOptions}
           onChange={onMemberCountChange}
         />
       </Stack>

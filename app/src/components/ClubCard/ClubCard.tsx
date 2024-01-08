@@ -23,7 +23,8 @@ const ClubCard: Component<Props> = ({ clubId }) => {
           direction="column"
           sx={{
             height: '18rem',
-            minWidth: '28.5rem',
+            // minWidth: '28.5rem',
+            width: '28.5rem',
             borderRadius: '0.75rem',
             backgroundColor: '#FFFFFF',
             boxShadow: '0px 8px 14px 0px rgba(160, 150, 150, 0.10)'

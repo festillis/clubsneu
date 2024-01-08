@@ -5,20 +5,20 @@ import {
   Stack,
   Typography
 } from '@suid/material';
-import { Accessor, Component, For } from 'solid-js';
+import { Accessor, For } from 'solid-js';
+import { ChecklistOption } from './types';
 
-export interface ChecklistOption {
-  label: string;
-  value: string;
-  checked: boolean;
+interface Props<T extends string = string> {
+  selectedValues: Accessor<T[]>;
+  options: ChecklistOption<T>[];
+  onChange: (value: T, checked: boolean) => void;
 }
 
-interface Props {
-  options: Accessor<ChecklistOption[]>;
-  onChange: (value: string, checked: boolean) => void;
-}
-
-const Checklist: Component<Props> = ({ options, onChange }) => {
+const Checklist = <T extends string>({
+  selectedValues,
+  options,
+  onChange
+}: Props<T>) => {
   return (
     <Stack
       direction="column"
@@ -29,13 +29,13 @@ const Checklist: Component<Props> = ({ options, onChange }) => {
         border: '1px solid #E3E3E3'
       }}>
       <FormGroup>
-        <For each={options()}>
-          {({ label, value, checked }) => (
+        <For each={options}>
+          {({ label, value }) => (
             <FormControlLabel
               control={
                 <Checkbox
                   value={value}
-                  checked={checked}
+                  checked={selectedValues().includes(value)}
                   onChange={(_, checked) => onChange(value, checked)}
                 />
               }

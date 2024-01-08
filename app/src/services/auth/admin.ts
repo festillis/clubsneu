@@ -1,5 +1,5 @@
 import type { Auth } from 'firebase-admin/auth';
-import { getProviderId } from './utils';
+import { authUtils } from '~/utils';
 import { AuthProvider } from './types';
 
 // Must run server-side
@@ -27,7 +27,7 @@ export const createNewAuthUser = async (
     displayName: name,
     emailVerified: true,
     providerToLink: {
-      providerId: getProviderId(provider)
+      providerId: authUtils.getProviderId(provider)
     }
   });
 };
