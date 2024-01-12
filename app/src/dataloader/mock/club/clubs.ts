@@ -18,11 +18,11 @@ export const clubs: Club[] = [
   },
   {
     id: 'club2',
-    name: 'Club2',
+    name: 'Generate',
     description: 'Club2 description',
     calendarUrl: null,
     logoUrl:
-      'https://scontent-lga3-1.xx.fbcdn.net/v/t39.30808-6/317742117_1777381502646757_6731108053682608929_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=PDXjML8nD6gAX-C7tzG&_nc_ht=scontent-lga3-1.xx&oh=00_AfAGsAEAkeoYINt0iMNVdKYJsQLjEAHk0aOvpN7zw9C6IA&oe=65999D7F',
+      'https://media.licdn.com/dms/image/D4E0BAQFOBhB8E28uyw/company-logo_200_200/0/1666806309716/generate_product_development_logo?e=1713398400&v=beta&t=wG2YV_Qfg0FyzVvjjRj-_YZuvtoSSombCmydoX-VmbE',
     joinStatus: 'not-accepting-members',
     membershipProcess: 'audition-required',
     memberCount: 10,
@@ -52,6 +52,90 @@ export const clubs: Club[] = [
     memberCount: 200,
     createdAt: new Date(),
     updatedAt: new Date()
+  },
+  {
+    id: 'club5',
+    name: 'Club5',
+    description: 'Club5 description',
+    calendarUrl: null,
+    logoUrl: null,
+    joinStatus: 'not-accepting-members',
+    membershipProcess: 'audition-required',
+    memberCount: 200,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'club6',
+    name: 'Club6',
+    description: 'Club6 description',
+    calendarUrl: null,
+    logoUrl: null,
+    joinStatus: 'not-accepting-members',
+    membershipProcess: 'audition-required',
+    memberCount: 200,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'club7',
+    name: 'Club7',
+    description: 'Club7 description',
+    calendarUrl: null,
+    logoUrl: null,
+    joinStatus: 'not-accepting-members',
+    membershipProcess: 'audition-required',
+    memberCount: 200,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'club8',
+    name: 'Club8',
+    description: 'Club8 description',
+    calendarUrl: null,
+    logoUrl: null,
+    joinStatus: 'not-accepting-members',
+    membershipProcess: 'audition-required',
+    memberCount: 200,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'club9',
+    name: 'Club9',
+    description: 'Club9 description',
+    calendarUrl: null,
+    logoUrl: null,
+    joinStatus: 'not-accepting-members',
+    membershipProcess: 'audition-required',
+    memberCount: 200,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'club10',
+    name: 'Club10',
+    description: 'Club10 description',
+    calendarUrl: null,
+    logoUrl: null,
+    joinStatus: 'not-accepting-members',
+    membershipProcess: 'audition-required',
+    memberCount: 200,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    id: 'club11',
+    name: 'Club11',
+    description: 'Club11 description',
+    calendarUrl: null,
+    logoUrl: null,
+    joinStatus: 'accepting-members',
+    membershipProcess: 'audition-required',
+    memberCount: 200,
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ];
 
@@ -77,6 +161,34 @@ export const tagsForClubs = [
   },
   {
     clubId: 'club4',
+    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
+  },
+  {
+    clubId: 'club5',
+    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
+  },
+  {
+    clubId: 'club6',
+    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
+  },
+  {
+    clubId: 'club7',
+    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
+  },
+  {
+    clubId: 'club8',
+    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
+  },
+  {
+    clubId: 'club9',
+    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
+  },
+  {
+    clubId: 'club10',
+    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
+  },
+  {
+    clubId: 'club11',
     tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
   }
 ];
