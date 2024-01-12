@@ -16,6 +16,7 @@ import {
 } from '~/components/Sidebar/types';
 
 const Home: Component = () => {
+  const [searchValue, setSearchValue] = createSignal<string>('');
   const [selectedCategory, setSelectedCategory] = createSignal<string>(
     categories[0]
   );
@@ -48,6 +49,10 @@ const Home: Component = () => {
       setSelectedMemberCounts([]);
     })
   );
+
+  const onSearchChange = (value: string) => {
+    setSearchValue(value);
+  };
 
   const onSelectedCategoryChange = (tagName: string) => {
     setSelectedCategory(tagName);
@@ -99,7 +104,7 @@ const Home: Component = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar searchValue={searchValue} onSearchChange={onSearchChange} />
       <Stack direction="row">
         <Sidebar
           selectedTags={selectedTags}
@@ -132,6 +137,7 @@ const Home: Component = () => {
           </Box>
           <Stack sx={{ alignItems: 'center', justifyContent: 'center' }}>
             <ClubGrid
+              searchValue={searchValue}
               tags={selectedTags}
               sortBy={selectedSortBy}
               joinStatuses={selectedJoinStatuses}

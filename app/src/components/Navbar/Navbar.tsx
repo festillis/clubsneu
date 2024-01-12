@@ -1,12 +1,17 @@
 import { Stack, Typography } from '@suid/material';
 import TextField from '~/components/TextField';
-import { Component, Show } from 'solid-js';
+import { Accessor, Component, Show } from 'solid-js';
 import SearchIcon from '@suid/icons-material/Search';
 import Button from '../Button';
 import { authService } from '~/services';
 import { authStore } from '~/stores';
 
-const Navbar: Component = () => {
+interface Props {
+  searchValue: Accessor<string>;
+  onSearchChange: (value: string) => void;
+}
+
+const Navbar: Component<Props> = ({ searchValue, onSearchChange }) => {
   const onSignInWithGoogle = () => {
     const authLink = authService.getGoogleAuthLink();
     window.location.replace(authLink);
@@ -45,6 +50,8 @@ const Navbar: Component = () => {
           gap: '1rem'
         }}>
         <TextField
+          value={searchValue}
+          onChange={onSearchChange}
           placeholder="Search for clubs"
           icon={<SearchIcon />}
           sx={{

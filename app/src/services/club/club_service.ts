@@ -10,6 +10,17 @@ export const getClubById = async (id: string) => {
 };
 
 // Must run server-side
+export const getClubWithTagsById = async (id: string) => {
+  const club = await prisma.club.findUnique({
+    where: { id },
+    include: {
+      tags: true
+    }
+  });
+  return club;
+};
+
+// Must run server-side
 export const getClubIdsByFilter = async (
   filter: Prisma.ClubWhereInput,
   orderBy: Prisma.ClubOrderByWithRelationInput
