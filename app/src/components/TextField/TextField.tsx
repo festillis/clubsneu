@@ -1,14 +1,22 @@
 import { InputAdornment, TextField as MUITextField } from '@suid/material';
-import { Component, JSX } from 'solid-js';
+import { Accessor, Component, JSX } from 'solid-js';
 import { SxProps } from '@suid/system';
 
 interface Props {
+  value: Accessor<string>;
+  onChange: (value: string) => void;
   icon?: JSX.Element;
   placeholder?: string;
   sx?: SxProps;
 }
 
-const TextField: Component<Props> = ({ icon, placeholder, sx }) => {
+const TextField: Component<Props> = ({
+  value,
+  icon,
+  placeholder,
+  onChange,
+  sx
+}) => {
   return (
     // <input
     //   placeholder={placeholder}
@@ -24,6 +32,8 @@ const TextField: Component<Props> = ({ icon, placeholder, sx }) => {
     //   }}></input>
 
     <MUITextField
+      value={value()}
+      onChange={(_, text) => onChange(text)}
       placeholder={placeholder}
       InputProps={{
         startAdornment: (

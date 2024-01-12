@@ -4,12 +4,12 @@ import { JoinStatus, MemberCount, MembershipProcess, SortBy } from './types';
 // Values must be properties of the `Club` model
 export const sortByOptions: ChecklistOption<SortBy>[] = [
   {
-    label: 'Name',
-    value: 'name'
-  },
-  {
     label: 'Date',
     value: 'createdAt'
+  },
+  {
+    label: 'Name',
+    value: 'name'
   }
 ];
 

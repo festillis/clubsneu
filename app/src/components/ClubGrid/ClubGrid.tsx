@@ -1,4 +1,4 @@
-import { Grid, Stack } from '@suid/material';
+import { Grid } from '@suid/material';
 import {
   Accessor,
   Component,
@@ -24,6 +24,7 @@ import { arrayUtils } from '~/utils';
 const NUMBER_OF_CLUB_SKELETONS = 8;
 
 interface Props {
+  searchValue: Accessor<string>;
   tags: Accessor<string[]>;
   sortBy: Accessor<ChecklistOption<SortBy>>;
   joinStatuses: Accessor<JoinStatus[]>;
@@ -32,6 +33,7 @@ interface Props {
 }
 
 const ClubGrid: Component<Props> = ({
+  searchValue,
   tags,
   sortBy,
   joinStatuses,
@@ -41,6 +43,7 @@ const ClubGrid: Component<Props> = ({
   const [clubIds, { refetch: refetchClubIds }] = createResource(() =>
     clubClient.getClubIdsByFilter(
       {
+        name: searchValue() ? searchValue() : undefined,
         tagNames: arrayUtils.undefinedIfEmpty(tags()),
         joinStatuses: arrayUtils.undefinedIfEmpty(joinStatuses()),
         membershipProcesses: arrayUtils.undefinedIfEmpty(membershipProcesses()),
@@ -51,9 +54,19 @@ const ClubGrid: Component<Props> = ({
   );
 
   createEffect(
-    on([tags, sortBy, joinStatuses, membershipProcesses, memberCounts], () => {
-      refetchClubIds();
-    })
+    on(
+      [
+        searchValue,
+        tags,
+        sortBy,
+        joinStatuses,
+        membershipProcesses,
+        memberCounts
+      ],
+      () => {
+        refetchClubIds();
+      }
+    )
   );
 
   return (

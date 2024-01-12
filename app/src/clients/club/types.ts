@@ -5,6 +5,7 @@ import {
 } from '~/components/Sidebar/types';
 
 export interface ClubFilters {
+  name?: string;
   tagNames?: string[];
   joinStatuses?: JoinStatus[];
   membershipProcesses?: MembershipProcess[];

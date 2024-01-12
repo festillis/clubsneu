@@ -10,14 +10,15 @@ export const GET = async ({ request }: APIEvent) => {
   const filters = JSON.parse(params.get('filters')!) as ClubFilters;
   const orderBy = params.get('orderBy') as SortBy;
 
+  console.log('filters', filters);
+
   try {
     const clubIds = await clubService.getClubIdsByFilter(
       {
-        AND: [
-          { tags: { some: { name: { in: filters.tagNames } } } },
-          { joinStatus: { in: filters.joinStatuses } },
-          { membershipProcess: { in: filters.membershipProcesses } }
-        ],
+        name: { contains: filters.name, mode: 'insensitive' },
+        tags: { some: { name: { in: filters.tagNames } } },
+        joinStatus: { in: filters.joinStatuses },
+        membershipProcess: { in: filters.membershipProcesses },
         OR: filters.memberCounts?.map((memberCount) => ({
           memberCount: countUtils.memberCountToRange(memberCount)
         }))
