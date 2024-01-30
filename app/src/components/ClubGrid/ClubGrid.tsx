@@ -53,6 +53,10 @@ const ClubGrid: Component<Props> = ({
     )
   );
 
+  createEffect(() => {
+    console.log('clubIds', clubIds());
+  });
+
   createEffect(
     on(
       [

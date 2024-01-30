@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Endpoint URL
-endpoint_url="http://localhost:3000/dataload/clear/$1"
+endpoint_url="http://localhost:3000/api/dataload/clear/$1"
 
 # Send the DELETE request using curl
 response=$(curl -X DELETE \

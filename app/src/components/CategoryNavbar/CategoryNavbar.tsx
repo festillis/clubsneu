@@ -28,7 +28,7 @@ const CategoryNavbar: Component<Props> = ({ selected, onSelectedChange }) => {
               border: selected() === tagName ? '1px solid #' : 'none'
             }}
             onClick={() => onSelectedChange(tagName)}>
-            <Typography fontSize="1.125rem">{tagName}</Typography>
+            <Typography variant="body1">{tagName}</Typography>
           </Box>
         )}
       </For>

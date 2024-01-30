@@ -5,6 +5,8 @@ import SearchIcon from '@suid/icons-material/Search';
 import Button from '../Button';
 import { authService } from '~/services';
 import { authStore } from '~/stores';
+import { useNavigate } from '@solidjs/router';
+import { colors } from '~/constants';
 
 interface Props {
   searchValue: Accessor<string>;
@@ -12,6 +14,12 @@ interface Props {
 }
 
 const Navbar: Component<Props> = ({ searchValue, onSearchChange }) => {
+  const navigate = useNavigate();
+
+  const onNavigateToHome = () => {
+    navigate('/');
+  };
+
   const onSignInWithGoogle = () => {
     const authLink = authService.getGoogleAuthLink();
     window.location.replace(authLink);
@@ -34,11 +42,15 @@ const Navbar: Component<Props> = ({ searchValue, onSearchChange }) => {
         justifyContent: 'space-between',
         px: '1rem',
         height: '4rem',
-        borderBottom: '2px solid #F5F5F5'
+        borderBottom: '2px solid #F5F5F5',
+        backgroundColor: '#FFFFFF'
       }}>
-      <Stack direction="row">
-        <Typography fontSize="2rem">Clubs</Typography>
-        <Typography fontSize="2rem" color="#E72330">
+      <Stack
+        direction="row"
+        onClick={onNavigateToHome}
+        sx={{ cursor: 'pointer' }}>
+        <Typography variant="h1">Clubs</Typography>
+        <Typography variant="h1" color={colors.RED}>
           NEU
         </Typography>
       </Stack>
@@ -66,25 +78,25 @@ const Navbar: Component<Props> = ({ searchValue, onSearchChange }) => {
               <Button
                 style={{
                   color: '#ffffff',
-                  'background-color': '#E72330'
+                  'background-color': colors.RED
                 }}
                 onClick={onSignInWithGoogle}>
-                Google
+                Club Exec
               </Button>
               <Button
                 style={{
                   color: '#ffffff',
-                  'background-color': '#E72330'
+                  'background-color': colors.RED
                 }}
                 onClick={onSignInWithMicrosoft}>
-                Microsoft
+                Member
               </Button>
             </Stack>
           }>
           <Button
             style={{
               color: '#ffffff',
-              'background-color': '#E72330'
+              'background-color': colors.RED
             }}
             onClick={onLogout}>
             Logout

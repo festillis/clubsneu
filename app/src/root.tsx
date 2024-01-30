@@ -16,6 +16,7 @@ import { ThemeProvider } from '@suid/material';
 import { theme } from './theme';
 import { createMediaQuery } from '@solid-primitives/media';
 import { flags } from './constants';
+import LoadingPage from '~/components/LoadingPage';
 
 export default function Root() {
   const isDesktopSize = createMediaQuery('(min-width: 1280px)');
@@ -33,7 +34,7 @@ export default function Root() {
             when={flags.ENFORCE_DESKTOP_ONLY_SIZE && !isDesktopSize()}
             fallback={
               <ErrorBoundary>
-                <Suspense fallback={<div>Loading</div>}>
+                <Suspense fallback={<LoadingPage />}>
                   <Routes>
                     <FileRoutes />
                   </Routes>

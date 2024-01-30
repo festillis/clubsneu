@@ -14,3 +14,19 @@ export const memberCountToRange = (memberCount: MemberCount) => {
       return { gte: 150 };
   }
 };
+
+export const memberCountToRangeString = (memberCount: number) => {
+  if (memberCount < 20) {
+    return 'Less than 20';
+  }
+  if (memberCount < 50) {
+    return '20-50';
+  }
+  if (memberCount < 100) {
+    return '50-100';
+  }
+  if (memberCount < 150) {
+    return '100-150';
+  }
+  return 'More than 150';
+};
