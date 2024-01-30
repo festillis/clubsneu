@@ -24,37 +24,31 @@ const Footer: Component = () => {
           width: '100%'
         }}>
         <Stack direction="column" justifyContent="space-between" height="100%">
-          <Stack direction="column">
-            <Typography fontSize="2.25rem" fontWeight={500}>
-              ClubsNEU
-            </Typography>
+          <Stack
+            direction="column"
+            sx={{
+              gap: '1rem'
+            }}>
+            <Typography variant="h1">ClubsNEU</Typography>
             <Typography
-              fontSize="1.125rem"
-              fontWeight={400}
+              variant="body1"
               sx={{
                 maxWidth: '300px'
               }}>
               ClubsNEU is a all-in-one club app for Northeastern students by
               Northeastern students
             </Typography>
+            <Typography variant="body1" color="text.secondary">
+              © {currentYear} ClubsNEU. All rights reserved.
+            </Typography>
           </Stack>
-          <Typography
-            fontSize="1.125rem"
-            color="text.secondary"
-            fontWeight={500}>
-            © {currentYear} ClubsNEU. All rights reserved.
-          </Typography>
         </Stack>
         <Stack direction="column" justifyContent="space-between" height="100%">
           <Stack direction="column">
-            <Typography fontSize="1.125rem" fontWeight={700}>
-              Resources
-            </Typography>
-            <Typography fontSize="1.125rem" fontWeight={400}>
-              FAQ
-            </Typography>
+            <Typography variant="h2">Resources</Typography>
+            <Typography variant="body1">FAQ</Typography>
           </Stack>
-          <Typography color="text.secondary" fontWeight={500}>
+          <Typography variant="body1" color="text.secondary">
             designed and developed with ❤
           </Typography>
         </Stack>

@@ -34,9 +34,10 @@ export const clubs: Club[] = [
     name: 'Club3',
     description: 'Club3 description',
     calendarUrl: null,
-    logoUrl: null,
+    logoUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Solid_black.svg/1200px-Solid_black.svg.png',
     joinStatus: 'not-accepting-members',
-    membershipProcess: 'audition-required',
+    membershipProcess: 'open-membership',
     memberCount: 0,
     createdAt: new Date(),
     updatedAt: new Date()
@@ -136,59 +137,5 @@ export const clubs: Club[] = [
     memberCount: 200,
     createdAt: new Date(),
     updatedAt: new Date()
-  }
-];
-
-export const tagsForClubs = [
-  {
-    clubId: 'club1',
-    tags: [
-      'Undergraduate',
-      'Khoury',
-      'Programming',
-      'Professional',
-      'Design',
-      'Product Development'
-    ]
-  },
-  {
-    clubId: 'club2',
-    tags: ['Consulting', 'Mentorship', 'Professional', 'Design']
-  },
-  {
-    clubId: 'club3',
-    tags: ['STEM', 'Khoury', 'Venture Accelerator', 'Cultural']
-  },
-  {
-    clubId: 'club4',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
-  },
-  {
-    clubId: 'club5',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
-  },
-  {
-    clubId: 'club6',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
-  },
-  {
-    clubId: 'club7',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
-  },
-  {
-    clubId: 'club8',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
-  },
-  {
-    clubId: 'club9',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
-  },
-  {
-    clubId: 'club10',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
-  },
-  {
-    clubId: 'club11',
-    tags: ['Undergraduate', 'Service', 'Engineering', 'Business']
   }
 ];

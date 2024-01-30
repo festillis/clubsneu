@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { APIEvent, json } from 'solid-start';
 import { ClubFilters } from '~/clients/club/types';
 import { SortBy } from '~/components/Sidebar/types';
@@ -7,26 +8,57 @@ import { countUtils, requestUtils } from '~/utils';
 
 export const GET = async ({ request }: APIEvent) => {
   const params = requestUtils.getUrlSearchParams(request);
-  const filters = JSON.parse(params.get('filters')!) as ClubFilters;
-  const orderBy = params.get('orderBy') as SortBy;
+  const paramFilters = params.get('filters');
+  const paramOrderBy = params.get('orderBy');
 
-  console.log('filters', filters);
+  if (!paramFilters || !paramOrderBy) {
+    return json(
+      { error: 'Missing one or more required params: filters, orderBy' },
+      { status: statusCodes.BAD_REQUEST }
+    );
+  }
+
+  const clubFilters = JSON.parse(paramFilters) as ClubFilters;
+  const sortBy = paramOrderBy as SortBy;
+
+  const filters: Prisma.ClubWhereInput = {};
+
+  if (clubFilters.name) {
+    filters.name = {
+      contains: clubFilters.name,
+      mode: 'insensitive'
+    };
+  }
+
+  if (clubFilters.tagNames) {
+    console.log('clubFilters.tagNames', clubFilters.tagNames);
+    filters.tags = {
+      some: {
+        name: {
+          in: clubFilters.tagNames
+        }
+      }
+    };
+  }
+
+  if (clubFilters.joinStatuses) {
+    filters.joinStatus = { in: clubFilters.joinStatuses };
+  }
+
+  if (clubFilters.membershipProcesses) {
+    filters.membershipProcess = { in: clubFilters.membershipProcesses };
+  }
+
+  if (clubFilters.memberCounts) {
+    filters.OR = clubFilters.memberCounts.map((memberCount) => ({
+      memberCount: countUtils.memberCountToRange(memberCount)
+    }));
+  }
 
   try {
-    const clubIds = await clubService.getClubIdsByFilter(
-      {
-        name: { contains: filters.name, mode: 'insensitive' },
-        tags: { some: { name: { in: filters.tagNames } } },
-        joinStatus: { in: filters.joinStatuses },
-        membershipProcess: { in: filters.membershipProcesses },
-        OR: filters.memberCounts?.map((memberCount) => ({
-          memberCount: countUtils.memberCountToRange(memberCount)
-        }))
-      },
-      {
-        [orderBy]: 'asc'
-      }
-    );
+    const clubIds = await clubService.getClubIdsByFilter(filters, {
+      [sortBy]: 'asc'
+    });
 
     return json(clubIds);
   } catch (e: any) {

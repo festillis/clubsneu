@@ -4,14 +4,22 @@ import TagChip from './TagChip';
 import GroupsIcon from '@suid/icons-material/Groups';
 import { clubClient } from '~/clients';
 import ClubCardSkeleton from './ClubCardSkeleton';
+import { useNavigate } from '@solidjs/router';
+import { colors } from '~/constants';
 
 interface Props {
   clubId: string;
 }
 
 const ClubCard: Component<Props> = ({ clubId }) => {
+  const navigate = useNavigate();
+
   const [club] = createResource(() => clubClient.getClubById(clubId));
   const [tags] = createResource(() => clubClient.getTagsForClub(clubId));
+
+  const onCardClick = () => {
+    navigate(`/club/${clubId}`);
+  };
 
   return (
     <Switch>
@@ -20,14 +28,16 @@ const ClubCard: Component<Props> = ({ clubId }) => {
       </Match>
       <Match when={club() && tags()}>
         <Stack
+          onClick={onCardClick}
           direction="column"
           sx={{
+            cursor: 'pointer',
             height: '18rem',
             // minWidth: '28.5rem',
             width: '28.5rem',
             borderRadius: '0.75rem',
             backgroundColor: '#FFFFFF',
-            boxShadow: '0px 8px 14px 0px rgba(160, 150, 150, 0.10)'
+            boxShadow: colors.BOX_SHADOW
           }}>
           <Stack
             direction="row"
@@ -56,9 +66,7 @@ const ClubCard: Component<Props> = ({ clubId }) => {
                 />
               </Show>
             </Box>
-            <Typography fontWeight={500} fontSize="1.25rem">
-              {club()!.name}
-            </Typography>
+            <Typography variant="h3">{club()!.name}</Typography>
           </Stack>
           <Divider />
           <Stack
@@ -68,7 +76,7 @@ const ClubCard: Component<Props> = ({ clubId }) => {
               padding: '1.25rem',
               justifyContent: 'space-evenly'
             }}>
-            <Typography>{club()!.description}</Typography>
+            <Typography variant="body1">{club()!.description}</Typography>
             <Stack
               direction="row"
               sx={{

@@ -120,14 +120,14 @@ export const updateClubCalendarUrl = async (
 
 // Must run server-side
 export const getTagsForClub = async (clubId: string) => {
-  console.log('getTagsForClub', clubId);
-
   const clubWithTags = await prisma.club.findUnique({
     where: { id: clubId },
     select: {
       tags: true
     }
   });
+
+  // console.log('getTagsForClub', clubId, clubWithTags);
 
   if (!clubWithTags) {
     throw new Error(`Club with id ${clubId} not found`);

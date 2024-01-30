@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Endpoint URL
-endpoint_url="http://localhost:3000/dataload/mock"
+endpoint_url="http://localhost:3000/api/dataload/mock"
 
 # Send the POST request using curl
 response=$(curl -X POST \

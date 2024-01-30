@@ -5,3 +5,4 @@ export * as timeUtils from './time';
 export * as authUtils from './auth';
 export * as arrayUtils from './array';
 export * as countUtils from './count';
+export * as conversionUtils from './conversion';

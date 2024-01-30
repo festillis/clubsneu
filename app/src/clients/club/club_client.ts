@@ -8,7 +8,7 @@ export const getAllClubIds = async () => {
 };
 
 export const getClubById = async (clubId: string) => {
-  return api.req<Club>('GET', { url: `/club/${clubId}` });
+  return api.req<Club | null>('GET', { url: `/club/${clubId}` });
 };
 
 export const getClubIdsByFilter = async (

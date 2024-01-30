@@ -39,7 +39,7 @@ const Checklist = <T extends string>({
                   onChange={(_, checked) => onChange(value, checked)}
                 />
               }
-              label={<Typography>{label}</Typography>}
+              label={<Typography variant="body1">{label}</Typography>}
               sx={{
                 width: 'max-content'
               }}
