@@ -16,9 +16,9 @@ const Button: Component<Props> = ({ children, style, onClick }) => {
         outline: 'none',
         border: 'none',
         padding: '0 1rem',
-        // width: '5.125rem',
         height: '2.6875rem',
-        'font-size': '1.25rem',
+        // 'font-size': '1.25rem',
+        'font-size': '1rem',
         'font-weight': 500,
         ...style
       }}>

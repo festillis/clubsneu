@@ -1,6 +1,7 @@
 import { InputAdornment, TextField as MUITextField } from '@suid/material';
 import { Accessor, Component, JSX } from 'solid-js';
 import { SxProps } from '@suid/system';
+import { colors } from '~/constants';
 
 interface Props {
   value: Accessor<string>;
@@ -45,6 +46,7 @@ const TextField: Component<Props> = ({
           },
           borderRadius: '0.75rem',
           height: '2.6875rem',
+          boxShadow: colors.BOX_SHADOW,
           ...sx
         }
       }}

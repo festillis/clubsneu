@@ -1,6 +1,7 @@
 import { Stack, Box, Skeleton, Divider } from '@suid/material';
 import { Component } from 'solid-js';
 import GroupsIcon from '@suid/icons-material/Groups';
+import { colors } from '~/constants';
 
 const LINE_HEIGHT = 25;
 const CHIP_HEIGHT = 30;
@@ -17,7 +18,7 @@ const ClubCardSkeleton: Component<Props> = () => {
         width: '28.5rem',
         borderRadius: '0.75rem',
         backgroundColor: '#FFFFFF',
-        boxShadow: '0px 8px 14px 0px rgba(160, 150, 150, 0.10)'
+        boxShadow: colors.BOX_SHADOW
       }}>
       <Stack
         direction="row"

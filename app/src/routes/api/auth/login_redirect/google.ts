@@ -84,7 +84,7 @@ export const GET = async ({ request }: APIEvent) => {
       );
 
       const redirectUrl = new URL(`${envVars.BASE_URL}/login`);
-      redirectUrl.searchParams.append('custom_token', customToken);
+      redirectUrl.searchParams.append('customToken', customToken);
 
       return redirect(redirectUrl.toString());
     }
@@ -103,7 +103,7 @@ export const GET = async ({ request }: APIEvent) => {
     });
 
     const redirectUrl = new URL(`${envVars.BASE_URL}/login`);
-    redirectUrl.searchParams.append('custom_token', customToken);
+    redirectUrl.searchParams.append('customToken', customToken);
 
     return redirect(redirectUrl.toString());
   } catch (e: any) {

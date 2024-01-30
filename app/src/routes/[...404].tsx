@@ -1,7 +1,14 @@
-export default function NotFound() {
+import { Component } from 'solid-js';
+import { Stack, Typography } from '@suid/material';
+
+interface Props {}
+
+const NotFoundPage: Component<Props> = () => {
   return (
-    <main class="w-full p-4 space-y-2">
-      <h1 class="font-bold text-xl">Page Not Found</h1>
-    </main>
+    <Stack>
+      <Typography>404 Page Not Found</Typography>
+    </Stack>
   );
-}
+};
+
+export default NotFoundPage;

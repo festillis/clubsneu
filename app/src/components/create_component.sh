@@ -9,6 +9,9 @@ fi
 # Get the given name from the command line argument
 given_name=$1
 
+# Navigate to the directory this script is in
+cd "$(dirname "$0")"
+
 # Create the directory
 mkdir $given_name
 

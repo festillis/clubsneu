@@ -1,7 +1,7 @@
 import { APIEvent, json } from 'solid-start';
 import { statusCodes } from '~/constants';
 import { authService, userService } from '~/services';
-import { requestUtils } from '~/utils';
+import { authUtils, requestUtils } from '~/utils';
 
 export const POST = async ({ request }: APIEvent) => {
   try {
@@ -22,7 +22,7 @@ export const POST = async ({ request }: APIEvent) => {
     const newCredentials = {
       accessToken: access_token,
       refreshToken: refresh_token,
-      accessTokenExpiry: authService.getAccessTokenExpiryDate(expires_in)
+      accessTokenExpiry: authUtils.getAccessTokenExpiryDate(expires_in)
     };
 
     await userService.updateUser(userId, newCredentials);

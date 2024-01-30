@@ -1,25 +1,33 @@
-import { Component, Show, createSignal, onMount } from 'solid-js';
+import { Component, Match, Switch, createSignal, onMount } from 'solid-js';
 import { useSearchParams } from '@solidjs/router';
 import { useNavigate } from '@solidjs/router';
 import { authService } from '~/services';
 
-const Login: Component = () => {
-  const [params, setParams] = useSearchParams();
+interface Params extends Record<string, string> {
+  customToken: string;
+}
+
+interface Props {}
+
+const LoginWithCustomToken: Component<Props> = () => {
+  const [params, setSearchParams] = useSearchParams<Params>();
   const navigate = useNavigate();
 
-  const [failedLogin, setFailedLogin] = createSignal(false);
+  const [isSuccessfulLogin, setIsSuccessfulLogin] = createSignal(true);
 
   onMount(async () => {
-    const customSignInToken = params['custom_token'];
+    const customSignInToken = params.customToken;
+
+    console.log('customSignInToken', customSignInToken);
 
     if (!customSignInToken) {
-      setFailedLogin(true);
+      setIsSuccessfulLogin(false);
       console.error('Log in failed. Missing custom token or access token');
       return;
     }
 
-    // Clear the search params from URL
-    setParams({});
+    // Clear search params
+    setSearchParams({});
 
     // Use Firebase Client to log in with custom token
     // so we keep this as a component instead of an HTTP API endpoint
@@ -30,18 +38,19 @@ const Login: Component = () => {
   });
 
   return (
-    <Show
-      when={failedLogin()}
-      fallback={
+    <Switch>
+      <Match when={isSuccessfulLogin()}>
         <div>
           <h1>Logging in...</h1>
         </div>
-      }>
-      <div>
-        <h1>Log in failed</h1>
-      </div>
-    </Show>
+      </Match>
+      <Match when={!isSuccessfulLogin()}>
+        <div>
+          <h1>Log in failed</h1>
+        </div>
+      </Match>
+    </Switch>
   );
 };
 
-export default Login;
+export default LoginWithCustomToken;

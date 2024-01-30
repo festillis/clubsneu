@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Endpoint URL
-endpoint_url="http://localhost:3000/dataload/production"
+endpoint_url="http://localhost:3000/api/dataload/production"
 
 # Send the POST request using curl
 response=$(curl -X POST \

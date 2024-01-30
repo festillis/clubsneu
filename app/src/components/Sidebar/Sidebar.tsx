@@ -53,22 +53,9 @@ const Sidebar: Component<Props> = ({
         padding: '3.5rem 1.5rem',
         width: '28.5rem'
       }}>
-      {/* Results */}
-      {/* <Stack direction="row"> */}
-      {/* <Typography fontWeight={600} fontSize="1.125rem">
-          554
-        </Typography>
-        &nbsp;
-        <Typography fontWeight={500} fontSize="1.125rem">
-          Results
-        </Typography> */}
-      {/* </Stack> */}
-
       {/* Tags */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={600} fontSize="1.125rem">
-          Tags
-        </Typography>
+        <Typography variant="h3">Tags</Typography>
         <TagSelect
           selectedTags={selectedTags}
           onSelectedTagsChange={onSelectedTagsChange}
@@ -77,9 +64,7 @@ const Sidebar: Component<Props> = ({
 
       {/* Sort by */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={600} fontSize="1.125rem">
-          Sort
-        </Typography>
+        <Typography variant="h3">Sort</Typography>
         <Select
           value={selectedSortBy}
           onChange={onSortChange}
@@ -90,9 +75,7 @@ const Sidebar: Component<Props> = ({
 
       {/* Join Status */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={600} fontSize="1.125rem">
-          Join Status
-        </Typography>
+        <Typography variant="h3">Join Status</Typography>
         <Checklist
           selectedValues={selectedJoinStatuses}
           options={joinStatusOptions}
@@ -102,9 +85,7 @@ const Sidebar: Component<Props> = ({
 
       {/* Membership Process */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={600} fontSize="1.125rem">
-          Membership Process
-        </Typography>
+        <Typography variant="h3">Membership Process</Typography>
         <Checklist
           selectedValues={selectedMembershipProcesses}
           options={membershipProcessOptions}
@@ -114,9 +95,7 @@ const Sidebar: Component<Props> = ({
 
       {/* Member Count */}
       <Stack direction="column" gap="1rem">
-        <Typography fontWeight={600} fontSize="1.125rem">
-          Member Count
-        </Typography>
+        <Typography variant="h3">Member Count</Typography>
         <Checklist
           selectedValues={selectedMemberCounts}
           options={memberCountOptions}

@@ -1,4 +1,5 @@
-import { clubs, tagsForClubs } from './clubs';
+import { clubs } from './clubs';
+import { tagsForClubs } from './tags_for_clubs';
 import { clubService, tagService } from '~/services';
 
 export const deleteClubs = async () => {
