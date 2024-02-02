@@ -1,19 +1,35 @@
-import { Box, Stack, Typography } from '@suid/material';
-import { Component } from 'solid-js';
-
-import EmailOutlinedIcon from '@suid/icons-material/EmailOutlined';
-import LanguageOutlinedIcon from '@suid/icons-material/LanguageOutlined';
+import { Stack, Typography } from '@suid/material';
+import { Component, Show } from 'solid-js';
 import {
+  AiOutlineMail,
   AiOutlineLinkedin,
   AiOutlineInstagram,
   AiOutlineGithub
 } from 'solid-icons/ai';
-import { FaBrandsMeta } from 'solid-icons/fa';
+import { FaBrandsMeta, FaBrandsDiscord } from 'solid-icons/fa';
+import { CgWebsite } from 'solid-icons/cg';
 import { colors } from '~/constants';
+import ContactRow from './ContactRow';
 
-interface Props {}
+interface Props {
+  email?: string;
+  websiteUrl?: string | null;
+  linkedinUrl?: string | null;
+  instagramUrl?: string | null;
+  facebookUrl?: string | null;
+  githubUrl?: string | null;
+  discordUrl?: string | null;
+}
 
-const ClubContact: Component<Props> = () => {
+const ClubContact: Component<Props> = ({
+  email,
+  websiteUrl,
+  linkedinUrl,
+  instagramUrl,
+  facebookUrl,
+  githubUrl,
+  discordUrl
+}) => {
   return (
     <Stack
       direction="column"
@@ -25,60 +41,69 @@ const ClubContact: Component<Props> = () => {
         boxShadow: colors.BOX_SHADOW
       }}>
       <Typography variant="h3">Contact</Typography>
-      <Stack
-        direction="row"
-        sx={{
-          gap: '1rem',
-          alignItems: 'center'
-        }}>
-        <EmailOutlinedIcon />
-        <Typography>Email</Typography>
-      </Stack>
-      <Stack
-        direction="row"
-        sx={{
-          gap: '1rem',
-          alignItems: 'center'
-        }}>
-        <LanguageOutlinedIcon />
-        <Typography>Website</Typography>
-      </Stack>
-      <Stack
-        direction="row"
-        sx={{
-          gap: '1rem',
-          alignItems: 'center'
-        }}>
-        <AiOutlineLinkedin size="1.5rem" />
-        <Typography>LinkedIn</Typography>
-      </Stack>
-      <Stack
-        direction="row"
-        sx={{
-          gap: '1rem',
-          alignItems: 'center'
-        }}>
-        <AiOutlineInstagram size="1.5rem" />
-        <Typography>Instagram</Typography>
-      </Stack>
-      <Stack
-        direction="row"
-        sx={{
-          gap: '1rem',
-          alignItems: 'center'
-        }}>
-        <FaBrandsMeta size="1.5rem" />
-        <Typography>Meta</Typography>
-      </Stack>
-      <Stack
-        direction="row"
-        sx={{
-          gap: '1rem',
-          alignItems: 'center'
-        }}>
-        <AiOutlineGithub size="1.5rem" />
-        <Typography>GitHub</Typography>
-      </Stack>
+      <Show
+        when={
+          !email &&
+          !websiteUrl &&
+          !linkedinUrl &&
+          !instagramUrl &&
+          !facebookUrl &&
+          !githubUrl &&
+          !discordUrl
+        }>
+        <Typography variant="body1" color="text.secondary">
+          No contact information available.
+        </Typography>
+      </Show>
+      <Show when={email}>
+        <ContactRow
+          icon={<AiOutlineMail size="1.5rem" />}
+          label="Email"
+          href={`mailto:${email!}`}
+        />
+      </Show>
+      <Show when={websiteUrl}>
+        <ContactRow
+          icon={<CgWebsite size="1.5rem" />}
+          label="Website"
+          href={websiteUrl!}
+        />
+      </Show>
+      <Show when={linkedinUrl}>
+        <ContactRow
+          icon={<AiOutlineLinkedin size="1.5rem" />}
+          label="LinkedIn"
+          href={linkedinUrl!}
+        />
+      </Show>
+      <Show when={instagramUrl}>
+        <ContactRow
+          icon={<AiOutlineInstagram size="1.5rem" />}
+          label="Instagram"
+          href={instagramUrl!}
+        />
+      </Show>
+      <Show when={facebookUrl}>
+        <ContactRow
+          icon={<FaBrandsMeta size="1.5rem" />}
+          label="Meta"
+          href={facebookUrl!}
+        />
+      </Show>
+      <Show when={githubUrl}>
+        <ContactRow
+          icon={<AiOutlineGithub size="1.5rem" />}
+          label="GitHub"
+          href={githubUrl!}
+        />
+      </Show>
+      <Show when={discordUrl}>
+        <ContactRow
+          icon={<FaBrandsDiscord size="1.5rem" />}
+          label="Discord"
+          href={discordUrl!}
+        />
+      </Show>
     </Stack>
   );
 };

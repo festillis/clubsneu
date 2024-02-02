@@ -115,7 +115,15 @@ const ClubPage: Component<Props> = () => {
                     club()!.membershipProcess as MembershipProcess
                   }
                 />
-                <ClubContact />
+                <ClubContact
+                  email={club()!.email}
+                  websiteUrl={club()!.websiteUrl}
+                  linkedinUrl={club()!.linkedinUrl}
+                  instagramUrl={club()!.instagramUrl}
+                  facebookUrl={club()!.facebookUrl}
+                  githubUrl={club()!.githubUrl}
+                  discordUrl={club()!.discordUrl}
+                />
                 <ClubUpcomingEvent />
               </Stack>
             </Stack>
