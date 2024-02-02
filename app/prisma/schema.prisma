@@ -43,14 +43,21 @@ model Profile {
 model Club {
   id                String   @id @default(uuid())
   name              String   @unique
-  calendarUrl       String?
+  email             String   @unique
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   description       String
-  logoUrl           String?
   joinStatus        String
   membershipProcess String
   memberCount       Int      @default(0)
+  calendarUrl       String?
+  discordUrl        String?
+  facebookUrl       String?
+  githubUrl         String?
+  instagramUrl      String?
+  websiteUrl        String?
+  linkedinUrl       String?
+  logoUrl           String?
   members           User[]   @relation("ClubMembers")
   owners            User[]   @relation("ClubOwners")
   subscribers       User[]   @relation("ClubSubscribers")
