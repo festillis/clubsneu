@@ -7,7 +7,7 @@ import {
   getApp as getAdminApp
 } from 'firebase-admin/app';
 import { getAuth as getAdminAuth } from 'firebase-admin/auth';
-import { authService, userService } from '~/services';
+import { authService, profileService, userService } from '~/services';
 import { statusCodes } from '~/constants';
 import { authUtils, requestUtils } from '~/utils';
 
@@ -58,13 +58,18 @@ export const GET = async ({ request }: APIEvent) => {
 
       await userService.createUser({
         id: createdAuthUser.uid,
-        email: mail,
-        name: displayName,
         accessToken: access_token,
         refreshToken: refresh_token,
         accessTokenExpiry: authUtils.getAccessTokenExpiryDate(expires_in),
         provider: 'microsoft',
         role: 'member'
+      });
+
+      await profileService.createProfile({
+        userId: createdAuthUser.uid,
+        email: mail,
+        name: displayName,
+        avatarUrl: createdAuthUser.photoURL
       });
 
       const customToken = await authService.createFirebaseToken(
@@ -79,14 +84,22 @@ export const GET = async ({ request }: APIEvent) => {
     }
 
     console.log('Auth user exists. Updating user...');
+
     const customToken = await authService.createFirebaseToken(
       adminAuth,
       authUser.uid
     );
+
     await userService.updateUser(authUser.uid, {
       accessToken: access_token,
       refreshToken: refresh_token,
       accessTokenExpiry: authUtils.getAccessTokenExpiryDate(expires_in)
+    });
+
+    await profileService.updateProfile(authUser.uid, {
+      email: mail,
+      name: displayName,
+      avatarUrl: authUser.photoURL
     });
 
     const redirectUrl = new URL(`${envVars.BASE_URL}/login`);

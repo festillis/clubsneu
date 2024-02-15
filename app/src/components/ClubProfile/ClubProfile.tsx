@@ -91,8 +91,7 @@ const ClubProfile: Component<Props> = ({ name, logoUrl }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 px: '0.5rem',
-                borderRadius: '0.75rem',
-                border: `1px solid ${colors.GRAY}`
+                borderRadius: '0.75rem'
               }}>
               <MoreHorizIcon />
             </Box>

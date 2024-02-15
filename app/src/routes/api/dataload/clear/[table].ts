@@ -1,7 +1,12 @@
 import { APIEvent, json } from 'solid-start';
 import { statusCodes } from '~/constants';
 import { envVars } from '~/constants';
-import { clubService, tagService, userService } from '~/services';
+import {
+  clubService,
+  profileService,
+  tagService,
+  userService
+} from '~/services';
 
 export const DELETE = async ({ params }: APIEvent) => {
   if (envVars.NODE_ENV !== 'development') {
@@ -24,9 +29,13 @@ export const DELETE = async ({ params }: APIEvent) => {
       case 'user':
         await userService.deleteAllUsers();
         return json('Cleared all users');
+      case 'profile':
+        await profileService.deleteAllProfiles();
+        return json('Cleared all profiles');
       case 'all':
         await tagService.deleteAllTags();
         await clubService.deleteAllClubs();
+        await profileService.deleteAllProfiles();
         await userService.deleteAllUsers();
         return json('Cleared all tables');
       default:

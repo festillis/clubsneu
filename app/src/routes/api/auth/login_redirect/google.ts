@@ -7,7 +7,7 @@ import {
   getApp as getAdminApp
 } from 'firebase-admin/app';
 import { getAuth as getAdminAuth } from 'firebase-admin/auth';
-import { authService, userService } from '~/services';
+import { authService, profileService, userService } from '~/services';
 import { statusCodes } from '~/constants';
 import { authUtils, requestUtils } from '~/utils';
 
@@ -69,13 +69,18 @@ export const GET = async ({ request }: APIEvent) => {
 
       await userService.createUser({
         id: createdAuthUser.uid,
-        email,
-        name,
         accessToken: access_token,
         refreshToken: refresh_token,
         accessTokenExpiry: authUtils.getAccessTokenExpiryDate(expires_in),
         provider: 'google',
         role: 'exec'
+      });
+
+      await profileService.createProfile({
+        userId: createdAuthUser.uid,
+        email,
+        name,
+        avatarUrl: createdAuthUser.photoURL
       });
 
       const customToken = await authService.createFirebaseToken(
@@ -100,6 +105,12 @@ export const GET = async ({ request }: APIEvent) => {
       accessToken: access_token,
       refreshToken: refresh_token,
       accessTokenExpiry: authUtils.getAccessTokenExpiryDate(expires_in)
+    });
+
+    await profileService.updateProfile(authUser.uid, {
+      email,
+      name,
+      avatarUrl: authUser.photoURL
     });
 
     const redirectUrl = new URL(`${envVars.BASE_URL}/login`);

@@ -8,4 +8,5 @@ export const loadData = async () => {
   await clubDataloader.deleteClubs();
   await clubDataloader.loadClubs();
   await clubDataloader.loadTagsForClubs();
+  await clubDataloader.loadOwnersForClubs();
 };

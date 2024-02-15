@@ -2,6 +2,7 @@ import { AuthProvider } from './types';
 import { logout } from './logout';
 import { setAccessToken } from './access_token';
 import { authClient } from '~/clients';
+import { toSafe } from '~/utils/safe';
 
 let accessTokenExpiryTimeout: NodeJS.Timeout | null = null;
 
@@ -17,19 +18,15 @@ export const startMonitoringAccessTokenSession = (
   const nowMs = new Date().getTime();
   const timeUntilExpiryMs = accessTokenExpiryMs - nowMs;
 
-  // console.log(
-  //   `Access token expires in ${Math.round(
-  //     timeUntilExpiryMs / 1000 / 60
-  //   )}m ${Math.round((timeUntilExpiryMs / 1000) % 60)}s`
-  // );
-
   accessTokenExpiryTimeout = setTimeout(async () => {
     console.log('Access token has expired. Need re-authentication');
 
-    const newCredentials = await authClient.getNewCredentialsWithRefreshToken(
-      userId,
-      provider,
-      refreshToken
+    const newCredentials = await toSafe(() =>
+      authClient.getNewCredentialsWithRefreshToken(
+        userId,
+        provider,
+        refreshToken
+      )
     );
 
     if (newCredentials.hasError) {
