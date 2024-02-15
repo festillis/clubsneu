@@ -2,6 +2,9 @@ import { ApiClient } from '~/api_client';
 import { envVars } from '~/constants';
 import { GoogleCredentials, GoogleTokenInfo, GoogleUserInfo } from './types';
 
+/**
+ * https://developers.google.com/identity/protocols/oauth2/scopes
+ */
 export const googleAuthScopes = [
   'https://www.googleapis.com/auth/calendar.readonly',
   'https://www.googleapis.com/auth/userinfo.email',

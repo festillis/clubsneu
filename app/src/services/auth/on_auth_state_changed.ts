@@ -12,10 +12,14 @@ import { AuthProvider } from './types';
 import { flags } from '~/constants';
 import { setProvider } from './provider';
 import server$ from 'solid-start/server';
-import { userService } from '..';
+import { profileService, userService } from '..';
 
 const serverGetUserById = server$(async (id: string) =>
   userService.getUserById(id)
+);
+
+const serverGetUserProfileById = server$(async (id: string) =>
+  profileService.getProfileByUserId(id)
 );
 
 const authChangedUnsubscribe = onAuthStateChanged(clientAuth, async (user) => {
@@ -27,8 +31,9 @@ const authChangedUnsubscribe = onAuthStateChanged(clientAuth, async (user) => {
   if (user) {
     // Force fetch user info
     const dbUser = await serverGetUserById(user.uid);
+    const dbUserProfile = await serverGetUserProfileById(user.uid);
 
-    if (!dbUser) {
+    if (!dbUser || !dbUserProfile) {
       console.error('User not found. Logging out...');
       await logout();
       return;
@@ -44,7 +49,7 @@ const authChangedUnsubscribe = onAuthStateChanged(clientAuth, async (user) => {
     setProvider(dbUser.provider as AuthProvider);
     authStore.setIsAuthenticated(true);
 
-    console.log(`User is signed in as ${dbUser.email}`);
+    console.log(`User is signed in as ${dbUserProfile.email}`);
   } else {
     setAccessToken(null);
     setProvider(null);

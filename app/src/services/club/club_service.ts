@@ -53,6 +53,36 @@ export const getAllClubIds = async () => {
 };
 
 // Must run server-side
+export const getClubOwnerById = async (clubId: string, userId: string) => {
+  const clubOwner = await prisma.clubOwner.findUnique({
+    where: {
+      userId_clubId: {
+        userId,
+        clubId
+      }
+    }
+  });
+
+  if (!clubOwner) {
+    throw new Error(`Club owner with id ${userId} not found`);
+  }
+
+  return clubOwner;
+};
+
+// Must run server-side
+export const getOwnerIdsForClub = async (clubId: string) => {
+  const clubOwners = await prisma.clubOwner.findMany({
+    where: { clubId },
+    select: {
+      userId: true
+    }
+  });
+
+  return clubOwners.map((clubOwner) => clubOwner.userId);
+};
+
+// Must run server-side
 export const clubExists = async (id: string) => {
   const club = await getClubById(id);
   return !!club;
@@ -78,14 +108,23 @@ export const deleteAllClubs = async () => {
 };
 
 // Must run server-side
-export const addOwnerToClub = async (clubId: string, userId: string) => {
-  return await prisma.club.update({
-    where: { id: clubId },
-    data: {
-      owners: {
-        connect: {
-          id: userId
-        }
+export const addOwnerToClub = async (input: {
+  userId: string;
+  clubId: string;
+  role: string;
+}) => {
+  return await prisma.clubOwner.create({
+    data: input
+  });
+};
+
+// Must run server-side
+export const deleteOwnerFromClub = async (userId: string, clubId: string) => {
+  return await prisma.clubOwner.delete({
+    where: {
+      userId_clubId: {
+        userId,
+        clubId
       }
     }
   });
@@ -126,8 +165,6 @@ export const getTagsForClub = async (clubId: string) => {
       tags: true
     }
   });
-
-  // console.log('getTagsForClub', clubId, clubWithTags);
 
   if (!clubWithTags) {
     throw new Error(`Club with id ${clubId} not found`);

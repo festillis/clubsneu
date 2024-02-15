@@ -91,7 +91,7 @@ const ClubPage: Component<Props> = () => {
                 <ClubFAQ />
 
                 {/* Eboard */}
-                <ClubEboard />
+                <ClubEboard clubId={id} />
               </Stack>
             </Stack>
             {/* Outer Right Column */}

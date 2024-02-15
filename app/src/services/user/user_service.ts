@@ -19,6 +19,17 @@ export const getUserById = async (id: string) => {
 };
 
 // Must run server-side
+export const getAllUserIds = async () => {
+  const users = await prisma.user.findMany({
+    select: {
+      id: true
+    }
+  });
+
+  return users.map((user) => user.id);
+};
+
+// Must run server-side
 export const createUser = async (input: Prisma.UserCreateInput) => {
   const user = await prisma.user.create({
     data: input

@@ -1,6 +1,6 @@
 import { clubs } from './clubs';
 import { tagsForClubs } from './tags_for_clubs';
-import { clubService, tagService } from '~/services';
+import { clubService, tagService, userService } from '~/services';
 
 export const deleteClubs = async () => {
   await clubService.deleteAllClubs();
@@ -26,6 +26,22 @@ export const loadTagsForClubs = async () => {
       }
 
       await clubService.addTagToClub(clubId, tag.id);
+    }
+  }
+};
+
+export const loadOwnersForClubs = async () => {
+  const allUserIds = await userService.getAllUserIds();
+
+  for (const club of clubs) {
+    for (const userId of allUserIds) {
+      await clubService.addOwnerToClub({
+        userId,
+        clubId: club.id,
+        role: 'President'
+      });
+
+      console.log(`Added owner ${userId} to club ${club.name}`);
     }
   }
 };

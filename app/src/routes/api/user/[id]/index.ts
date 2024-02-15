@@ -21,16 +21,24 @@ export const GET = async ({ request, params }: APIEvent) => {
     );
   }
 
-  const dbUser = await userService.getUserById(id);
+  try {
+    const dbUser = await userService.getUserById(id);
 
-  if (!dbUser) {
+    if (!dbUser) {
+      return json(
+        {
+          error: 'No user with the given id'
+        },
+        { status: statusCodes.INTERNAL_SERVER_ERROR }
+      );
+    }
+
+    return json(dbUser);
+  } catch (e: any) {
+    console.error(e);
     return json(
-      {
-        error: 'No user with the given id'
-      },
+      { error: e.message },
       { status: statusCodes.INTERNAL_SERVER_ERROR }
     );
   }
-
-  return json(dbUser);
 };

@@ -8,25 +8,20 @@ datasource db {
 }
 
 model User {
-  id                String   @id
-  email             String   @unique
-  name              String
+  id                String      @id
   role              String
   provider          String
   refreshToken      String
   accessToken       String
   accessTokenExpiry DateTime
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  ClubOwner         ClubOwner[]
   profile           Profile?
-  memberClubs       Club[]   @relation("ClubMembers")
-  ownedClubs        Club[]   @relation("ClubOwners")
-  subscribedClubs   Club[]   @relation("ClubSubscribers")
 }
 
 model Profile {
   userId       String   @id @unique
-  name         String
   pronouns     String?
   bio          String?
   schoolYear   String?
@@ -37,37 +32,45 @@ model Profile {
   instagramUrl String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  name         String
+  email        String   @unique
   user         User     @relation(fields: [userId], references: [id])
 }
 
 model Club {
-  id                String   @id @default(uuid())
-  name              String   @unique
-  email             String   @unique
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                String      @id @default(uuid())
+  name              String      @unique
+  calendarUrl       String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
   description       String
+  logoUrl           String?
   joinStatus        String
   membershipProcess String
-  memberCount       Int      @default(0)
-  calendarUrl       String?
+  memberCount       Int         @default(0)
   discordUrl        String?
+  email             String      @unique
   facebookUrl       String?
   githubUrl         String?
   instagramUrl      String?
   websiteUrl        String?
   linkedinUrl       String?
-  logoUrl           String?
-  members           User[]   @relation("ClubMembers")
-  owners            User[]   @relation("ClubOwners")
-  subscribers       User[]   @relation("ClubSubscribers")
-  tags              Tag[]    @relation("ClubTags")
+  ClubOwner         ClubOwner[]
+  tags              Tag[]       @relation("ClubTags")
+}
+
+model ClubOwner {
+  userId String
+  clubId String
+  role   String
+  club   Club   @relation(fields: [clubId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@id([userId, clubId])
 }
 
 model Tag {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  clubs     Club[]   @relation("ClubTags")
+  id    String @id @default(uuid())
+  name  String @unique
+  clubs Club[] @relation("ClubTags")
 }
