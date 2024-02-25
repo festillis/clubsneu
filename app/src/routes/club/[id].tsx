@@ -18,9 +18,10 @@ import ClubFAQ from '~/components/ClubFAQ';
 import ClubEboard from '~/components/ClubEboard';
 import ClubInfo from '~/components/ClubInfo';
 import ClubContact from '~/components/ClubContact';
-import ClubUpcomingEvent from '~/components/ClubUpcomingEvent';
+import ClubUpcomingEvent from '~/components/ClubUpcomingEvents';
 import Footer from '~/components/Footer';
 import { JoinStatus, MembershipProcess } from '~/components/Sidebar/types';
+import ClubTags from '~/components/ClubTags';
 
 interface Params extends Record<string, string> {
   id: string;
@@ -128,6 +129,7 @@ const ClubPage: Component<Props> = () => {
                 <Show when={club()!.calendarUrl}>
                   <ClubUpcomingEvent calendarUrl={club()!.calendarUrl!} />
                 </Show>
+                <ClubTags clubId={id} />
               </Stack>
             </Stack>
           </Stack>

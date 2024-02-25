@@ -9,7 +9,7 @@ interface Props {
   calendarUrl: string;
 }
 
-const ClubUpcomingEvent: Component<Props> = ({ calendarUrl }) => {
+const ClubUpcomingEvents: Component<Props> = ({ calendarUrl }) => {
   const [events] = createResource(() =>
     calendarService.getCalendarEvents(calendarUrl, { upcomingOnly: true })
   );
@@ -77,4 +77,4 @@ const ClubUpcomingEvent: Component<Props> = ({ calendarUrl }) => {
   );
 };
 
-export default ClubUpcomingEvent;
+export default ClubUpcomingEvents;
