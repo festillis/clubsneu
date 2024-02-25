@@ -27,8 +27,6 @@ const ClubProfile: Component<Props> = ({ name, logoUrl }) => {
           left: '3rem',
           zIndex: 1,
           borderRadius: '0.75rem',
-          // height: '11.25rem',
-          // width: '11.25rem',
           height: '10rem',
           width: '10rem',
           border: '1rem solid #FFFFFF',
@@ -77,14 +75,7 @@ const ClubProfile: Component<Props> = ({ name, logoUrl }) => {
         <Stack direction="column" sx={{ gap: '1rem' }}>
           <Typography variant="h2">{name}</Typography>
           <Stack direction="row" sx={{ gap: '0.75rem' }}>
-            <Button
-            // style={{
-            //   'background-color': colors.RED,
-            //   color: '#FFFFFF'
-            // }}
-            >
-              Join Waitlist
-            </Button>
+            <Button>Join Waitlist</Button>
             <Box
               sx={{
                 cursor: 'pointer',

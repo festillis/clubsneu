@@ -21,7 +21,6 @@ export const getDateFromNow = (options?: {
 };
 
 export const toLocaleTimeString = (date: Date) => {
-  // I want the format 9:30AM
   return new Date(date).toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: 'numeric',
