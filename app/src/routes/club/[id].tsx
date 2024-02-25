@@ -3,6 +3,7 @@ import { Box, Stack, Typography } from '@suid/material';
 import {
   Component,
   Match,
+  Show,
   Switch,
   createResource,
   createSignal
@@ -124,7 +125,9 @@ const ClubPage: Component<Props> = () => {
                   githubUrl={club()!.githubUrl}
                   discordUrl={club()!.discordUrl}
                 />
-                <ClubUpcomingEvent />
+                <Show when={club()!.calendarUrl}>
+                  <ClubUpcomingEvent calendarUrl={club()!.calendarUrl!} />
+                </Show>
               </Stack>
             </Stack>
           </Stack>

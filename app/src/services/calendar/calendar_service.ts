@@ -1,20 +1,37 @@
 import { ApiClient } from '~/api_client';
-import { CalendarEvents, CalendarList } from './types';
+import { Calendar, CalendarList } from './types';
 import { envVars } from '~/constants';
 
-export const getCalendar = async (calendarId: string) => {
-  const api = new ApiClient('https://www.googleapis.com/calendar/v3');
+export const getCalendarEvents = async (
+  calendarId: string,
+  options?: {
+    upcomingOnly?: boolean;
+  }
+) => {
+  const calendarApi = new ApiClient('https://www.googleapis.com/calendar/v3');
+  const optionalParams: Record<string, string> = {};
 
-  return await api.req<CalendarEvents>('GET', {
+  if (options?.upcomingOnly) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set the time to 00:00:00
+    optionalParams['timeMin'] = today.toISOString();
+  }
+
+  const calendar = await calendarApi.req<Calendar>('GET', {
     url: `/calendars/${calendarId}/events`,
-    params: { key: envVars.GOOGLE_CLOUD_API_KEY }
+    params: {
+      key: envVars.GOOGLE_CLOUD_API_KEY,
+      ...optionalParams
+    }
   });
+
+  return calendar.items;
 };
 
-export const getCalendarList = async () => {
-  const api = new ApiClient('https://www.googleapis.com/calendar/v3');
+export const getCalendarListOfCurrentUser = async () => {
+  const calendarApi = new ApiClient('https://www.googleapis.com/calendar/v3');
 
-  return await api.authReq<CalendarList>('GET', {
+  return await calendarApi.authReq<CalendarList>('GET', {
     url: '/users/me/calendarList'
   });
 };

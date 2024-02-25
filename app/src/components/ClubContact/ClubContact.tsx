@@ -86,7 +86,7 @@ const ClubContact: Component<Props> = ({
       <Show when={facebookUrl}>
         <ContactRow
           icon={<FaBrandsMeta size="1.5rem" />}
-          label="Meta"
+          label="Facebook"
           href={facebookUrl!}
         />
       </Show>
