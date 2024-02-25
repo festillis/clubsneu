@@ -131,6 +131,11 @@ export const deleteOwnerFromClub = async (userId: string, clubId: string) => {
 };
 
 // Must run server-side
+export const deleteAllClubOwners = async () => {
+  return await prisma.clubOwner.deleteMany();
+};
+
+// Must run server-side
 export const addTagToClub = async (clubId: string, tagId: string) => {
   return await prisma.club.update({
     where: { id: clubId },

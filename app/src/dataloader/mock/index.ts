@@ -5,6 +5,7 @@ export const loadData = async () => {
   await tagDataloader.deleteTags();
   await tagDataloader.loadTags();
 
+  await clubDataloader.deleteClubOwners();
   await clubDataloader.deleteClubs();
   await clubDataloader.loadClubs();
   await clubDataloader.loadTagsForClubs();

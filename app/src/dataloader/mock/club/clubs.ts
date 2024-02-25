@@ -7,8 +7,9 @@ export const clubs: Club[] = [
     email: 'club1@gmail.com',
     description:
       "Northeastern's student-led software consultancy working closely with clients to help them best leverage computation.",
+    // TODO: Should be `calendarId` instead of `calendarUrl`
     calendarUrl:
-      'https://calendar.google.com/calendar/embed?src=aab8e2278c912e76e6e7e7f2836021a9a838b75d39ceea69eee8ad9ee675c170%40group.calendar.google.com&ctz=America%2FNew_York',
+      'aab8e2278c912e76e6e7e7f2836021a9a838b75d39ceea69eee8ad9ee675c170@group.calendar.google.com',
     websiteUrl: 'https://www.sandboxnu.com/',
     facebookUrl: 'https://www.facebook.com/sandboxnu/',
     instagramUrl: 'https://www.instagram.com/sandboxnu/',

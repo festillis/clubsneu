@@ -76,28 +76,28 @@ const Navbar: Component<Props> = ({ searchValue, onSearchChange }) => {
           fallback={
             <Stack direction="row" spacing={2}>
               <Button
-                style={{
-                  color: '#ffffff',
-                  'background-color': colors.RED
-                }}
+                // style={{
+                //   color: '#ffffff',
+                //   'background-color': colors.RED
+                // }}
                 onClick={onSignInWithGoogle}>
                 Club Exec
               </Button>
               <Button
-                style={{
-                  color: '#ffffff',
-                  'background-color': colors.RED
-                }}
+                // style={{
+                //   color: '#ffffff',
+                //   'background-color': colors.RED
+                // }}
                 onClick={onSignInWithMicrosoft}>
                 Member
               </Button>
             </Stack>
           }>
           <Button
-            style={{
-              color: '#ffffff',
-              'background-color': colors.RED
-            }}
+            // style={{
+            //   color: '#ffffff',
+            //   'background-color': colors.RED
+            // }}
             onClick={onLogout}>
             Logout
           </Button>

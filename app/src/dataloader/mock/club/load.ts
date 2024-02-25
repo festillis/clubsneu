@@ -8,6 +8,12 @@ export const deleteClubs = async () => {
   console.log('Deleted all clubs');
 };
 
+export const deleteClubOwners = async () => {
+  await clubService.deleteAllClubOwners();
+
+  console.log('Deleted all club owners');
+};
+
 export const loadClubs = async () => {
   for (const club of clubs) {
     const createdClub = await clubService.createClub(club);

@@ -1,4 +1,6 @@
+import { Button as MuiButton } from '@suid/material';
 import { Component, JSX } from 'solid-js';
+import { colors } from '~/constants';
 
 interface Props {
   children?: JSX.Element;
@@ -8,22 +10,27 @@ interface Props {
 
 const Button: Component<Props> = ({ children, style, onClick }) => {
   return (
-    <button
+    <MuiButton
       onClick={onClick}
-      style={{
+      disableElevation
+      sx={{
         cursor: 'pointer',
-        'border-radius': '0.75rem',
+        textTransform: 'none',
+        borderRadius: '0.75rem',
         outline: 'none',
-        border: 'none',
-        padding: '0 1rem',
-        height: '2.6875rem',
-        // 'font-size': '1.25rem',
-        'font-size': '1rem',
-        'font-weight': 500,
+        px: '1rem',
+        backgroundColor: colors.RED,
+        fontSize: '1rem',
+        fontWeight: 500,
+        color: '#FFFFFF',
+        boxShadow: colors.BOX_SHADOW,
+        '&:hover': {
+          backgroundColor: colors.RED
+        },
         ...style
       }}>
       {children}
-    </button>
+    </MuiButton>
   );
 };
 

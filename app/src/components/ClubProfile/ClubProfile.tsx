@@ -78,10 +78,11 @@ const ClubProfile: Component<Props> = ({ name, logoUrl }) => {
           <Typography variant="h2">{name}</Typography>
           <Stack direction="row" sx={{ gap: '0.75rem' }}>
             <Button
-              style={{
-                'background-color': colors.RED,
-                color: '#FFFFFF'
-              }}>
+            // style={{
+            //   'background-color': colors.RED,
+            //   color: '#FFFFFF'
+            // }}
+            >
               Join Waitlist
             </Button>
             <Box
@@ -91,7 +92,8 @@ const ClubProfile: Component<Props> = ({ name, logoUrl }) => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 px: '0.5rem',
-                borderRadius: '0.75rem'
+                borderRadius: '0.75rem',
+                boxShadow: colors.BOX_SHADOW
               }}>
               <MoreHorizIcon />
             </Box>
