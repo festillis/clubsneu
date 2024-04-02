@@ -4,7 +4,7 @@
 
 ### Tech Stack
 
-- Solid Start
+- SolidStart
 - TypeScript
 - Prisma
 - Firebase Authentication
