@@ -1,12 +1,5 @@
 import { Stack, Typography } from '@suid/material';
-import {
-  Component,
-  For,
-  Match,
-  Switch,
-  createEffect,
-  createResource
-} from 'solid-js';
+import { Component, For, Match, Switch, createResource } from 'solid-js';
 import { colors } from '~/constants';
 import TagChip from '../ClubCard/TagChip';
 import { clubClient } from '~/clients';

@@ -1,6 +1,7 @@
-import { Stack, Typography } from '@suid/material';
+import { Box, Divider, Stack, Typography } from '@suid/material';
 import { Component } from 'solid-js';
 import { colors } from '~/constants';
+import Collapsible from '../Collapsible';
 
 interface Props {}
 
@@ -16,12 +17,29 @@ const ClubFAQ: Component<Props> = () => {
         gap: '1rem'
       }}>
       <Typography variant="h3">FAQ</Typography>
-      <Typography variant="body1">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-        suscipit iusto ullam magni. Reprehenderit, iure iusto minima quasi
-        reiciendis, quis, corporis explicabo dolore itaque dolores aspernatur
-        debitis ratione enim vel?
-      </Typography>
+      <Collapsible
+        label="How much previous coding experience do you need to join?"
+        content="Every level of experience is welcome in Sandbox. In our coding
+            challenges, there will be different application tracks. Depending on
+            your experience, you will be assigned to a track to give you the
+            best opportunity to showcase your ability."
+      />
+      <Divider />
+      <Collapsible
+        label="How much previous coding experience do you need to join?"
+        content="Every level of experience is welcome in Sandbox. In our coding
+            challenges, there will be different application tracks. Depending on
+            your experience, you will be assigned to a track to give you the
+            best opportunity to showcase your ability."
+      />
+      <Divider />
+      <Collapsible
+        label="How much previous coding experience do you need to join?"
+        content="Every level of experience is welcome in Sandbox. In our coding
+            challenges, there will be different application tracks. Depending on
+            your experience, you will be assigned to a track to give you the
+            best opportunity to showcase your ability."
+      />
     </Stack>
   );
 };
