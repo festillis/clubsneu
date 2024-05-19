@@ -5,15 +5,15 @@ export const theme = createTheme({
     fontFamily: "'Montserrat', sans-serif",
     h1: {
       fontSize: '2rem',
-      fontWeight: 500
+      fontWeight: 600
     },
     h2: {
       fontSize: '1.5rem',
-      fontWeight: 500
+      fontWeight: 600
     },
     h3: {
       fontSize: '1.25rem',
-      fontWeight: 500
+      fontWeight: 600
     },
     h4: {
       fontSize: '1.15rem',

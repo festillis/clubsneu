@@ -38,25 +38,26 @@ model Profile {
 }
 
 model Club {
-  id                String      @id @default(uuid())
-  name              String      @unique
+  id                String                    @id @default(uuid())
+  name              String                    @unique
   calendarUrl       String?
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
   description       String
   logoUrl           String?
   joinStatus        String
   membershipProcess String
-  memberCount       Int         @default(0)
+  memberCount       Int                       @default(0)
   discordUrl        String?
-  email             String      @unique
+  email             String                    @unique
   facebookUrl       String?
   githubUrl         String?
   instagramUrl      String?
   websiteUrl        String?
   linkedinUrl       String?
   ClubOwner         ClubOwner[]
-  tags              Tag[]       @relation("ClubTags")
+  tags              Tag[]                     @relation("ClubTags")
+  faqs              FrequentlyAskedQuestion[] @relation("ClubFAQs")
 }
 
 model ClubOwner {
@@ -73,4 +74,12 @@ model Tag {
   id    String @id @default(uuid())
   name  String @unique
   clubs Club[] @relation("ClubTags")
+}
+
+model FrequentlyAskedQuestion {
+  id       String @id @default(uuid())
+  clubId   String
+  question String
+  answer   String
+  Club     Club   @relation("ClubFAQs", fields: [clubId], references: [id])
 }
