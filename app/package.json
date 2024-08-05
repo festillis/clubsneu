@@ -12,7 +12,8 @@
     "prisma:studio": "prisma studio",
     "dataclear": "./src/scripts/dataclear.sh",
     "dataload:mock": "./src/scripts/dataload_mock.sh",
-    "dataload:prod": "./src/scripts/dataload_production.sh"
+    "dataload:prod": "./src/scripts/dataload_production.sh",
+    "docker:create": "cd ./docker && bash create_container.sh && bash create_image.sh"
   },
   "type": "module",
   "devDependencies": {
